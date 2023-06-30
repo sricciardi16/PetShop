@@ -1,0 +1,119 @@
+package it.petshop.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import it.petshop.model.Indirizzo;
+
+public class IndirizzoDAO implements DAO<Indirizzo> {
+
+	private DataSource dataSource;
+	private static final String TABLE_NAME = "indirizzo";
+
+	public IndirizzoDAO(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	@Override
+	public synchronized void create(Indirizzo indirizzo) throws SQLException {
+		String insertSQL = "INSERT INTO " + TABLE_NAME
+				+ " (id, via, numero, citta, codice_postale, provincia, paese, id_utente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+			preparedStatement.setInt(1, indirizzo.getId());
+			preparedStatement.setString(2, indirizzo.getVia());
+			preparedStatement.setString(3, indirizzo.getNumero());
+			preparedStatement.setString(4, indirizzo.getCitta());
+			preparedStatement.setString(5, indirizzo.getCodicePostale());
+			preparedStatement.setString(6, indirizzo.getProvincia());
+			preparedStatement.setString(7, indirizzo.getPaese());
+			preparedStatement.setInt(8, indirizzo.getIdUtente());
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
+	@Override
+	public synchronized boolean delete(int id) throws SQLException {
+		int result = 0;
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+			preparedStatement.setInt(1, id);
+			result = preparedStatement.executeUpdate();
+		}
+
+		return result != 0;
+	}
+
+	@Override
+	public synchronized List<Indirizzo> retrieveAll(String order) throws SQLException {
+		List<Indirizzo> indirizzi = new ArrayList<>();
+
+		String selectSQL = "SELECT * FROM " + TABLE_NAME;
+
+		if (order != null && !order.equals("")) {
+			selectSQL += " ORDER BY " + order;
+		}
+
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+				ResultSet rs = preparedStatement.executeQuery()) {
+
+			while (rs.next()) {
+				Indirizzo bean = new Indirizzo();
+				bean.setId(rs.getInt("id"));
+				bean.setVia(rs.getString("via"));
+				bean.setNumero(rs.getString("numero"));
+				bean.setCitta(rs.getString("citta"));
+				bean.setCodicePostale(rs.getString("codice_postale"));
+				bean.setProvincia(rs.getString("provincia"));
+				bean.setPaese(rs.getString("paese"));
+				bean.setIdUtente(rs.getInt("id_utente"));
+
+				indirizzi.add(bean);
+			}
+		}
+
+		return indirizzi;
+	}
+
+	public synchronized List<Indirizzo> retrieveAll() throws SQLException {
+		return retrieveAll("");
+	}
+
+	@Override
+	public synchronized Indirizzo retrieveByKey(int id) throws SQLException {
+		Indirizzo bean = new Indirizzo();
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+			preparedStatement.setInt(1, id);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					bean.setId(rs.getInt("id"));
+					bean.setVia(rs.getString("via"));
+					bean.setNumero(rs.getString("numero"));
+					bean.setCitta(rs.getString("citta"));
+					bean.setCodicePostale(rs.getString("codice_postale"));
+					bean.setProvincia(rs.getString("provincia"));
+					bean.setPaese(rs.getString("paese"));
+					bean.setIdUtente(rs.getInt("id_utente"));
+				}
+			}
+		}
+
+		return bean;
+	}
+
+}
