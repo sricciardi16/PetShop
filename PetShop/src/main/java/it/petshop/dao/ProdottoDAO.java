@@ -120,13 +120,13 @@ public class ProdottoDAO implements DAO<Prodotto> {
 
 		String selectSQL = "SELECT * FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
 
-		if (categoria.getTipologia() != null)
+		if (!categoria.getTipologia().isBlank())
 			selectSQL += " AND tipologia = ?";
 
-		if (categoria.getTipologiaIn() != null)
+		if (!categoria.getTipologiaIn().isBlank())
 			selectSQL += " AND tipologia_in = ?";
 
-		if (order != null && !order.equals(""))
+		if (!order.isBlank())
 			selectSQL += " ORDER BY " + order;
 
 		if (!asc)
@@ -140,10 +140,10 @@ public class ProdottoDAO implements DAO<Prodotto> {
 			int index = 1;
 			preparedStatement.setString(index++, categoria.getAnimale());
 
-			if (categoria.getTipologia() != null)
+			if (!categoria.getTipologia().isBlank())
 				preparedStatement.setString(index++, categoria.getTipologia());
 
-			if (categoria.getTipologiaIn() != null)
+			if (!categoria.getTipologiaIn().isBlank())
 				preparedStatement.setString(index++, categoria.getTipologiaIn());
 
 			preparedStatement.setInt(index++, limit);

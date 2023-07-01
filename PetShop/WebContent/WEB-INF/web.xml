@@ -26,5 +26,17 @@
         <servlet-name>ProdottiServlet</servlet-name>
         <url-pattern>/prodotti</url-pattern>
     </servlet-mapping>
+    
+    
+      <servlet>
+        <servlet-name>CategoriaServlet</servlet-name>
+        <servlet-class>it.petshop.control.CategoriaServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CategoriaServlet</servlet-name>
+        <url-pattern>/categoria</url-pattern>
+    </servlet-mapping>
+	
 	
 </web-app>

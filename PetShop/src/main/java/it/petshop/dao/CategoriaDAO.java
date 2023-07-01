@@ -105,30 +105,36 @@ public class CategoriaDAO implements DAO<Categoria> {
 	
 	
 	public synchronized List<Categoria> retrieve(Categoria categoria) throws SQLException {
-		List<Categoria> categorie = new ArrayList<>();
+	    List<Categoria> categorie = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
-		
-		String animale = categoria.getAnimale();
-		String tipologia = categoria.getTipologia();
-		String tipologiaIn = categoria.getTipologiaIn();
-		
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-				ResultSet rs = preparedStatement.executeQuery()) {
+	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE animale = ?";
+	    
+	    if (!categoria.getTipologia().isBlank())
+	        selectSQL += " AND tipologia = ?";
 
-			while (rs.next()) {
-				Categoria bean = new Categoria();
-				bean.setId(rs.getInt("id"));
-				bean.setAnimale(rs.getString("animale"));
-				bean.setTipologia(rs.getString("tipologia"));
-				bean.setTipologiaIn(rs.getString("tipologia_in"));
+	    try (Connection connection = dataSource.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
-				categorie.add(bean);
-			}
-		}
+	        preparedStatement.setString(1, categoria.getAnimale());
+	        
+	        if (!categoria.getTipologia().isBlank())
+	            preparedStatement.setString(2, categoria.getTipologia());
 
-		return categorie;
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                Categoria bean = new Categoria();
+	                bean.setId(rs.getInt("id"));
+	                bean.setAnimale(rs.getString("animale"));
+	                bean.setTipologia(rs.getString("tipologia"));
+	                bean.setTipologiaIn(rs.getString("tipologia_in"));
+
+	                categorie.add(bean);
+	            }
+	        }
+	    }
+
+	    return categorie;
 	}
+
 
 }
