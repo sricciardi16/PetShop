@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,28 +38,45 @@ public class ProdottiServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		System.out.println("-");
+		request.getParameterNames().asIterator().forEachRemaining(v -> System.out.println(request.getParameter(v)));
+		System.out.println("-");
+		
+		int page = Optional.ofNullable(request.getParameter("page")).map(Integer::parseInt).orElse(1);
+		String animale = request.getParameter("animale");
+		if (animale == null) {
+			request.setAttribute("errorMessage", "error");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
+			dispatcher.forward(request, response);
+		}
+		
+		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
+		String tipologiaIn = Optional.ofNullable(request.getParameter("tipologiaIn")).orElse("");
+		String orderBy = Optional.ofNullable(request.getParameter("order")).orElse("in_magazzino");
+		String direction = Optional.ofNullable(request.getParameter("direction")).orElse("asc");
+		System.out.println("tipologia " + tipologia);
 		Categoria categoria = new Categoria();
-		categoria.setAnimale(request.getParameter("animale"));
-		categoria.setTipologia(request.getParameter("tipologia"));
-		categoria.setTipologiaIn(request.getParameter("tipologiaIn"));
 		
-		String orderBy = request.getParameter("order");
-		String direction = request.getParameter("direction");
+		categoria.setAnimale(animale);
+		categoria.setTipologia(tipologia);
+		categoria.setTipologiaIn(tipologiaIn);
+		
+		
 		boolean asc = true;
-		
-		if (direction != null && direction.equals("desc"))
+		if (direction.equals("desc"))
 			asc = false;
-		
-		String pageParameter = request.getParameter("page");
-		int page = pageParameter == null ? 1 : Integer.parseInt(pageParameter);
+		else if (!direction.equals("asc")) {
+			request.setAttribute("errorMessage", "error");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
+			dispatcher.forward(request, response);
+		}		
 		
 
 		try {
 			List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1),
 					PRODOTTI_PER_PAGINA, orderBy, asc);
 			request.setAttribute("prodotti", prodotti);
-			System.out.println(prodotti);
+			System.out.println("prodotti "+prodotti);
 
 			if (isAjaxRequest(request)) {
 

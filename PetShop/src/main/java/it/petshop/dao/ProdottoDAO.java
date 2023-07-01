@@ -150,6 +150,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 			preparedStatement.setInt(index++, offset);
 
 			try (ResultSet rs = preparedStatement.executeQuery()) {
+				
 				while (rs.next()) {
 					Prodotto bean = new Prodotto();
 					bean.setId(rs.getInt("id"));
@@ -161,6 +162,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 					bean.setIdCategoria(rs.getInt("id_categoria"));
 
 					prodotti.add(bean);
+					
 				}
 			}
 		}
