@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="headerStyle.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/headerStyle.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
  <div class="container-logo">
- 	<div class="logo" ><img alt="logo" src="logoPetShop.png"></div>
+ 	<div class="logo" ><img alt="logo" src="${pageContext.request.contextPath}/assets/img/GUI/logo.png"></div>
  </div>
 	<div class="navbar">
 		<a class="home" href="#">HOME</a>
@@ -146,8 +146,8 @@
 		</div>
 				<a href="#">Chi siamo?</a>
 		<div class="search-container">
-			<a href="#" class="cart-icon" style="border-right: 2px solid #333;"><img src="area-personale.png" alt="MYpetshop" /></a>
-			<a href="#" class="cart-icon"><img src="carrello.png" alt="Carrello" /></a>
+			<a href="#" class="cart-icon" style="border-right: 2px solid #333;"><img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" /></a>
+			<a href="#" class="cart-icon"><img src="${pageContext.request.contextPath}/assets/img/GUI/carrello.png" alt="Carrello" /></a>
 			<input type="text" placeholder="Cerca..." name="search" style="margin-left: 10px;">
 			<button type="submit">Cerca</button>
 		</div>

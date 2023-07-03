@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="assets/styles/main.css"> -->
 </head>
 <body>
-   <jsp:include page="WEB-INF/views/fragments/header.jsp" />
+   <jsp:include page="WEB-INF/views/fragments/header.jsp" flush="true"/>
 
     <div id="content">
         <h1>Ciao PetShop!</h1>
@@ -27,6 +27,6 @@
         <h3><a href="carrello">Carrello</a></h3>
     </div>
 
-   <%-- <jsp:include page="WEB-INF/views/fragments/footer.jsp" /> --%>
+   <jsp:include page="WEB-INF/views/fragments/footer.jsp" flush="true"/>
 </body>
 </html>
