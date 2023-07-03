@@ -89,8 +89,13 @@
 		<servlet-name>CarrelloServlet</servlet-name>
 		<url-pattern>/carrello</url-pattern>
 	</servlet-mapping>
-
-
-
-
+	
+	<servlet>
+		<servlet-name>Launch</servlet-name>
+		<servlet-class>it.petshop.control.Launch</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>Launch</servlet-name>
+		<url-pattern>/Launch</url-pattern>
+	</servlet-mapping>
 </web-app>

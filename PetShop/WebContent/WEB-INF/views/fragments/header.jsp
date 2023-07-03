@@ -146,7 +146,7 @@
 		</div>
 				<a href="#">Chi siamo?</a>
 		<div class="search-container">
-			<a href="#" class="cart-icon" style="border-right: 2px solid #333;"><img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" /></a>
+			<a href="Launch" class="cart-icon" style="border-right: 2px solid #333;"><img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" /></a>
 			<a href="#" class="cart-icon"><img src="${pageContext.request.contextPath}/assets/img/GUI/carrello.png" alt="Carrello" /></a>
 			<input type="text" placeholder="Cerca..." name="search" style="margin-left: 10px;">
 			<button type="submit">Cerca</button>
