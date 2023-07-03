@@ -7,7 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title></title>
 </head>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/fragments/header.jsp" flush="true"/>
+<jsp:include page="../../views/fragments/header.jsp"/>
+
 <body> 
 	<div id="container">
 		<h2>Dati personali:</h2>
@@ -22,5 +23,5 @@
 		</div>
 	</div>
 </body>
-<jsp:include page="${pageContext.request.contextPath}/WEB-INF/views/fragments/footer.jsp" flush="true"/>
+<jsp:include page="../../views/fragments/footer.jsp" />
 </html>
