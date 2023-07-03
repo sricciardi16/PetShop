@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" type="text/css" href="assets/styles/main.css"> -->
 </head>
 <body>
-   <%-- <jsp:include page="WEB-INF/views/fragments/header.jsp" /> --%>
+   <jsp:include page="WEB-INF/views/fragments/header.jsp" />
 
     <div id="content">
         <h1>Ciao PetShop!</h1>
