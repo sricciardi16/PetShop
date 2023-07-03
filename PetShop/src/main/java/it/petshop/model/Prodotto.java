@@ -1,6 +1,7 @@
 package it.petshop.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Prodotto implements Serializable {
 
@@ -68,6 +69,21 @@ public class Prodotto implements Serializable {
 
 	public void setIdCategoria(int idCategoria) {
 		this.idCategoria = idCategoria;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Prodotto prodotto = (Prodotto) o;
+		return id == prodotto.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 }

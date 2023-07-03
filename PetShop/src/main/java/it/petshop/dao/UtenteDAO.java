@@ -114,5 +114,16 @@ public class UtenteDAO implements DAO<Utente> {
 
 		return bean;
 	}
+	
+	public boolean exits(String username, String password) throws SQLException {
+        String query = "SELECT*FROM utente WHERE nome_utente = ? AND password = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
 
 }

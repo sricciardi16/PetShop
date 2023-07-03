@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
-	
+
 	<display-name>PetShop</display-name>
 	<resource-ref>
 		<description>JNDI reference to a data source</description>
@@ -15,28 +15,82 @@
 		<param-name>imgProdottiPath</param-name>
 		<param-value>/assets/img/prodotti/</param-value>
 	</context-param>
-	
-	
-	  <servlet>
-        <servlet-name>ProdottiServlet</servlet-name>
-        <servlet-class>it.petshop.control.ProdottiServlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>ProdottiServlet</servlet-name>
-        <url-pattern>/prodotti</url-pattern>
-    </servlet-mapping>
-    
-    
-      <servlet>
-        <servlet-name>CategoriaServlet</servlet-name>
-        <servlet-class>it.petshop.control.CategoriaServlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>CategoriaServlet</servlet-name>
-        <url-pattern>/categoria</url-pattern>
-    </servlet-mapping>
-	
-	
+	<servlet>
+		<servlet-name>ProdottiServlet</servlet-name>
+		<servlet-class>it.petshop.control.ProdottiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProdottiServlet</servlet-name>
+		<url-pattern>/prodotti</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>CategoriaServlet</servlet-name>
+		<servlet-class>it.petshop.control.CategoriaServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CategoriaServlet</servlet-name>
+		<url-pattern>/categoria</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ProdottoServlet</servlet-name>
+		<servlet-class>it.petshop.control.ProdottoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProdottoServlet</servlet-name>
+		<url-pattern>/prodotto</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>it.petshop.control.LoginServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>it.petshop.control.LogoutServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GestisciProdottiServlet</servlet-name>
+		<servlet-class>it.petshop.control.GestisciProdottiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GestisciProdottiServlet</servlet-name>
+		<url-pattern>/gestisci-prodotti</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CarrelloServlet</servlet-name>
+		<servlet-class>it.petshop.control.CarrelloServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CarrelloServlet</servlet-name>
+		<url-pattern>/carrello</url-pattern>
+	</servlet-mapping>
+
+
+
+
 </web-app>

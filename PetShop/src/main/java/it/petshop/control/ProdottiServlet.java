@@ -3,7 +3,9 @@ package it.petshop.control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +23,8 @@ import it.petshop.dao.ProdottoDAO;
 import it.petshop.model.Categoria;
 import it.petshop.model.Prodotto;
 
+import it.petshop.utility.*;
+
 public class ProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,15 +37,11 @@ public class ProdottiServlet extends HttpServlet {
 	public void init() throws ServletException {
 		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		prodottoDao = new ProdottoDAO(dataSource);
-
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("-");
-		request.getParameterNames().asIterator().forEachRemaining(v -> System.out.println(request.getParameter(v)));
-		System.out.println("-");
-		
+
 		int page = Optional.ofNullable(request.getParameter("page")).map(Integer::parseInt).orElse(1);
 		String animale = request.getParameter("animale");
 		if (animale == null) {
@@ -49,19 +49,18 @@ public class ProdottiServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		String tipologiaIn = Optional.ofNullable(request.getParameter("tipologiaIn")).orElse("");
 		String orderBy = Optional.ofNullable(request.getParameter("order")).orElse("in_magazzino");
 		String direction = Optional.ofNullable(request.getParameter("direction")).orElse("asc");
-		System.out.println("tipologia " + tipologia);
+
 		Categoria categoria = new Categoria();
-		
+
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
 		categoria.setTipologiaIn(tipologiaIn);
-		
-		
+
 		boolean asc = true;
 		if (direction.equals("desc"))
 			asc = false;
@@ -69,28 +68,28 @@ public class ProdottiServlet extends HttpServlet {
 			request.setAttribute("errorMessage", "error");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
 			dispatcher.forward(request, response);
-		}		
-		
+		}
 
 		try {
 			List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1),
 					PRODOTTI_PER_PAGINA, orderBy, asc);
+			int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
 			request.setAttribute("prodotti", prodotti);
-			System.out.println("prodotti "+prodotti);
+			request.setAttribute("numeroPagine", numeroPagine);
+			System.out.println("prodotti " + prodotti);
 
-			if (isAjaxRequest(request)) {
+			if (Util.isAjaxRequest(request)) {
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("prodotti", prodotti);
+				resultMap.put("numeroPagine", numeroPagine);
 
 				Gson gson = new GsonBuilder().create();
-
-				String json = gson.toJson(prodotti);
+				String json = gson.toJson(resultMap);
 
 				response.setContentType("application/json");
-
 				response.getWriter().write(json);
 			} else {
-
-				RequestDispatcher dispatcher = request
-						.getRequestDispatcher("/WEB-INF/views/customer/lista-prodotti.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/customer/lista-prodotti.jsp");
 				dispatcher.forward(request, response);
 			}
 
@@ -104,9 +103,5 @@ public class ProdottiServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	private boolean isAjaxRequest(HttpServletRequest request) {
-		return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 	}
 }

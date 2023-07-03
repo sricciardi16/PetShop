@@ -5,11 +5,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +18,6 @@ import com.google.gson.GsonBuilder;
 
 import it.petshop.dao.CategoriaDAO;
 import it.petshop.model.Categoria;
-import it.petshop.model.Prodotto;
 
 /**
  * Servlet implementation class CategoriaServlet
@@ -51,16 +48,16 @@ public class CategoriaServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
 			dispatcher.forward(request, response);
 		}
-		
+
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
-		
+
 		try {
-			
+
 			List<Categoria> categorie = categoriaDao.retrieve(categoria);
-			
+
 			System.out.println(animale + tipologia);
 			Gson gson = new GsonBuilder().create();
 

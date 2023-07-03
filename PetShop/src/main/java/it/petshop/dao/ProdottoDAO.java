@@ -170,4 +170,47 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		return prodotti;
 	}
 
+	public synchronized int numeroPagine(Categoria categoria, int limit) throws SQLException {
+	    int result = 0;
+	    
+	    String countSQL = "SELECT COUNT(*) AS count FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
+	    if (!categoria.getTipologia().isBlank())
+	        countSQL += " AND tipologia = ?";
+
+	    if (!categoria.getTipologiaIn().isBlank())
+	        countSQL += " AND tipologia_in = ?";
+
+	    try (Connection connection = dataSource.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(countSQL)) {
+
+	        int index = 1;
+	        preparedStatement.setString(index++, categoria.getAnimale());
+
+	        if (!categoria.getTipologia().isBlank())
+	            preparedStatement.setString(index++, categoria.getTipologia());
+
+	        if (!categoria.getTipologiaIn().isBlank())
+	            preparedStatement.setString(index++, categoria.getTipologiaIn());
+
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                int count = rs.getInt("count");
+	                result = count / limit;
+
+	                if (count % limit != 0) {
+	                    result++;
+	                }
+	            }
+	        }
+	    }
+
+	    return result;
+	}
+
+	
 }
+
+
+
+
+

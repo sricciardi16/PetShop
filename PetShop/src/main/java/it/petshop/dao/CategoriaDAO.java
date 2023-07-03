@@ -102,39 +102,37 @@ public class CategoriaDAO implements DAO<Categoria> {
 
 		return bean;
 	}
-	
-	
+
 	public synchronized List<Categoria> retrieve(Categoria categoria) throws SQLException {
-	    List<Categoria> categorie = new ArrayList<>();
+		List<Categoria> categorie = new ArrayList<>();
 
-	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE animale = ?";
-	    
-	    if (!categoria.getTipologia().isBlank())
-	        selectSQL += " AND tipologia = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE animale = ?";
 
-	    try (Connection connection = dataSource.getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		if (!categoria.getTipologia().isBlank())
+			selectSQL += " AND tipologia = ?";
 
-	        preparedStatement.setString(1, categoria.getAnimale());
-	        
-	        if (!categoria.getTipologia().isBlank())
-	            preparedStatement.setString(2, categoria.getTipologia());
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
-	        try (ResultSet rs = preparedStatement.executeQuery()) {
-	            while (rs.next()) {
-	                Categoria bean = new Categoria();
-	                bean.setId(rs.getInt("id"));
-	                bean.setAnimale(rs.getString("animale"));
-	                bean.setTipologia(rs.getString("tipologia"));
-	                bean.setTipologiaIn(rs.getString("tipologia_in"));
+			preparedStatement.setString(1, categoria.getAnimale());
 
-	                categorie.add(bean);
-	            }
-	        }
-	    }
+			if (!categoria.getTipologia().isBlank())
+				preparedStatement.setString(2, categoria.getTipologia());
 
-	    return categorie;
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					Categoria bean = new Categoria();
+					bean.setId(rs.getInt("id"));
+					bean.setAnimale(rs.getString("animale"));
+					bean.setTipologia(rs.getString("tipologia"));
+					bean.setTipologiaIn(rs.getString("tipologia_in"));
+
+					categorie.add(bean);
+				}
+			}
+		}
+
+		return categorie;
 	}
-
 
 }

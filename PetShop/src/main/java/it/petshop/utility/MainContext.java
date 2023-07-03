@@ -24,8 +24,8 @@ public class MainContext implements ServletContextListener {
 
 		} catch (NamingException e) {
 			System.out.println("Error:" + e.getMessage());
-		}		
+		}
 
-		context.setAttribute("DataSource", dataSource);	
+		context.setAttribute("DataSource", dataSource);
 	}
 }

@@ -104,5 +104,16 @@ public class AmministratoreDAO implements DAO<Amministratore> {
 
 	    return bean;
 	}
+	
+	public boolean exits(String username, String password) throws SQLException {
+        String query = "SELECT * FROM amministratore WHERE nome_utente = ? AND password = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        }
+    }
 
 }
