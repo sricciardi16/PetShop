@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>Carrello</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -28,30 +29,36 @@ body {
 	margin-bottom: 1em;
 }
 
-.Heading, .Action, .title, .subtitle, .Subtotal, .items, .total-amount {
-	margin: 0;
-}
-
 .Cart-Items {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 1em;
+	padding: 1em;
+	border-bottom: 1px solid #ddd;
 }
 
 .image-box img {
 	width: 100px;
+	height: 100px;
+	object-fit: cover;
 }
 
 .about {
-	width: 30%;
+	width: 25%;
 }
 
-.counter {
-	display: flex;
+.price, .counter, .prices {
+	width: 15%;
+	text-align: center;
 }
 
 .btn {
 	margin: 0 1em;
+	border: 0;
+	background: #f1f1f1;
+	padding: 10px;
+	cursor: pointer;
 }
 
 .prices {
@@ -63,8 +70,8 @@ body {
 	font-weight: bold;
 }
 
-.save, .remove {
-	color: blue;
+.remove {
+	color: red;
 	cursor: pointer;
 	text-decoration: underline;
 }
@@ -84,25 +91,24 @@ body {
 
 .button:hover {
 	background-color: #0056b3;
-}
-</style>
+}</style>
 </head>
 <body>
+<jsp:include page="../../views/fragments/header.jsp"/>
+
 	<div class="CartContainer">
 		<div class="Header">
 			<h3 class="Heading">Shopping Cart</h3>
-			<h5 class="Action">Remove all</h5>
+			<a href="#" class="Action">Remove all</a>
 		</div>
 
-		<c:forEach var="entry" items="${carrello}">
+		<c:forEach var="entry" items="${prodottiCarrello}">
 			<div class="Cart-Items">
 				<div class="image-box">
-					<img
-						src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${entry.key.immagine}" />
+					<img src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${entry.key.immagine}" />
 				</div>
 				<div class="about">
 					<h1 class="title">${entry.key.nome}</h1>
-					<h3 class="subtitle">${entry.key.descrizione}</h3>
 				</div>
 				<div class="counter">
 					<button class="btn">+</button>
@@ -111,8 +117,8 @@ body {
 				</div>
 				<div class="prices">
 					<div class="amount">$${entry.key.prezzo * entry.value}</div>
-					<div class="save">Save for later</div>
-					<div class="remove">Remove</div>
+					<a href="#" class="save">Save for later</a>
+					<a href="#" class="remove">Remove</a>
 				</div>
 			</div>
 		</c:forEach>
@@ -121,13 +127,44 @@ body {
 		<div class="checkout">
 			<div class="total">
 				<div>
-					<h3 class="Subtotal">Sub-Total</h3>
-					<h4 class="items">numero tot elementi</h4>
+					<h4 class="items">${numeroProdottiCarrello} prodotti</h4>
 				</div>
-				<h2 class="total-amount">prez tot €</h2>
+				<h2 class="total-amount">${totaleCarrello}€</h2>
 			</div>
 			<button class="button">Checkout</button>
 		</div>
 	</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".btn").click(function(){
+        let prodottoId = $(this).parent().parent().find('img').attr('src').split('=')[1];
+        let quantita = parseInt($(this).parent().find('.count').text());
+        let mode = $(this).text() == '+' ? "increase" : "decrease";
+        
+        if(mode == "decrease" && quantita == 1) {
+            alert("Quantità non può essere inferiore a 1");
+            return;
+        }
+
+        $.ajax({
+            url: "carrello",
+            type: "POST",
+            data: {
+                id: prodottoId,
+                quantita: quantita,
+                mode: mode
+            },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("Errore: " + textStatus);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

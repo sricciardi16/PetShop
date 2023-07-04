@@ -2,6 +2,7 @@ let page, animale, tipologia, tipologiaIn, order, direction, numeroPagine;
 
 $(document).ready(function() {
 	first();
+	loadProducts();
 	eventiCategoria();
 	eventiPaginazione();
 });
@@ -162,7 +163,39 @@ function populateProducts(response) {
 	$('#paginaCorrente').html(page);
 	$('#ultimaPagina').html(numeroPagine);
 	window.scrollTo(0, 0);
+	carrello();
 }
+
+function carrello() {
+	$('.add-to-cart').click(function() {
+			let prodottoId = $(this).parent().find('a').attr('href').split('=')[1];
+			var quantita = 1;
+
+			$.ajax({
+				url: "carrello",
+				type: "POST",
+				data: {
+					id: prodottoId,
+					quantita: quantita,
+					mode: "increase"
+				},
+				success: function(response) {
+					showToast("Prodotto aggiunto al carrello");
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					alert("Eroror" + textStatus);
+				}
+			});
+		});
+}
+
+function showToast(message) {
+    let toast = document.getElementById("toast");
+    toast.className = "show";
+    toast.innerText = message;
+    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
 
 function showError() {
 	console.log('Erroro recupero dati');

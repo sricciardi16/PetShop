@@ -9,6 +9,49 @@
 	<script>
 		let imgProdottiPath = "${pageContext.request.contextPath}${initParam['imgProdottiPath']}"
 	</script>
+	<style type="text/css">#toast {
+    visibility: hidden;
+    max-width: 200px;
+    height: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    margin-left: -100px;
+}
+
+#toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+	</style>
 	<script>
 	$(document).ready(function() {
 		$('.add-to-cart').click(function() {
@@ -37,7 +80,9 @@
 	<script src="${pageContext.request.contextPath}/assets/script/prodotti.js"></script>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/main.css">
 </head>
+
 <body>
+<jsp:include page="../../views/fragments/header.jsp"/>
 	<div id="content">
 		<h1>I nostri prodotti</h1>
 		<select id="tipologia" name="tipologia">
@@ -57,16 +102,11 @@
 		</select>
 
 		<div id="productList">
-			<c:forEach var="prodotto" items="${prodotti}">
-				<div class="grid-item">
-					<img src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${prodotto.immagine}"
-						alt="Immagine del prodotto ${prodotto.nome}">
-					<h2><a href="prodotto?id=${prodotto.id}">${prodotto.nome}</a></h2>
-					<p>${prodotto.prezzo}€</p>
-					<button type="button" class="add-to-cart">Aggiungi al carrello</button>
-				</div>
-			</c:forEach>
+			
+			
 		</div>
+		<div id="toast"></div>
+		
 		<span>
 			<div class="pagination">
 				<button class="pagination-btn" id="primaPagina">1</button>
@@ -77,5 +117,6 @@
 			</div>
 		</span>
 	</div>
+	<jsp:include page="../../views/fragments/footer.jsp"/>
 </body>
 </html>

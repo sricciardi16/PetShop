@@ -49,6 +49,7 @@ public class CarrelloServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		System.out.println(session.getId());
 		
 		Prodotto prodotto;
 		try {
@@ -59,7 +60,7 @@ public class CarrelloServlet extends HttpServlet {
 			if (mode.equals("replace"))
 				increase = false;
 			
-			Object prodottiObj = session.getAttribute("carrello");
+			Object prodottiObj = session.getAttribute("prodottiCarrello");
 			if (prodottiObj == null) {
 				prodotti = new LinkedHashMap<>();
 				prodotti.put(prodotto, quantita);
@@ -68,7 +69,12 @@ public class CarrelloServlet extends HttpServlet {
 				prodotti.merge(prodotto, quantita, increase ? (o,n) -> o + n : (o,n) -> n);
 			}
 			
-			session.setAttribute("carrello", prodotti);
+			int numeroProdotti = prodotti.values().stream().mapToInt(i -> i.intValue()).reduce(0, (q, r) -> q + r);
+			double totale = prodotti.entrySet().stream().mapToDouble(c -> c.getKey().getPrezzo() * c.getValue()).reduce(0, (r, p) -> r + p);
+			
+			session.setAttribute("prodottiCarrello", prodotti);
+			session.setAttribute("numeroProdottiCarrello", numeroProdotti);
+			session.setAttribute("totaleCarrello", totale);
 		} catch (NumberFormatException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

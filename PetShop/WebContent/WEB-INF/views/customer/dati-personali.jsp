@@ -21,6 +21,7 @@
 		<div id="email" class="element"><label>Email: </label><span><!-- PLACE CODE HERE --></span></div>
 		<div id="telefono" class="element"><label>Telefono: </label><span><!-- PLACE CODE HERE --></span></div>
 		</div>
+		<a href="logout">logout</a>
 	</div>
 </body>
 <jsp:include page="../../views/fragments/footer.jsp" />
