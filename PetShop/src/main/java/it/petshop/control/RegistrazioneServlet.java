@@ -45,7 +45,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		utente.setTelefono(telefono);
 
 		utenteDao.create(utente);
-		response.sendRedirect("/");
+		response.sendRedirect(request.getContextPath());
 		// continuare qualcosa per vedere se andato a buon fine e redirect
 	}
 

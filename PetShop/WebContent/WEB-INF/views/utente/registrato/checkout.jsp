@@ -24,7 +24,7 @@
 						<br>
 					</div>
 				</c:forEach>
-				<button type="button" onclick="window.location.href = '${pageContext.request.contextPath}/user/indirizzi/new?redirect=user/checkout'" name="addAddress">Aggiungi Un Nuovo Indirizzo</button>
+				<button type="button" onclick="window.location.href = '${pageContext.request.contextPath}/user/indirizzi/new?redirect=checkout'" name="addAddress">Aggiungi Un Nuovo Indirizzo</button>
 			</div>
 			<br>
 			<h4>Metodo di spedizione:</h4>

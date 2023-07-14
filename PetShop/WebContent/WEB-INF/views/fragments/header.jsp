@@ -278,16 +278,14 @@
 				<c:choose>
 					<c:when
 						test='${empty sessionScope.nomeUtente || empty sessionScope.role}'>
-						<c:set var="link" value="login" />
 						<c:set var="label" value="Ciao" />
 					</c:when>
 					<c:otherwise>
-						<c:set var="link" value="myAccount" />
 						<c:set var="label" value="${sessionScope.nomeUtente}" />
 					</c:otherwise>
 				</c:choose>
 
-				<a href="${link}" class="cart-icon"
+				<a href="${pageContext.request.contextPath}/login" class="cart-icon"
 					style="border-right: 2px solid #333;"> <img
 					src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png"
 					alt="MYpetshop" />
