@@ -1,5 +1,4 @@
 let page, animale, tipologia, tipologiaIn, order, direction, numeroPagine;
-
 $(document).ready(function() {
 	first();
 	loadProducts();
@@ -20,7 +19,7 @@ function first() {
 
 function loadTipologie() {
 	$.ajax({
-		url: "categoria",
+		url: contextPath + "/categoria",
 		type: "GET",
 		data: { animale: animale },
 		dataType: "json",
@@ -28,7 +27,7 @@ function loadTipologie() {
 			$("#tipologia").empty();
 			$("#tipologia").append('<option value="tutte">tutte</option>');
 
-			data.forEach(function(item) {
+			data.tipologie.forEach(function(item) {
 				let option = $('<option></option>').attr("value", item).text(item);
 				$('#tipologia').append(option);
 			});
@@ -37,7 +36,7 @@ function loadTipologie() {
 
 			loadTipologiaIn();
 		},
-		error: showError
+		error: handleError
 	});
 }
 
@@ -50,7 +49,7 @@ function loadTipologiaIn() {
 	}
 
 	$.ajax({
-		url: "categoria",
+		url: contextPath + "/categoria",
 		type: "GET",
 		data: {
 			animale: animale,
@@ -61,14 +60,14 @@ function loadTipologiaIn() {
 			$("#tipologiaIn").empty();
 			$("#tipologiaIn").append('<option value="tutte">tutte</option>');
 
-			data.forEach(function(item) {
+			data.tipologie.forEach(function(item) {
 				let option = $('<option></option>').attr("value", item).text(item);
 				$("#tipologiaIn").append(option);
 			});
 
 			$('#tipologiaIn').val(tipologiaIn);
 		},
-		error: showError
+		error: handleError
 	});
 }
 
@@ -127,10 +126,9 @@ function eventiPaginazione() {
 	});
 }
 
-// Funzione per caricare i prodotti
 function loadProducts() {
 	$.ajax({
-		url: "prodotti",
+		url: contextPath + "/prodotti",
 		type: "GET",
 		data: {
 			page: page,
@@ -142,7 +140,7 @@ function loadProducts() {
 		},
 		dataType: "json",
 		success: populateProducts,
-		error: showError
+		error: handleError
 	});
 }
 
@@ -153,9 +151,9 @@ function populateProducts(response) {
 	response.prodotti.forEach(function(prodotto) {
 		let prodottoHTML = '<div class="grid-item">' +
 			'<img src="' + imgProdottiPath + prodotto.immagine + '" alt="Immagine del prodotto ' + prodotto.nome + '">' +
-			'<h2><a href="prodotto?id=' + prodotto.id + '">' + prodotto.nome + '</a></h2>' +
+			'<h2><a href="' + contextPath +  '/prodotto?id=' + prodotto.id + '">' + prodotto.nome + '</a></h2>' +
 			'<p>' + prodotto.prezzo + ' €</p>' +
-			'<button type="button" class="add-to-cart">Aggiungi al carrello</button>' +
+			'<button type="button" class="aggiungiAlCarrello" data-id= ' + prodotto.id + '>Aggiungi al carrello</button>' +
 			'</div>';
 
 		$("#productList").append(prodottoHTML);
@@ -163,40 +161,17 @@ function populateProducts(response) {
 	$('#paginaCorrente').html(page);
 	$('#ultimaPagina').html(numeroPagine);
 	window.scrollTo(0, 0);
-	carrello();
-}
-
-function carrello() {
-	$('.add-to-cart').click(function() {
-			let prodottoId = $(this).parent().find('a').attr('href').split('=')[1];
-			var quantita = 1;
-
-			$.ajax({
-				url: "carrello",
-				type: "POST",
-				data: {
-					id: prodottoId,
-					quantita: quantita,
-					mode: "increase"
-				},
-				success: function(response) {
-					showToast("Prodotto aggiunto al carrello");
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					alert("Eroror" + textStatus);
-				}
-			});
-		});
-}
-
-function showToast(message) {
-    let toast = document.getElementById("toast");
-    toast.className = "show";
-    toast.innerText = message;
-    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+	aggiungiAlCarrello();
 }
 
 
-function showError() {
-	console.log('Erroro recupero dati');
+function aggiungiAlCarrello() {
+    $('.aggiungiAlCarrello').click(function() {
+        let idProdotto = $(this).data('id');
+        let quantita = 1;
+        aggiornaCarrello('increase', idProdotto, quantita, function(response) {
+            showToast("Un Prodotto Aggiunto Al Carrello!", "#34c759");
+        });
+    });
 }
+

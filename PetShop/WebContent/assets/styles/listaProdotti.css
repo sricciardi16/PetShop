@@ -1,0 +1,81 @@
+@charset "ISO-8859-1";
+
+body{
+	font-family: sans-serif;
+	width: 100%;
+}
+
+#content{
+	width:100%;
+	margin-bottom: 2%;
+}
+
+#prodotti{
+	width:100%;
+}
+
+#prodotti h1{
+	margin-left: 1%;
+}
+
+#ordinaPer{
+	margin-left: 1%;
+}
+
+#prodotto {
+    visibility: hidden;
+    max-width: 200px;
+    height: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    margin-left: -100px;
+}
+
+#prodotto.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@media ( max-width : 768px) {
+	#content {
+		font-size: 10px;
+	}
+	#prodotto{
+		padding-bottom:20%;
+	}
+}
+
+@media ( min-width : 768px) and (max-width: 1023px) {
+	body {
+		font-size: 10px;
+	}
+}

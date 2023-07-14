@@ -1,29 +1,21 @@
 package it.petshop.control;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import it.petshop.dao.CategoriaDAO;
 import it.petshop.dao.ProdottoDAO;
 import it.petshop.model.Categoria;
 import it.petshop.model.Prodotto;
-
-import it.petshop.utility.*;
+import it.petshop.utility.DataHelper;
+import it.petshop.utility.PetShopException;
+import it.petshop.utility.Util;
 
 public class ProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,16 +31,15 @@ public class ProdottiServlet extends HttpServlet {
 		prodottoDao = new ProdottoDAO(dataSource);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		if (!Util.isAjaxRequest(request))
+			request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
+		
 		int page = Optional.ofNullable(request.getParameter("page")).map(Integer::parseInt).orElse(1);
 		String animale = request.getParameter("animale");
-		if (animale == null) {
-			request.setAttribute("errorMessage", "error");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
+		if (animale == null)
+			throw new PetShopException("Errore Server");
 
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		String tipologiaIn = Optional.ofNullable(request.getParameter("tipologiaIn")).orElse("");
@@ -64,44 +55,15 @@ public class ProdottiServlet extends HttpServlet {
 		boolean asc = true;
 		if (direction.equals("desc"))
 			asc = false;
-		else if (!direction.equals("asc")) {
-			request.setAttribute("errorMessage", "error");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
+		else if (!direction.equals("asc"))
+			throw new PetShopException("Errore Server");
 
-		try {
-			List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1),
-					PRODOTTI_PER_PAGINA, orderBy, asc);
-			int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
-			request.setAttribute("prodotti", prodotti);
-			request.setAttribute("numeroPagine", numeroPagine);
-			System.out.println("prodotti " + prodotti);
+		List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1), PRODOTTI_PER_PAGINA, orderBy, asc);
+		int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
+		DataHelper data = new DataHelper();
+		data.add("prodotti", prodotti);
+		data.add("numeroPagine", numeroPagine);
+		data.sendAsJSON(response);
 
-			if (Util.isAjaxRequest(request)) {
-				Map<String, Object> resultMap = new HashMap<>();
-				resultMap.put("prodotti", prodotti);
-				resultMap.put("numeroPagine", numeroPagine);
-
-				Gson gson = new GsonBuilder().create();
-				String json = gson.toJson(resultMap);
-
-				response.setContentType("application/json");
-				response.getWriter().write(json);
-			} else {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/customer/lista-prodotti.jsp");
-				dispatcher.forward(request, response);
-			}
-
-		} catch (SQLException e) {
-			request.setAttribute("errorMessage", e.getMessage());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
 	}
 }

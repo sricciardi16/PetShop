@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import it.petshop.utility.PetShopException;
 import it.petshop.model.Categoria;
 import it.petshop.model.Prodotto;
 
@@ -22,12 +23,10 @@ public class ProdottoDAO implements DAO<Prodotto> {
 	}
 
 	@Override
-	public synchronized void create(Prodotto prodotto) throws SQLException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME
-				+ " (id, nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public synchronized void create(Prodotto prodotto) throws PetShopException {
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setInt(1, prodotto.getId());
 			preparedStatement.setString(2, prodotto.getNome());
 			preparedStatement.setString(3, prodotto.getDescrizione());
@@ -37,25 +36,28 @@ public class ProdottoDAO implements DAO<Prodotto> {
 			preparedStatement.setInt(7, prodotto.getIdCategoria());
 
 			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 	}
 
 	@Override
-	public synchronized boolean delete(int id) throws SQLException {
+	public synchronized boolean delete(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return result != 0;
 	}
 
 	@Override
-	public synchronized List<Prodotto> retrieveAll(String order) throws SQLException {
+	public synchronized List<Prodotto> retrieveAll(String order) throws PetShopException {
 		List<Prodotto> prodotti = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM " + TABLE_NAME;
@@ -64,9 +66,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 			selectSQL += " ORDER BY " + order;
 		}
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-				ResultSet rs = preparedStatement.executeQuery()) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
 
 			while (rs.next()) {
 				Prodotto bean = new Prodotto();
@@ -80,22 +80,23 @@ public class ProdottoDAO implements DAO<Prodotto> {
 
 				prodotti.add(bean);
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return prodotti;
 	}
 
-	public synchronized List<Prodotto> retrieveAll() throws SQLException {
+	public synchronized List<Prodotto> retrieveAll() throws PetShopException {
 		return retrieveAll("");
 	}
 
 	@Override
-	public synchronized Prodotto retrieveByKey(int id) throws SQLException {
+	public synchronized Prodotto retrieveByKey(int id) throws PetShopException {
 		Prodotto bean = new Prodotto();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -109,16 +110,17 @@ public class ProdottoDAO implements DAO<Prodotto> {
 					bean.setIdCategoria(rs.getInt("id_categoria"));
 				}
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return bean;
 	}
 
-	public synchronized List<Prodotto> retrieve(Categoria categoria, int offset, int limit, String order, boolean asc)
-			throws SQLException {
+	public synchronized List<Prodotto> retrieve(Categoria categoria, int offset, int limit, String order, boolean asc) throws PetShopException {
 		List<Prodotto> prodotti = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
+		String selectSQL = "SELECT * FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ? AND prodotto.in_magazzino != 0 ";
 
 		if (!categoria.getTipologia().isBlank())
 			selectSQL += " AND tipologia = ?";
@@ -134,8 +136,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 
 		selectSQL += " LIMIT ? OFFSET ?";
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			int index = 1;
 			preparedStatement.setString(index++, categoria.getAnimale());
@@ -150,7 +151,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 			preparedStatement.setInt(index++, offset);
 
 			try (ResultSet rs = preparedStatement.executeQuery()) {
-				
+
 				while (rs.next()) {
 					Prodotto bean = new Prodotto();
 					bean.setId(rs.getInt("id"));
@@ -162,55 +163,69 @@ public class ProdottoDAO implements DAO<Prodotto> {
 					bean.setIdCategoria(rs.getInt("id_categoria"));
 
 					prodotti.add(bean);
-					
+
 				}
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return prodotti;
 	}
 
-	public synchronized int numeroPagine(Categoria categoria, int limit) throws SQLException {
-	    int result = 0;
-	    
-	    String countSQL = "SELECT COUNT(*) AS count FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
-	    if (!categoria.getTipologia().isBlank())
-	        countSQL += " AND tipologia = ?";
+	public synchronized int numeroPagine(Categoria categoria, int limit) throws PetShopException {
+		int result = 0;
 
-	    if (!categoria.getTipologiaIn().isBlank())
-	        countSQL += " AND tipologia_in = ?";
+		String countSQL = "SELECT COUNT(*) AS count FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
+		if (!categoria.getTipologia().isBlank())
+			countSQL += " AND tipologia = ?";
 
-	    try (Connection connection = dataSource.getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement(countSQL)) {
+		if (!categoria.getTipologiaIn().isBlank())
+			countSQL += " AND tipologia_in = ?";
 
-	        int index = 1;
-	        preparedStatement.setString(index++, categoria.getAnimale());
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(countSQL)) {
 
-	        if (!categoria.getTipologia().isBlank())
-	            preparedStatement.setString(index++, categoria.getTipologia());
+			int index = 1;
+			preparedStatement.setString(index++, categoria.getAnimale());
 
-	        if (!categoria.getTipologiaIn().isBlank())
-	            preparedStatement.setString(index++, categoria.getTipologiaIn());
+			if (!categoria.getTipologia().isBlank())
+				preparedStatement.setString(index++, categoria.getTipologia());
 
-	        try (ResultSet rs = preparedStatement.executeQuery()) {
-	            while (rs.next()) {
-	                int count = rs.getInt("count");
-	                result = count / limit;
+			if (!categoria.getTipologiaIn().isBlank())
+				preparedStatement.setString(index++, categoria.getTipologiaIn());
 
-	                if (count % limit != 0) {
-	                    result++;
-	                }
-	            }
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					int count = rs.getInt("count");
+					result = count / limit;
+
+					if (count % limit != 0) {
+						result++;
+					}
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
+		}
+
+		return result;
+	}
+	
+	public synchronized void updateInMagazzino(int idProdotto, int quantita) throws PetShopException {
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET in_magazzino = in_magazzino - ? WHERE id = ?";
+
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+	        preparedStatement.setInt(1, quantita);
+	        preparedStatement.setInt(2, idProdotto);
+	        
+	        int rowsUpdated = preparedStatement.executeUpdate();
+	        if (rowsUpdated == 0) {
+	            throw new PetShopException("Nessun prodotto trovato con l'ID specificato.");
 	        }
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore Server", e);
 	    }
-
-	    return result;
 	}
 
-	
+
 }
-
-
-
-
-
