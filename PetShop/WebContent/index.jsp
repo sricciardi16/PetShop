@@ -3,20 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>PetShop Home</title>
-    <!-- <link rel="stylesheet" type="text/css" href="assets/styles/main.css"> -->
+<meta charset="UTF-8">
+<title>PetShop Home</title>
+<!-- <link rel="stylesheet" type="text/css" href="assets/styles/main.css"> -->
 </head>
 <body>
-   <jsp:include page="WEB-INF/views/fragments/header.jsp"/>
+	<jsp:include page="WEB-INF/views/fragments/header.jsp" />
 
-    <div id="content">
-        <h1>Ciao PetShop!</h1>
-        
-        <p>La soluzione completa per tutte le esigenze del tuo animale domestico</p>
-        
-    </div>
+	<div id="content">
+		<h1>Ciao PetShop!</h1>
 
-   <jsp:include page="WEB-INF/views/fragments/footer.jsp" flush="true"/>
+		<p>La soluzione completa per tutte le esigenze del tuo animale domestico</p>
+		
+
+	</div>
+	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />
+	<jsp:include page="WEB-INF/views/fragments/toast.jsp" />	
 </body>
 </html>

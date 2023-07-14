@@ -1,27 +1,21 @@
 package it.petshop.control;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import it.petshop.dao.CategoriaDAO;
 import it.petshop.model.Categoria;
-
-/**
- * Servlet implementation class CategoriaServlet
- */
+import it.petshop.utility.DataHelper;
+import it.petshop.utility.PetShopException;
 
 public class CategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,57 +27,23 @@ public class CategoriaServlet extends HttpServlet {
 	public void init() throws ServletException {
 		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		categoriaDao = new CategoriaDAO(dataSource);
-
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String animale = request.getParameter("animale");
-		if (animale == null) {
-			request.setAttribute("errorMessage", "error");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
+		if (animale == null)
+			throw new PetShopException("Errore Server");
 
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
 
-		try {
+		List<Categoria> categorie = categoriaDao.retrieve(categoria);
 
-			List<Categoria> categorie = categoriaDao.retrieve(categoria);
-
-			System.out.println(animale + tipologia);
-			Gson gson = new GsonBuilder().create();
-
-			String json = gson.toJson(
-					categorie.stream().map(tipologia.isBlank() ? Categoria::getTipologia : Categoria::getTipologiaIn)
-							.collect(Collectors.toSet()));
-			System.out.println("aio" + json);
-			response.setContentType("application/json");
-
-			response.getWriter().write(json);
-
-		} catch (SQLException e) {
-			request.setAttribute("errorMessage", e.getMessage());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
+		DataHelper data = new DataHelper();
+		Set<String> tipologie = categorie.stream().map(tipologia.isBlank() ? Categoria::getTipologia : Categoria::getTipologiaIn).collect(Collectors.toSet());
+		data.add("tipologie", tipologie);
+		data.sendAsJSON(response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

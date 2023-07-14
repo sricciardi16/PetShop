@@ -19,7 +19,7 @@
 	position: fixed;
 	z-index: 1;
 	left: 50%;
-	top: -100px; /* Impostato per essere fuori dallo schermo */
+	top: -100px;
 	font-size: 17px;
 	margin-left: -125px;
 	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
@@ -35,41 +35,38 @@
 }
 </style>
 <script>
-function showToast(message, color) {
-    let toast = $(".toast");
-    toast.text(message);
-    toast.addClass("show");
-    toast.css("background-color", color); 
-    
-    setTimeout(function(){ 
-        toast.removeClass("show");
-    }, 3000);
-}
+	function showToast(message, color) {
+		let toast = document.querySelector(".toast");
+		toast.textContent = message;
+		toast.classList.add("show");
+		toast.style.backgroundColor = color;
+
+		setTimeout(function() {
+			toast.classList.remove("show");
+		}, 3000);
+	}
 </script>
-<script
-	src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
 </head>
 <body>
 	<div class="toast"></div>
 	<c:choose>
 		<c:when test="${status eq 'success'}">
 			<script>
-            showToast("${message}", "#34c759");
-        </script>
+				showToast("${message}", "#34c759");
+			</script>
 		</c:when>
 		<c:when test="${status eq 'error'}">
 			<script>
-            showToast("${message}", "#ff3b30");
-        </script>
+				showToast("${message}", "#ff3b30");
+			</script>
 		</c:when>
 		<c:otherwise>
 			<c:if test="${not empty message}">
 				<script>
-                showToast("${message}", "#007bff");
-            </script>
+					showToast("${message}", "#007bff");
+				</script>
 			</c:if>
 		</c:otherwise>
 	</c:choose>
-
 </body>
 </html>
