@@ -14,7 +14,10 @@
 		<h1>Ciao PetShop!</h1>
 
 		<p>La soluzione completa per tutte le esigenze del tuo animale domestico</p>
-		
+		<a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a> 
+		<a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a> 
+		<a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a> 
+		<a href="${pageContext.request.contextPath}/logout">Logout</a>
 
 	</div>
 	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />

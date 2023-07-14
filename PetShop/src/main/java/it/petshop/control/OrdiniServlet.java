@@ -11,13 +11,14 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.OrdineDAO;
-import it.petshop.model.Elemento;
+import it.petshop.model.Indirizzo;
 import it.petshop.model.Ordine;
 import it.petshop.model.Utente;
 import it.petshop.utility.PetShopException;
 
-public class OrdineServlet extends HttpServlet {
+public class OrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	private DataSource dataSource;
 	private OrdineDAO ordineDao;
 
@@ -28,22 +29,15 @@ public class OrdineServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		HttpSession session = request.getSession(false);
 		Utente utente = (Utente) session.getAttribute("utente");
-		int idOrdine = Integer.parseInt(request.getParameter("id"));
-		Ordine ordine = ordineDao.retrieveByKey(idOrdine);
-		
-		if (!ordineDao.retrieveByUtente(utente).contains(ordine))
-			throw new PetShopException("Errore Server: Accesso non consentito");
-		
-		List<Elemento> elementi = ordineDao.getElementiOrdine(idOrdine);
-		request.setAttribute("elementi", elementi);
-		request.setAttribute("numeroProdotti", elementi.stream().mapToInt(Elemento::getQuantita).sum());
-		request.setAttribute("totaleOrdine", ordine.getPrezzo());
-		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/ordine.jsp").forward(request, response);
+		List<Ordine> ordini = ordineDao.retrieveByUtente(utente);
+		request.setAttribute("ordini", ordini);
+		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/ordini.jsp").forward(request, response);
 
 	}
 
-	
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
 }
