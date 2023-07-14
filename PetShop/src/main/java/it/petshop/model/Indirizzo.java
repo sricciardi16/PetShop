@@ -7,6 +7,7 @@ public class Indirizzo implements Serializable {
 	private static final long serialVersionUID = -7413258288344222169L;
 
 	private int id;
+	private String alias;
 	private String via;
 	private String numero;
 	private String citta;
@@ -23,6 +24,14 @@ public class Indirizzo implements Serializable {
 		this.id = id;
 	}
 
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
 	public String getVia() {
 		return via;
 	}
