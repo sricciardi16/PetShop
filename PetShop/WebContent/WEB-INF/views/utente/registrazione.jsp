@@ -3,6 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/registrazione.css">
+<script src="${pageContext.request.contextPath}/assets/script/common/validateForm.js"></script>
 <title>Registrazione Utente</title>
 </head>
 <body>
@@ -48,7 +49,7 @@
 					<label>Password:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="password" id="password" placeholder="Inserisci Password">
+					<input class="field" type="password" name="password" id="password" placeholder="Inserisci Password">
 				</div>
 			</div>
 			<div class="input">

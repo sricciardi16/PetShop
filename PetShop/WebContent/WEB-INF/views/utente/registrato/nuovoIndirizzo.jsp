@@ -5,6 +5,7 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/nuovoIndirizzo.css">
+<script src="${pageContext.request.contextPath}/assets/script/common/validateForm.js"></script>
 <title>Nuovo indirizzo</title>
 </head>
 <body>
