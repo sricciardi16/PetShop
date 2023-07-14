@@ -48,7 +48,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 			Function<Prodotto, Categoria> getCategoria = p -> {
 				try {
 					return categoriaDao.retrieveByKey(p.getIdCategoria());
-				} catch (SQLException e) {
+				} catch (Exception e) {
 
 				}
 				return null;
@@ -59,7 +59,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 
 			request.setAttribute("prodottiConCategoria", prodottiConCategoria);
 			request.getRequestDispatcher("/WEB-INF/views/amministratore/prodotti.jsp").forward(request, response);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
