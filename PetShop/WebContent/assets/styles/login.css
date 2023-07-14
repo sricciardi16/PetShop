@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+body {
+	background-color: white;
+	width: 100%;
+}
+
+h1 {
+	text-align: center;
+	font-size: 40px;
+	color: black;
+	padding: 2%;
+	margin-top: 2%;
+	margin-left: 2%;
+}
+
+#content {
+	text-align: center;
+	width: 100%;
+	min-width: 380px;
+	margin-bottom: 5%;
+}
+
+.credenziali {
+	background: #FA9D12;
+	border: solid;
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	display: inline-block;
+	padding: 2%;
+	border-radius: 10px;
+}
+
+.credenziali label{
+	font-weight: bold;
+}
+
+.credenziali input{
+	font-size: medium;
+	border-radius: 5px;
+	
+}
+
+.form {
+	line-height: 3em;
+}
+
+.button{
+	padding: 3%;
+	background: #333;
+	font-size: 15px;
+	border: solid;
+	color: white;
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  .credenziali {
+    padding: 1%;
+    font-size: 14px;
+  }
+
+  .button {
+    padding: 2%;
+    font-size: 12px;
+  }
+
+  span {
+    margin-left: 5%;
+  }
+}
