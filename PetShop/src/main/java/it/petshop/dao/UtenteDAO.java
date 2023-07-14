@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import it.petshop.utility.PetShopException;
 import it.petshop.model.Utente;
 
 public class UtenteDAO implements DAO<Utente> {
@@ -21,11 +22,10 @@ public class UtenteDAO implements DAO<Utente> {
 	}
 
 	@Override
-	public synchronized void create(Utente utente) throws SQLException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME
-				+ " (id, nome_utente, password, nome, cognome, email, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public synchronized void create(Utente utente) throws PetShopException {
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome_utente, password, nome, cognome, email, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		try (Connection connection = dataSource.getConnection();
+		try (Connection connection = dataSource.getConnection(); 
 				PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setInt(1, utente.getId());
 			preparedStatement.setString(2, utente.getNomeUtente());
@@ -36,25 +36,29 @@ public class UtenteDAO implements DAO<Utente> {
 			preparedStatement.setString(7, utente.getTelefono());
 
 			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante la creazione dell'utente", e);
 		}
 	}
 
 	@Override
-	public synchronized boolean delete(int id) throws SQLException {
+	public synchronized boolean delete(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-		try (Connection connection = dataSource.getConnection();
+		try (Connection connection = dataSource.getConnection(); 
 				PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return result != 0;
 	}
 
 	@Override
-	public synchronized List<Utente> retrieveAll(String order) throws SQLException {
+	public synchronized List<Utente> retrieveAll(String order) throws PetShopException {
 		List<Utente> utenti = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM " + TABLE_NAME;
@@ -63,9 +67,7 @@ public class UtenteDAO implements DAO<Utente> {
 			selectSQL += " ORDER BY " + order;
 		}
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-				ResultSet rs = preparedStatement.executeQuery()) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
 
 			while (rs.next()) {
 				Utente bean = new Utente();
@@ -80,22 +82,23 @@ public class UtenteDAO implements DAO<Utente> {
 
 				utenti.add(bean);
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return utenti;
 	}
 
-	public synchronized List<Utente> retrieveAll() throws SQLException {
+	public synchronized List<Utente> retrieveAll() throws PetShopException {
 		return retrieveAll("");
 	}
 
 	@Override
-	public synchronized Utente retrieveByKey(int id) throws SQLException {
+	public synchronized Utente retrieveByKey(int id) throws PetShopException {
 		Utente bean = new Utente();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
-		try (Connection connection = dataSource.getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -110,20 +113,49 @@ public class UtenteDAO implements DAO<Utente> {
 					bean.setTelefono(rs.getString("telefono"));
 				}
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return bean;
 	}
+
+	public boolean exists(String username, String password) throws PetShopException {
+		String query = "SELECT * FROM utente WHERE nome_utente = ? AND password = ?";
+		try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
+		}
+	}
 	
-	public boolean exits(String username, String password) throws SQLException {
-        String query = "SELECT*FROM utente WHERE nome_utente = ? AND password = ?";
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            return rs.next();
-        }
-    }
+	public synchronized Utente retrieveByNomeUtente(String nomeUtente) throws PetShopException {
+		Utente bean = new Utente();
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+			preparedStatement.setString(1, nomeUtente);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					bean.setId(rs.getInt("id"));
+					bean.setNomeUtente(rs.getString("nome_utente"));
+					bean.setPassword(rs.getString("password"));
+					bean.setNome(rs.getString("nome"));
+					bean.setCognome(rs.getString("cognome"));
+					bean.setDataRegistrazione(rs.getTimestamp("data_registrazione"));
+					bean.setEmail(rs.getString("email"));
+					bean.setTelefono(rs.getString("telefono"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
+		}
+
+		return bean;
+	}
 
 }

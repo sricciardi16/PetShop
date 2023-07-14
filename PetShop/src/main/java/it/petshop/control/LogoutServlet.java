@@ -13,38 +13,19 @@ import javax.sql.DataSource;
 
 import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
+import it.petshop.utility.DataHelper;
 
-/**
- * Servlet implementation class LogoutServlet
- */
 
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		String nomeUtente = (String) session.getAttribute("nomeUtente");
-		String role = (String) session.getAttribute("role");
-		
-		if (nomeUtente != null && role != null) {
-			session.invalidate();
-			response.sendRedirect("index.jsp"); 
-		} else {
-			request.setAttribute("errorMessage", "non sei loggato");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/error.jsp");
-			dispatcher.forward(request, response);
-		}
-		
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		request.getSession(false).invalidate();
+		DataHelper data = new DataHelper();
+		data.add("status", "success");
+		data.add("message", "Logout effettuato");
+		data.setAsRequestAttribute(request);
+		request.getRequestDispatcher("").forward(request, response);
 	}
 
 }

@@ -6,36 +6,47 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
-/**
- * Servlet implementation class RegistrazioneServlet
- */
-@WebServlet("/RegistrazioneServlet")
+import it.petshop.dao.AmministratoreDAO;
+import it.petshop.dao.UtenteDAO;
+import it.petshop.model.Utente;
+
 public class RegistrazioneServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistrazioneServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	private DataSource dataSource;
+	private UtenteDAO utenteDao;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	@Override
+	public void init() throws ServletException {
+		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		utenteDao = new UtenteDAO(dataSource);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/WEB-INF/views/utente/registrazione.jsp").forward(request, response);
+
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//Aggiugnere verifica nomeutente univoco
+		String nome = request.getParameter("nome");
+		String cognome = request.getParameter("cognome");
+		String email = request.getParameter("email");
+		String nomeUtente = request.getParameter("nomeUtente");
+		String password = request.getParameter("password");
+		String telefono = request.getParameter("telefono");
+
+		Utente utente = new Utente();
+		utente.setNome(nome);
+		utente.setCognome(cognome);
+		utente.setEmail(email);
+		utente.setNomeUtente(nomeUtente);
+		utente.setPassword(password);
+		utente.setTelefono(telefono);
+
+		utenteDao.create(utente);
+		response.sendRedirect("/");
+		// continuare qualcosa per vedere se andato a buon fine e redirect
 	}
 
 }
