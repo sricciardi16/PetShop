@@ -23,7 +23,7 @@ public class MainContext implements ServletContextListener {
 			dataSource = (DataSource) envCtx.lookup("jdbc/petshop");
 
 		} catch (NamingException e) {
-			System.out.println("Error:" + e.getMessage());
+			throw new PetShopException("Errore database", e);
 		}
 
 		context.setAttribute("DataSource", dataSource);

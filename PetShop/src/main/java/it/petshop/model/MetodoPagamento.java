@@ -1,6 +1,7 @@
 package it.petshop.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class MetodoPagamento implements Serializable {
 
@@ -8,9 +9,6 @@ public class MetodoPagamento implements Serializable {
 
 	private int id;
 	private String tipo;
-	private String token;
-	private String dettagliVisualizzazione;
-	private int idUtente;
 
 	public int getId() {
 		return id;
@@ -28,28 +26,17 @@ public class MetodoPagamento implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public String getToken() {
-		return token;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		MetodoPagamento that = (MetodoPagamento) o;
+		return id == that.id &&
+				Objects.equals(tipo, that.tipo);
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, tipo);
 	}
-
-	public String getDettagliVisualizzazione() {
-		return dettagliVisualizzazione;
-	}
-
-	public void setDettagliVisualizzazione(String dettagliVisualizzazione) {
-		this.dettagliVisualizzazione = dettagliVisualizzazione;
-	}
-
-	public int getIdUtente() {
-		return idUtente;
-	}
-
-	public void setIdUtente(int idUtente) {
-		this.idUtente = idUtente;
-	}
-
 }

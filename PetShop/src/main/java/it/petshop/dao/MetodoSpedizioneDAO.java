@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import it.petshop.utility.PetShopException;
 import it.petshop.model.MetodoSpedizione;
 
 public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
@@ -21,7 +22,7 @@ public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
 	}
 
 	@Override
-	public synchronized void create(MetodoSpedizione metodoSpedizione) throws SQLException {
+	public synchronized void create(MetodoSpedizione metodoSpedizione) throws PetShopException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME
 				+ " (id, descrizione, prezzo, giorni_consegna_previsti) VALUES (?, ?, ?, ?)";
 
@@ -33,11 +34,13 @@ public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
 			preparedStatement.setInt(4, metodoSpedizione.getGiorniConsegnaPrevisti());
 
 			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 	}
 
 	@Override
-	public synchronized boolean delete(int id) throws SQLException {
+	public synchronized boolean delete(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -45,13 +48,15 @@ public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
 				PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
 			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return result != 0;
 	}
 
 	@Override
-	public synchronized List<MetodoSpedizione> retrieveAll(String order) throws SQLException {
+	public synchronized List<MetodoSpedizione> retrieveAll(String order) throws PetShopException {
 		List<MetodoSpedizione> metodiSpedizione = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM " + TABLE_NAME;
@@ -73,17 +78,19 @@ public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
 
 				metodiSpedizione.add(bean);
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return metodiSpedizione;
 	}
 
-	public synchronized List<MetodoSpedizione> retrieveAll() throws SQLException {
+	public synchronized List<MetodoSpedizione> retrieveAll() throws PetShopException {
 		return retrieveAll("");
 	}
 
 	@Override
-	public synchronized MetodoSpedizione retrieveByKey(int id) throws SQLException {
+	public synchronized MetodoSpedizione retrieveByKey(int id) throws PetShopException {
 		MetodoSpedizione bean = new MetodoSpedizione();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -99,6 +106,8 @@ public class MetodoSpedizioneDAO implements DAO<MetodoSpedizione> {
 					bean.setGiorniConsegnaPrevisti(rs.getInt("giorni_consegna_previsti"));
 				}
 			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore Server", e);
 		}
 
 		return bean;
