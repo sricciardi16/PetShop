@@ -20,7 +20,7 @@
 				<span>${indirizzo.codicePostale} ${indirizzo.citta}</span><br> 
 				<span>${indirizzo.provincia}</span><br> 
 				<span>${indirizzo.paese}</span><br>
-				<form method="POST" action="user/indirizzi/delete">
+				<form method="POST" action="${pageContext.request.contextPath}/user/indirizzi/delete">
 					<input type="hidden" name="id" value="${indirizzo.id}">
 					<button type="submit" class="button">Elimina</button>
 				</form>
