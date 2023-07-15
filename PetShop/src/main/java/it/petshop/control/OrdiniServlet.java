@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.OrdineDAO;
-import it.petshop.model.Indirizzo;
-import it.petshop.model.Ordine;
-import it.petshop.model.Utente;
+import it.petshop.dto.Indirizzo;
+import it.petshop.dto.Ordine;
+import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
 public class OrdiniServlet extends HttpServlet {

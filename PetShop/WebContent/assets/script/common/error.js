@@ -1,3 +1,5 @@
 function handleError(jqXHR, textStatus, errorThrown) {
-	showToast("Errore Server", "#ff3a30");
+    let statusCode = jqXHR.status;
+    let errorObj = JSON.parse(jqXHR.responseText);
+    showToast("Errore " + statusCode + ": " + errorObj.message, "#ff3a30");
 }

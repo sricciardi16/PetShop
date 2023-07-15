@@ -8,9 +8,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import it.petshop.model.Indirizzo;
+import it.petshop.dto.Indirizzo;
+import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
-import it.petshop.model.Utente;
 
 public class IndirizzoDAO implements DAO<Indirizzo> {
 
@@ -40,7 +40,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
         	 System.out.println(e.getMessage());
-            throw new PetShopException("Errore durante la creazione dell'indirizzo", e);
+            throw new PetShopException("Errore durante la creazione dell'indirizzo", 500, e);
         }
     }
 
@@ -54,7 +54,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
             preparedStatement.setInt(1, id);
             result = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante l'eliminazione dell'indirizzo", e);
+            throw new PetShopException("Errore durante l'eliminazione dell'indirizzo", 500, e);
         }
 
         return result != 0;
@@ -89,7 +89,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
                 indirizzi.add(bean);
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero degli indirizzi", e);
+            throw new PetShopException("Errore durante il recupero degli indirizzi", 500, e);
         }
 
         return indirizzi;
@@ -122,7 +122,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
                 }
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero dell'indirizzo", e);
+            throw new PetShopException("Errore durante il recupero dell'indirizzo", 500, e);
         }
 
         return bean;
@@ -155,7 +155,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
                 }
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero degli indirizzi dell'utente", e);
+            throw new PetShopException("Errore durante il recupero degli indirizzi dell'utente", 500, e);
         }
 
         return indirizzi;

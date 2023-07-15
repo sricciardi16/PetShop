@@ -3,6 +3,7 @@ package it.petshop.control;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.apache.catalina.connector.Response;
+
 import it.petshop.dao.ProdottoDAO;
-import it.petshop.model.Categoria;
-import it.petshop.model.Prodotto;
+import it.petshop.dto.Categoria;
+import it.petshop.dto.Prodotto;
 import it.petshop.utility.DataHelper;
+import it.petshop.utility.Param;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 
@@ -33,33 +37,33 @@ public class ProdottiServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (!Util.isAjaxRequest(request))
-			request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
-		
 		int page = Optional.ofNullable(request.getParameter("page")).map(Integer::parseInt).orElse(1);
 		String animale = request.getParameter("animale");
-		if (animale == null)
-			throw new PetShopException("Errore Server");
-
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		String tipologiaIn = Optional.ofNullable(request.getParameter("tipologiaIn")).orElse("");
 		String orderBy = Optional.ofNullable(request.getParameter("order")).orElse("in_magazzino");
 		String direction = Optional.ofNullable(request.getParameter("direction")).orElse("asc");
 
-		Categoria categoria = new Categoria();
+		if (!Param.isValid(animale, "cane", "gatto") || !Param.isValid(direction, "asc", "desc"))
+			throw new PetShopException("Parametri Errati nella Richiesta dei Prodotti", 404);
 
+		if (!Util.isAjaxRequest(request)) {
+			request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
+			return;
+		}
+		
+		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
 		categoria.setTipologiaIn(tipologiaIn);
 
-		boolean asc = true;
-		if (direction.equals("desc"))
-			asc = false;
-		else if (!direction.equals("asc"))
-			throw new PetShopException("Errore Server");
+		AtomicBoolean asc = new AtomicBoolean();
+		Param.doOnMatch(direction, new String[] { "desc", "asc", "", null }, p -> asc.set(false), p -> asc.set(true), p -> asc.set(true), p -> asc.set(true), p -> asc.set(true));
 
-		List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1), PRODOTTI_PER_PAGINA, orderBy, asc);
+		List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1), PRODOTTI_PER_PAGINA, orderBy, asc.get());
 		int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
+
+		
 		DataHelper data = new DataHelper();
 		data.add("prodotti", prodotti);
 		data.add("numeroPagine", numeroPagine);

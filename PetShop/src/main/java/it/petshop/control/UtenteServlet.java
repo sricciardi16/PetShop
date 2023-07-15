@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.UtenteDAO;
-import it.petshop.model.Utente;
+import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
 

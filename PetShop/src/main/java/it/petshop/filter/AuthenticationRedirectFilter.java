@@ -21,7 +21,7 @@ public class AuthenticationRedirectFilter extends HttpFilter {
             if (session.getAttribute("utente") != null) {
                 response.sendRedirect(request.getContextPath() + "/");
             } else if (session.getAttribute("amministratore") != null) {
-                response.sendRedirect("nceiojvncwiemacimer"); // amministratore
+                response.sendRedirect(request.getContextPath() + "/admin"); // amministratore
             }
         } else {
             chain.doFilter(request, response);

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.IndirizzoDAO;
-import it.petshop.model.Indirizzo;
-import it.petshop.model.Utente;
+import it.petshop.dto.Indirizzo;
+import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
 public class IndirizziServlet extends HttpServlet {
@@ -29,14 +29,14 @@ public class IndirizziServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getPathInfo() != null && !request.getPathInfo().equals("/new"))
-			throw new PetShopException("Errore Server");
+			throw new PetShopException("Percorso Errato", 404);
 
 		boolean create = request.getPathInfo() != null ? true : false;
 
 		if (create) {
 			String redirect = request.getParameter("redirect");
 			if (redirect != null && !redirect.equals("checkout"))
-				throw new PetShopException("Errore Server: Pagina Non Esistente");
+				throw new PetShopException("Errore Server: Pagina Non Esistente", 404);
 			redirect = redirect == null ? "user/indirizzi" : "user/checkout";
 			request.getSession(false).setAttribute("redirect", redirect);
 			request.getRequestDispatcher("/WEB-INF/views/utente/registrato/nuovoIndirizzo.jsp").forward(request, response);
@@ -80,7 +80,7 @@ public class IndirizziServlet extends HttpServlet {
 			indirizzoDao.delete(Integer.parseInt(request.getParameter("id")));
 			response.sendRedirect(request.getContextPath() + "/user/indirizzi");
 		} else {
-			throw new PetShopException("Errore Server");
+			throw new PetShopException("Errore Server", 500);
 		}
 	}
 }

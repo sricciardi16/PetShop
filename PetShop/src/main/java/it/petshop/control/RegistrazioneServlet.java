@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
-import it.petshop.model.Utente;
+import it.petshop.dto.Utente;
 
 public class RegistrazioneServlet extends HttpServlet {
 	private DataSource dataSource;

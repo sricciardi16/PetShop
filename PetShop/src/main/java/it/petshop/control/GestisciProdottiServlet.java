@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import it.petshop.model.Categoria;
-import it.petshop.model.Prodotto;
 import it.petshop.dao.CategoriaDAO;
 import it.petshop.dao.ProdottoDAO;
+import it.petshop.dto.Categoria;
+import it.petshop.dto.Prodotto;
 
 /**
  * Servlet implementation class GestisciProdotti

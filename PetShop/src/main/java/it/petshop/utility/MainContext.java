@@ -23,7 +23,7 @@ public class MainContext implements ServletContextListener {
 			dataSource = (DataSource) envCtx.lookup("jdbc/petshop");
 
 		} catch (NamingException e) {
-			throw new PetShopException("Errore database", e);
+			throw new PetShopException("Failed to initialize data source", 500, e);
 		}
 
 		context.setAttribute("DataSource", dataSource);

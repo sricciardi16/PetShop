@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.OrdineDAO;
-import it.petshop.model.Elemento;
-import it.petshop.model.Ordine;
-import it.petshop.model.Utente;
+import it.petshop.dto.Elemento;
+import it.petshop.dto.Ordine;
+import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
 public class OrdineServlet extends HttpServlet {
@@ -34,7 +34,7 @@ public class OrdineServlet extends HttpServlet {
 		Ordine ordine = ordineDao.retrieveByKey(idOrdine);
 		
 		if (!ordineDao.retrieveByUtente(utente).contains(ordine))
-			throw new PetShopException("Errore Server: Accesso non consentito");
+			throw new PetShopException("Errore Server: Accesso non consentito", 500);
 		
 		List<Elemento> elementi = ordineDao.getElementiOrdine(idOrdine);
 		request.setAttribute("elementi", elementi);

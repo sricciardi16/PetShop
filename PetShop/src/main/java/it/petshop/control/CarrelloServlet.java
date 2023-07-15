@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import com.google.gson.*;
 
 import it.petshop.dao.ProdottoDAO;
-import it.petshop.model.*;
+import it.petshop.dto.*;
 import it.petshop.utility.DataHelper;
 import it.petshop.utility.Util;;
 

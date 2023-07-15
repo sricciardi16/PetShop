@@ -29,13 +29,13 @@ import it.petshop.dao.MetodoPagamentoDAO;
 import it.petshop.dao.MetodoSpedizioneDAO;
 import it.petshop.dao.OrdineDAO;
 import it.petshop.dao.ProdottoDAO;
-import it.petshop.model.Elemento;
-import it.petshop.model.Indirizzo;
-import it.petshop.model.MetodoPagamento;
-import it.petshop.model.MetodoSpedizione;
-import it.petshop.model.Ordine;
-import it.petshop.model.Prodotto;
-import it.petshop.model.Utente;
+import it.petshop.dto.Elemento;
+import it.petshop.dto.Indirizzo;
+import it.petshop.dto.MetodoPagamento;
+import it.petshop.dto.MetodoSpedizione;
+import it.petshop.dto.Ordine;
+import it.petshop.dto.Prodotto;
+import it.petshop.dto.Utente;
 import it.petshop.utility.DataHelper;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
@@ -44,7 +44,6 @@ import it.petshop.utility.Util;
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
 	private DataSource dataSource;
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
@@ -166,7 +165,7 @@ public class CheckoutServlet extends HttpServlet {
 	    try {
 			Files.copy(origine, destinazione, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			throw new PetShopException("Errore I/O: impossibile salvere immagine", e);
+			throw new PetShopException("Errore I/O: impossibile salvere immagine", 500, e);
 		}
 	}
 

@@ -18,8 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import it.petshop.dao.ProdottoDAO;
-import it.petshop.model.Categoria;
-import it.petshop.model.Prodotto;
+import it.petshop.dto.Categoria;
+import it.petshop.dto.Prodotto;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 

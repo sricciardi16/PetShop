@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import it.petshop.model.Elemento;
+import it.petshop.dto.Elemento;
 import it.petshop.utility.PetShopException;
 
 public class ElementoDAO implements DAO<Elemento> {
@@ -39,7 +39,7 @@ public class ElementoDAO implements DAO<Elemento> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante la creazione dell'elemento", e);
+            throw new PetShopException("Errore durante la creazione dell'elemento", 500, e);
         }
     }
     
@@ -68,7 +68,7 @@ public class ElementoDAO implements DAO<Elemento> {
                 }
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante la creazione dell'elemento", e);
+            throw new PetShopException("Errore durante la creazione dell'elemento", 500, e);
         }
 
         return generatedId;
@@ -85,7 +85,7 @@ public class ElementoDAO implements DAO<Elemento> {
             preparedStatement.setInt(1, id);
             result = preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante l'eliminazione dell'elemento", e);
+            throw new PetShopException("Errore durante l'eliminazione dell'elemento", 500, e);
         }
 
         return result != 0;
@@ -119,7 +119,7 @@ public class ElementoDAO implements DAO<Elemento> {
                 elementi.add(bean);
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero degli elementi", e);
+            throw new PetShopException("Errore durante il recupero degli elementi", 500, e);
         }
 
         return elementi;
@@ -151,7 +151,7 @@ public class ElementoDAO implements DAO<Elemento> {
                 }
             }
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero dell'elemento", e);
+            throw new PetShopException("Errore durante il recupero dell'elemento", 500, e);
         }
 
         return bean;
@@ -167,10 +167,7 @@ public class ElementoDAO implements DAO<Elemento> {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new PetShopException("Errore durante l'impostazione dell'immagine", e);
+            throw new PetShopException("Errore durante l'impostazione dell'immagine", 500, e);
         }
     }
-
-    
-    
 }

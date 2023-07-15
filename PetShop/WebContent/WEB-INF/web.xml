@@ -22,20 +22,6 @@
 		<param-value>/assets/img/elementi/</param-value>
 	</context-param>
 
-	<error-page>
-		<location>/error</location>
-	</error-page>
-
-	<servlet>
-		<servlet-name>ErrorHandlerServlet</servlet-name>
-		<servlet-class>it.petshop.control.ErrorHandlerServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ErrorHandlerServlet</servlet-name>
-		<url-pattern>/error</url-pattern>
-	</servlet-mapping>
-
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>it.petshop.control.LoginServlet</servlet-class>
@@ -159,6 +145,27 @@
 		<url-pattern>/user/ordine</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AmministratoreServlet</servlet-name>
+		<servlet-class>it.petshop.control.AmministratoreServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AmministratoreServlet</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GestisciProdottiServlet</servlet-name>
+		<servlet-class>it.petshop.control.GestisciProdottiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GestisciProdottiServlet</servlet-name>
+		<url-pattern>/admin/prodotti</url-pattern>
+	</servlet-mapping>
+
+
 
 	<filter>
 		<filter-name>AuthenticationRedirectFilter</filter-name>
@@ -199,8 +206,18 @@
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>ErrorHandlerFilter</filter-name>
+		<filter-class>it.petshop.filter.ErrorHandlerFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ErrorHandlerFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
-
+	<error-page>
+		<location>/error.jsp</location>
+	</error-page>
 
 
 

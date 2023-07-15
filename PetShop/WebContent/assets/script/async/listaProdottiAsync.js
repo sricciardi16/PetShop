@@ -9,7 +9,7 @@ $(document).ready(function() {
 function first() {
 	let reqPar = new URLSearchParams(window.location.search);
 	page = reqPar.get("page") || 1;
-	animale = reqPar.get("animale");
+	animale = reqPar.get("animale") || null;
 	tipologia = reqPar.get("tipologia") || 'tutte';
 	tipologiaIn = reqPar.get("tipologiaIn") || 'tutte';
 	order = reqPar.get("order") || 'in_magazzino';

@@ -1,4 +1,4 @@
-package it.petshop.model;
+package it.petshop.dto;
 
 import java.io.Serializable;
 import java.util.Objects;

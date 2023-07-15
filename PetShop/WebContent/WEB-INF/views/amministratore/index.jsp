@@ -12,7 +12,7 @@
     </header>
     <nav>
         <ul>
-            <li><a href="gestisci-prodotti">Prodotti</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/prodotti">Prodotti</a></li>
             <li><a href=". . .">Spedizioni</a></li>
             <li><a href=". . . ">Ordini</a></li>
         </ul>
