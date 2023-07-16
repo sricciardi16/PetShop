@@ -50,7 +50,7 @@ public class CarrelloServlet extends HttpServlet {
 				element.getAsJsonObject().addProperty("quantita", quantita);
 				prodottiCarrello.add(element);
 			});
-			
+
 			data.add("prodottiCarrello", prodottiCarrello);
 			numeroProdottiCarrello = (int) session.getAttribute("numeroProdottiCarrello");
 			totaleCarrello = (double) session.getAttribute("totaleCarrello");
@@ -63,19 +63,19 @@ public class CarrelloServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+
 		DataHelper status = new DataHelper();
-		
+
 		Prodotto prodotto = prodottoDao.retrieveByKey(Integer.parseInt(request.getParameter("id")));
 		int quantita = Integer.parseInt(request.getParameter("quantita"));
 		String mode = request.getParameter("mode");
 		boolean increase = mode.equals("increase") ? true : false;
 
 		Map<Prodotto, Integer> prodotti = getProdottiCarrello(session);
-		
+
 		if (prodotti == null)
 			prodotti = new LinkedHashMap<>();
-			
+
 		int quantitaOld = prodotti.getOrDefault(prodotto, 0);
 
 		prodotti.merge(prodotto, quantita, increase ? (o, n) -> o + n : (o, n) -> n);
@@ -90,12 +90,11 @@ public class CarrelloServlet extends HttpServlet {
 		}
 
 		prodotti.values().removeIf(q -> q == 0);
-		
+
 		setCarrello(session, prodotti);
-		
+
 		status.add("status", "success");
 		status.sendAsJSON(response);
-		
 
 	}
 
@@ -111,11 +110,11 @@ public class CarrelloServlet extends HttpServlet {
 
 		return (Map<Prodotto, Integer>) prodottiObj;
 	}
-	
+
 	private void setCarrello(HttpSession session, Map<Prodotto, Integer> prodotti) {
 		int numeroProdottiCarrello = prodotti.values().stream().mapToInt(i -> i.intValue()).reduce(0, (q, r) -> q + r);
 		double totaleCarrello = prodotti.entrySet().stream().mapToDouble(c -> c.getKey().getPrezzo() * c.getValue()).reduce(0, (r, p) -> r + p);
-		
+
 		DataHelper sessionData = new DataHelper();
 		sessionData.add("prodottiCarrello", prodotti);
 		sessionData.add("numeroProdottiCarrello", numeroProdottiCarrello);

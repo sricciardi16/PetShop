@@ -31,7 +31,7 @@ public class Indirizzo implements Serializable {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	
+
 	public String getVia() {
 		return via;
 	}

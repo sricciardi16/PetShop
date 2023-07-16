@@ -1,6 +1,7 @@
 package it.petshop.control;
 
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("utente", utenteDao.retrieveByNomeUtente(nomeUtente));
 			data.add("status", "success");
 			data.add("message", "Ciao " + nomeUtente);
-			data.sendAsJSON(response);;
+			data.sendAsJSON(response);
 		} else if (isAmministratore) {
 			session.setAttribute("nomeUtente", nomeUtente);
 			session.setAttribute("amministratore", amministratoreDao.retrieveByNomeUtente(nomeUtente));
@@ -58,6 +59,5 @@ public class LoginServlet extends HttpServlet {
 			data.sendAsJSON(response);
 		}
 
-		
 	}
 }

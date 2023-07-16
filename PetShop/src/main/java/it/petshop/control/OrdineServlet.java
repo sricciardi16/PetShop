@@ -32,10 +32,10 @@ public class OrdineServlet extends HttpServlet {
 		Utente utente = (Utente) session.getAttribute("utente");
 		int idOrdine = Integer.parseInt(request.getParameter("id"));
 		Ordine ordine = ordineDao.retrieveByKey(idOrdine);
-		
+
 		if (!ordineDao.retrieveByUtente(utente).contains(ordine))
 			throw new PetShopException("Errore Server: Accesso non consentito", 500);
-		
+
 		List<Elemento> elementi = ordineDao.getElementiOrdine(idOrdine);
 		request.setAttribute("elementi", elementi);
 		request.setAttribute("numeroProdotti", elementi.stream().mapToInt(Elemento::getQuantita).sum());
@@ -43,7 +43,5 @@ public class OrdineServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/ordine.jsp").forward(request, response);
 
 	}
-
-	
 
 }

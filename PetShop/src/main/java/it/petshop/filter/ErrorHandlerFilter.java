@@ -19,23 +19,23 @@ import it.petshop.utility.Util;
 
 public class ErrorHandlerFilter extends HttpFilter {
 
-    @Override
-    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try {
-            chain.doFilter(request, response);
-        } catch (Exception exception) {
-        	int errorCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-            if (exception instanceof PetShopException)
-                errorCode = ((PetShopException)exception).getErrorCode();
-            if (Util.isAjaxRequest(request)) {
-            	response.setStatus(errorCode);
-            	DataHelper errorData = new DataHelper();
-            	errorData.add("message", exception.getMessage());
-            	errorData.sendAsJSON(response);
-            } else {
-            	response.sendError(errorCode, exception.getMessage());
-            }
-            return;
-        }
-    }
+	@Override
+	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+		try {
+			chain.doFilter(request, response);
+		} catch (Exception exception) {
+			int errorCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+			if (exception instanceof PetShopException)
+				errorCode = ((PetShopException) exception).getErrorCode();
+			if (Util.isAjaxRequest(request)) {
+				response.setStatus(errorCode);
+				DataHelper errorData = new DataHelper();
+				errorData.add("message", exception.getMessage());
+				errorData.sendAsJSON(response);
+			} else {
+				response.sendError(errorCode, exception.getMessage());
+			}
+			return;
+		}
+	}
 }

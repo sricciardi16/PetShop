@@ -40,10 +40,9 @@ import it.petshop.utility.DataHelper;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 
-
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private DataSource dataSource;
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
@@ -61,18 +60,18 @@ public class CheckoutServlet extends HttpServlet {
 		ordineDao = new OrdineDAO(dataSource);
 		elementoDao = new ElementoDAO(dataSource);
 		prodottoDao = new ProdottoDAO(dataSource);
-		
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession(false);
-		
+
 		if (Util.isAjaxRequest(request)) {
 			getTotaleJSon(response, session);
 			return;
 		}
-		
+
 		Utente utente = (Utente) session.getAttribute("utente");
 		List<Indirizzo> indirizzi = indirizzoDao.retrieveByUtente(utente);
 		List<MetodoSpedizione> metodiSpedizione = metodoSpedizioneDao.retrieveAll();
@@ -84,17 +83,17 @@ public class CheckoutServlet extends HttpServlet {
 		data.setAsRequestAttribute(request);
 		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/checkout.jsp").forward(request, response);
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		
+
 		if (Util.isAjaxRequest(request)) {
 			setTotale(request, session);
 			return;
 		}
-		
+
 		double prezzo = (double) session.getAttribute("totale");
-		int idUtente = ((Utente)session.getAttribute("utente")).getId();
+		int idUtente = ((Utente) session.getAttribute("utente")).getId();
 		String metodoPagamentoParam = request.getParameter("metodoPagamento");
 		int idMetodoPagamento;
 		if ((metodoPagamentoDao.retrieveByTipo("contanti").getId() + "").equals(metodoPagamentoParam)) {
@@ -106,7 +105,7 @@ public class CheckoutServlet extends HttpServlet {
 		}
 		int idIndirizzo = Integer.parseInt(request.getParameter("indirizzo"));
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("metodoSpedizione"));
-		
+
 		Ordine ordine = new Ordine();
 		ordine.setPrezzo(prezzo);
 		ordine.setIdUtente(idUtente);
@@ -114,15 +113,15 @@ public class CheckoutServlet extends HttpServlet {
 		ordine.setIdIndirizzo(idIndirizzo);
 		ordine.setIdMetodoSpedizione(idMetodoSpedizione);
 		int idOrdine = ordineDao.createAndGetId(ordine);
-		
+
 		Map<Prodotto, Integer> prodotti = (Map<Prodotto, Integer>) session.getAttribute("prodottiCarrello");
-		
+
 		prodotti.forEach((prodotto, quantita) -> {
 			Elemento elemento = new Elemento();
 			elemento.setNome(prodotto.getNome());
-		    elemento.setDescrizione(prodotto.getDescrizione());
-		    elemento.setPrezzo(prodotto.getPrezzo());
-		    elemento.setIdProdotto(prodotto.getId());
+			elemento.setDescrizione(prodotto.getDescrizione());
+			elemento.setPrezzo(prodotto.getPrezzo());
+			elemento.setIdProdotto(prodotto.getId());
 			elemento.setQuantita(quantita);
 			prodottoDao.updateInMagazzino(prodotto.getId(), quantita);
 			elemento.setIdOrdine(idOrdine);
@@ -131,7 +130,7 @@ public class CheckoutServlet extends HttpServlet {
 			salvaImmagine(prodotto.getImmagine(), nomeImmagine);
 			elementoDao.setImmagine(idElemento, nomeImmagine);
 		});
-		
+
 		session.removeAttribute("prodottiCarrello");
 		session.removeAttribute("numeroProdottiCarrello");
 		session.removeAttribute("totaleCarrello");
@@ -142,27 +141,25 @@ public class CheckoutServlet extends HttpServlet {
 		message.setAsRequestAttribute(request);
 		request.getRequestDispatcher("/").forward(request, response);
 	}
-	
-	
+
 	private void setTotale(HttpServletRequest request, HttpSession session) {
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("idMetodoSpedizione"));
 		double prezzoSpedizione = metodoSpedizioneDao.retrieveByKey(idMetodoSpedizione).getPrezzo();
 		double totaleParziale = (double) session.getAttribute("totaleCarrello");
 		session.setAttribute("totale", Math.round((prezzoSpedizione + totaleParziale) * 100.0) / 100.0);
 	}
-	
+
 	private void getTotaleJSon(HttpServletResponse response, HttpSession session) throws IOException {
 		DataHelper data = new DataHelper();
 		double totale = (double) session.getAttribute("totale");
 		data.add("totale", totale);
 		data.sendAsJSON(response);
 	}
-	
-	
+
 	private void salvaImmagine(String prodotto, String elemento) {
-	    Path origine = Path.of( getServletContext().getRealPath(getServletContext().getInitParameter("imgProdottiPath")), prodotto);
-	    Path destinazione = Path.of( getServletContext().getRealPath(getServletContext().getInitParameter("imgElementiPath")), elemento);
-	    try {
+		Path origine = Path.of(getServletContext().getRealPath(getServletContext().getInitParameter("imgProdottiPath")), prodotto);
+		Path destinazione = Path.of(getServletContext().getRealPath(getServletContext().getInitParameter("imgElementiPath")), elemento);
+		try {
 			Files.copy(origine, destinazione, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			throw new PetShopException("Errore I/O: impossibile salvere immagine", 500, e);

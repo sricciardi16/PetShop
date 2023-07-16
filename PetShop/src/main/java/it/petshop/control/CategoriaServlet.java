@@ -44,9 +44,7 @@ public class CategoriaServlet extends HttpServlet {
 		List<Categoria> categorie = categoriaDao.retrieve(categoria);
 
 		DataHelper data = new DataHelper();
-		Set<String> tipologie = categorie.stream()
-			    .map(tipologia.isBlank() ? Categoria::getTipologia : Categoria::getTipologiaIn)
-			    .collect(Collectors.toCollection(LinkedHashSet::new));
+		Set<String> tipologie = categorie.stream().map(tipologia.isBlank() ? Categoria::getTipologia : Categoria::getTipologiaIn).collect(Collectors.toCollection(LinkedHashSet::new));
 		data.add("tipologie", tipologie);
 		data.sendAsJSON(response);
 	}

@@ -16,18 +16,18 @@ public class AuthenticationRedirectFilter extends HttpFilter {
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
-		
+
 		if (session != null && session.getAttribute("nomeUtente") != null) {
-            if (session.getAttribute("utente") != null) {
-                response.sendRedirect(request.getContextPath() + "/");
-            } else if (session.getAttribute("amministratore") != null) {
-                response.sendRedirect(request.getContextPath() + "/admin"); // amministratore
-            }
-        } else {
-            chain.doFilter(request, response);
-        }
-		
-		
+			if (session.getAttribute("utente") != null) {
+				request.setAttribute("redirect", request.getContextPath() + "/");
+			} else if (session.getAttribute("amministratore") != null) {
+				request.setAttribute("redirect", request.getContextPath() + "/admin"); // amministratore
+			}
+
+		}
+
+		chain.doFilter(request, response);
+
 	}
 
 }

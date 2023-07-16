@@ -28,7 +28,7 @@ public class RegistrazioneServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Aggiugnere verifica nomeutente univoco
+		// Aggiugnere verifica nomeutente univoco
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");

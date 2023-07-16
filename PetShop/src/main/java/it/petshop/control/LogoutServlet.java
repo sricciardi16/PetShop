@@ -15,10 +15,9 @@ import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
 import it.petshop.utility.DataHelper;
 
-
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession(false).invalidate();
 		DataHelper data = new DataHelper();

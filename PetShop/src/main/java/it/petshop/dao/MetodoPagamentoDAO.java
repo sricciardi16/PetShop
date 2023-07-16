@@ -15,136 +15,128 @@ import it.petshop.utility.PetShopException;
 
 public class MetodoPagamentoDAO implements DAO<MetodoPagamento> {
 
-    private DataSource dataSource;
-    private static final String TABLE_NAME = "metodo_pagamento";
+	private DataSource dataSource;
+	private static final String TABLE_NAME = "metodo_pagamento";
 
-    public MetodoPagamentoDAO(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+	public MetodoPagamentoDAO(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
-    @Override
-    public synchronized void create(MetodoPagamento metodoPagamento) throws PetShopException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME
-                + " (tipo) VALUES (?)";
+	@Override
+	public synchronized void create(MetodoPagamento metodoPagamento) throws PetShopException {
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            preparedStatement.setString(1, metodoPagamento.getTipo());
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+			preparedStatement.setString(1, metodoPagamento.getTipo());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
-        }
-    }
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
+		}
+	}
 
-    public synchronized int createAndReturnId(MetodoPagamento metodoPagamento) throws PetShopException {
-        String insertSQL = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
-        int generatedId = -1;
+	public synchronized int createAndReturnId(MetodoPagamento metodoPagamento) throws PetShopException {
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
+		int generatedId = -1;
 
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, metodoPagamento.getTipo());
-            preparedStatement.executeUpdate();
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+			preparedStatement.setString(1, metodoPagamento.getTipo());
+			preparedStatement.executeUpdate();
 
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                generatedId = generatedKeys.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
-        }
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				generatedId = generatedKeys.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
+		}
 
-        return generatedId;
-    }
+		return generatedId;
+	}
 
-    @Override
-    public synchronized boolean delete(int id) throws PetShopException {
-        int result = 0;
-        String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+	@Override
+	public synchronized boolean delete(int id) throws PetShopException {
+		int result = 0;
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-            preparedStatement.setInt(1, id);
-            result = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante l'eliminazione del metodo di pagamento", 500, e);
-        }
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+			preparedStatement.setInt(1, id);
+			result = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante l'eliminazione del metodo di pagamento", 500, e);
+		}
 
-        return result != 0;
-    }
+		return result != 0;
+	}
 
-    @Override
-    public synchronized List<MetodoPagamento> retrieveAll(String order) throws PetShopException {
-        List<MetodoPagamento> metodiPagamento = new ArrayList<>();
+	@Override
+	public synchronized List<MetodoPagamento> retrieveAll(String order) throws PetShopException {
+		List<MetodoPagamento> metodiPagamento = new ArrayList<>();
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+		String selectSQL = "SELECT * FROM " + TABLE_NAME;
 
-        if (order != null && !order.equals("")) {
-            selectSQL += " ORDER BY " + order;
-        }
+		if (order != null && !order.equals("")) {
+			selectSQL += " ORDER BY " + order;
+		}
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-                ResultSet rs = preparedStatement.executeQuery()) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
 
-            while (rs.next()) {
-                MetodoPagamento bean = new MetodoPagamento();
-                bean.setId(rs.getInt("id"));
-                bean.setTipo(rs.getString("tipo"));
+			while (rs.next()) {
+				MetodoPagamento bean = new MetodoPagamento();
+				bean.setId(rs.getInt("id"));
+				bean.setTipo(rs.getString("tipo"));
 
-                metodiPagamento.add(bean);
-            }
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero dei metodi di pagamento", 500, e);
-        }
+				metodiPagamento.add(bean);
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero dei metodi di pagamento", 500, e);
+		}
 
-        return metodiPagamento;
-    }
+		return metodiPagamento;
+	}
 
-    public synchronized List<MetodoPagamento> retrieveAll() throws PetShopException {
-        return retrieveAll("");
-    }
+	public synchronized List<MetodoPagamento> retrieveAll() throws PetShopException {
+		return retrieveAll("");
+	}
 
-    @Override
-    public synchronized MetodoPagamento retrieveByKey(int id) throws PetShopException {
-        MetodoPagamento bean = new MetodoPagamento();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+	@Override
+	public synchronized MetodoPagamento retrieveByKey(int id) throws PetShopException {
+		MetodoPagamento bean = new MetodoPagamento();
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
-            preparedStatement.setInt(1, id);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                while (rs.next()) {
-                    bean.setId(rs.getInt("id"));
-                    bean.setTipo(rs.getString("tipo"));
-                }
-            }
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero del metodo di pagamento", 500, e);
-        }
+			preparedStatement.setInt(1, id);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					bean.setId(rs.getInt("id"));
+					bean.setTipo(rs.getString("tipo"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero del metodo di pagamento", 500, e);
+		}
 
-        return bean;
-    }
+		return bean;
+	}
 
-    public synchronized MetodoPagamento retrieveByTipo(String tipo) throws PetShopException {
-        MetodoPagamento bean = new MetodoPagamento();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE tipo = ? LIMIT 1";
+	public synchronized MetodoPagamento retrieveByTipo(String tipo) throws PetShopException {
+		MetodoPagamento bean = new MetodoPagamento();
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE tipo = ? LIMIT 1";
 
-        try (Connection connection = dataSource.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
-            preparedStatement.setString(1, tipo);
-            try (ResultSet rs = preparedStatement.executeQuery()) {
-                if (rs.next()) {
-                    bean.setId(rs.getInt("id"));
-                    bean.setTipo(rs.getString("tipo"));
-                }
-            }
-        } catch (SQLException e) {
-            throw new PetShopException("Errore durante il recupero del metodo di pagamento", 500, e);
-        }
+			preparedStatement.setString(1, tipo);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				if (rs.next()) {
+					bean.setId(rs.getInt("id"));
+					bean.setTipo(rs.getString("tipo"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero del metodo di pagamento", 500, e);
+		}
 
-        return bean;
-    }
+		return bean;
+	}
 }

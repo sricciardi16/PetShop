@@ -23,7 +23,6 @@ import it.petshop.dto.Prodotto;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 
-
 public class ProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,9 +35,8 @@ public class ProdottoServlet extends HttpServlet {
 		prodottoDao = new ProdottoDAO(dataSource);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		int id = Integer.parseInt(request.getParameter("id"));
 		Prodotto prodotto = prodottoDao.retrieveByKey(id);
 		request.setAttribute("prodotto", prodotto);

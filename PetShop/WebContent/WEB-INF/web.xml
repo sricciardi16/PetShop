@@ -166,6 +166,14 @@
 	</servlet-mapping>
 
 
+	<filter>
+		<filter-name>ErrorHandlerFilter</filter-name>
+		<filter-class>it.petshop.filter.ErrorHandlerFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ErrorHandlerFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<filter>
 		<filter-name>AuthenticationRedirectFilter</filter-name>
@@ -177,6 +185,16 @@
 		<url-pattern>/login</url-pattern>
 		<url-pattern>/registrati</url-pattern>
 	</filter-mapping>
+
+	<filter>
+		<filter-name>RedirectFilter</filter-name>
+		<filter-class>it.petshop.filter.RedirectFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>RedirectFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 
 
 	<filter>
@@ -206,20 +224,8 @@
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
 
-	<filter>
-		<filter-name>ErrorHandlerFilter</filter-name>
-		<filter-class>it.petshop.filter.ErrorHandlerFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>ErrorHandlerFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
 	<error-page>
 		<location>/error.jsp</location>
 	</error-page>
-
-
-
 
 </web-app>

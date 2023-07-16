@@ -51,7 +51,7 @@ public class ProdottiServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
 			return;
 		}
-		
+
 		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
@@ -63,7 +63,6 @@ public class ProdottiServlet extends HttpServlet {
 		List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1), PRODOTTI_PER_PAGINA, orderBy, asc.get());
 		int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
 
-		
 		DataHelper data = new DataHelper();
 		data.add("prodotti", prodotti);
 		data.add("numeroPagine", numeroPagine);

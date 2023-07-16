@@ -61,7 +61,7 @@ public class IndirizziServlet extends HttpServlet {
 			String codicePostale = request.getParameter("codicePostale");
 			String provincia = request.getParameter("provincia");
 			String paese = request.getParameter("paese");
-			
+
 			Indirizzo indirizzo = new Indirizzo();
 			indirizzo.setAlias(alias);
 			indirizzo.setVia(via);
@@ -73,7 +73,7 @@ public class IndirizziServlet extends HttpServlet {
 			indirizzo.setIdUtente(utente.getId());
 
 			indirizzoDao.create(indirizzo);
-			
+
 			response.sendRedirect(request.getContextPath() + "/" + request.getSession(false).getAttribute("redirect"));
 			request.getSession().removeAttribute("redirect");
 		} else if (request.getPathInfo().equals("/delete")) {

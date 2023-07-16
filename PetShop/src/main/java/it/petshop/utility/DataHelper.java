@@ -17,20 +17,20 @@ public class DataHelper {
 	public DataHelper() {
 		data = new HashMap<>();
 	}
-	
+
 	public void add(String key, Object value) {
 		data.put(key, value);
 	}
-	
+
 	public void setAsRequestAttribute(HttpServletRequest request) {
 		data.forEach(request::setAttribute);
 	}
-	
+
 	public void setAsSessionAttribute(HttpSession session) {
 		data.forEach(session::setAttribute);
 	}
-	
-	public void sendAsJSON (HttpServletResponse response) throws IOException {
+
+	public void sendAsJSON(HttpServletResponse response) throws IOException {
 		response.setContentType("application/json");
 		response.getWriter().write(gson.toJson(data));
 	}
