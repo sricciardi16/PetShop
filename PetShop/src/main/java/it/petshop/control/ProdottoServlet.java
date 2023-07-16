@@ -36,9 +36,10 @@ public class ProdottoServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		int id = Integer.parseInt(request.getParameter("id"));
-		Prodotto prodotto = prodottoDao.retrieveByKey(id);
+		
+		Prodotto prodotto = prodottoDao.findById(id);
+		
 		request.setAttribute("prodotto", prodotto);
 
 		request.getRequestDispatcher("/WEB-INF/views/utente/prodotto.jsp").forward(request, response);

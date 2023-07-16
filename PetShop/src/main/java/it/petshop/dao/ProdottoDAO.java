@@ -13,7 +13,7 @@ import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.PetShopException;
 
-public class ProdottoDAO implements DAO<Prodotto> {
+public class ProdottoDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "prodotto";
@@ -22,8 +22,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		this.dataSource = dataSource;
 	}
 
-	@Override
-	public synchronized void create(Prodotto prodotto) throws PetShopException {
+	public synchronized void save(Prodotto prodotto) throws PetShopException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -41,8 +40,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		}
 	}
 
-	@Override
-	public synchronized boolean delete(int id) throws PetShopException {
+	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -56,43 +54,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		return result != 0;
 	}
 
-	@Override
-	public synchronized List<Prodotto> retrieveAll(String order) throws PetShopException {
-		List<Prodotto> prodotti = new ArrayList<>();
-
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
-
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
-
-			while (rs.next()) {
-				Prodotto bean = new Prodotto();
-				bean.setId(rs.getInt("id"));
-				bean.setNome(rs.getString("nome"));
-				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
-				bean.setImmagine(rs.getString("immagine"));
-				bean.setInMagazzino(rs.getInt("in_magazzino"));
-				bean.setIdCategoria(rs.getInt("id_categoria"));
-
-				prodotti.add(bean);
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il recupero dei prodotti", 500, e);
-		}
-
-		return prodotti;
-	}
-
-	public synchronized List<Prodotto> retrieveAll() throws PetShopException {
-		return retrieveAll("");
-	}
-
-	@Override
-	public synchronized Prodotto retrieveByKey(int id) throws PetShopException {
+	public synchronized Prodotto findById(int id) throws PetShopException {
 		Prodotto bean = new Prodotto();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -117,7 +79,25 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		return bean;
 	}
 
-	public synchronized List<Prodotto> retrieve(Categoria categoria, int offset, int limit, String order, boolean asc) throws PetShopException {
+	public synchronized int findIdByIdElemento(int idElemento) throws PetShopException {
+		int prodottoId = -1;
+		String selectSQL = "SELECT prodotto.id FROM prodotto JOIN elemento ON prodotto.id = elemento.id_prodotto WHERE elemento.id = ?";
+
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			preparedStatement.setInt(1, idElemento);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				if (rs.next()) {
+					prodottoId = rs.getInt("id");
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero dell'ID del prodotto tramite ID dell'elemento", 500, e);
+		}
+
+		return prodottoId;
+	}
+
+	public synchronized List<Prodotto> findAllByCategoriaWithLimit(Categoria categoria, int limit, int offset, String order, boolean asc) throws PetShopException {
 		List<Prodotto> prodotti = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ? AND prodotto.in_magazzino != 0 ";
@@ -173,7 +153,7 @@ public class ProdottoDAO implements DAO<Prodotto> {
 		return prodotti;
 	}
 
-	public synchronized int numeroPagine(Categoria categoria, int limit) throws PetShopException {
+	public synchronized int countPagine(Categoria categoria, int limit) throws PetShopException {
 		int result = 0;
 
 		String countSQL = "SELECT COUNT(*) AS count FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";

@@ -41,26 +41,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Prodotto> prodotti;
-		try {
-			prodotti = prodottoDao.retrieveAll();
-
-			Function<Prodotto, Categoria> getCategoria = p -> {
-				try {
-					return categoriaDao.retrieveByKey(p.getIdCategoria());
-				} catch (Exception e) {
-
-				}
-				return null;
-			};
-
-			Map<Prodotto, Categoria> prodottiConCategoria = prodotti.stream().collect(Collectors.toMap(p -> p, getCategoria, (o, n) -> o, () -> new TreeMap<>((p, v) -> v.getId() - p.getId())));
-
-			request.setAttribute("prodottiConCategoria", prodottiConCategoria);
-			request.getRequestDispatcher("/WEB-INF/views/amministratore/prodotti.jsp").forward(request, response);
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+		
 
 	}
 

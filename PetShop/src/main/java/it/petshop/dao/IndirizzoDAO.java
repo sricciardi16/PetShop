@@ -13,7 +13,7 @@ import it.petshop.dto.Indirizzo;
 import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
-public class IndirizzoDAO implements DAO<Indirizzo> {
+public class IndirizzoDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "indirizzo";
@@ -22,8 +22,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
 		this.dataSource = dataSource;
 	}
 
-	@Override
-	public synchronized void create(Indirizzo indirizzo) throws PetShopException {
+	public synchronized void save(Indirizzo indirizzo) throws PetShopException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME + " (alias, via, numero, citta, codice_postale, provincia, paese, id_utente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -38,13 +37,11 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			throw new PetShopException("Errore durante la creazione dell'indirizzo", 500, e);
 		}
 	}
 
-	@Override
-	public synchronized boolean delete(int id) throws PetShopException {
+	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -58,72 +55,7 @@ public class IndirizzoDAO implements DAO<Indirizzo> {
 		return result != 0;
 	}
 
-	@Override
-	public synchronized List<Indirizzo> retrieveAll(String order) throws PetShopException {
-		List<Indirizzo> indirizzi = new ArrayList<>();
-
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
-
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
-
-			while (rs.next()) {
-				Indirizzo bean = new Indirizzo();
-				bean.setId(rs.getInt("id"));
-				bean.setAlias(rs.getString("alias"));
-				bean.setVia(rs.getString("via"));
-				bean.setNumero(rs.getString("numero"));
-				bean.setCitta(rs.getString("citta"));
-				bean.setCodicePostale(rs.getString("codice_postale"));
-				bean.setProvincia(rs.getString("provincia"));
-				bean.setPaese(rs.getString("paese"));
-				bean.setIdUtente(rs.getInt("id_utente"));
-
-				indirizzi.add(bean);
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il recupero degli indirizzi", 500, e);
-		}
-
-		return indirizzi;
-	}
-
-	public synchronized List<Indirizzo> retrieveAll() throws PetShopException {
-		return retrieveAll("");
-	}
-
-	@Override
-	public synchronized Indirizzo retrieveByKey(int id) throws PetShopException {
-		Indirizzo bean = new Indirizzo();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
-			preparedStatement.setInt(1, id);
-			try (ResultSet rs = preparedStatement.executeQuery()) {
-				while (rs.next()) {
-					bean.setId(rs.getInt("id"));
-					bean.setAlias(rs.getString("alias"));
-					bean.setVia(rs.getString("via"));
-					bean.setNumero(rs.getString("numero"));
-					bean.setCitta(rs.getString("citta"));
-					bean.setCodicePostale(rs.getString("codice_postale"));
-					bean.setProvincia(rs.getString("provincia"));
-					bean.setPaese(rs.getString("paese"));
-					bean.setIdUtente(rs.getInt("id_utente"));
-				}
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il recupero dell'indirizzo", 500, e);
-		}
-
-		return bean;
-	}
-
-	public synchronized List<Indirizzo> retrieveByUtente(Utente utente) throws PetShopException {
+	public synchronized List<Indirizzo> findAllByUtente(Utente utente) throws PetShopException {
 		List<Indirizzo> indirizzi = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ? ORDER BY id DESC";

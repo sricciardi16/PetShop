@@ -3,18 +3,36 @@ package it.petshop.control;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import it.petshop.dao.ElementoDAO;
+import it.petshop.dao.IndirizzoDAO;
+import it.petshop.dao.MetodoPagamentoDAO;
+import it.petshop.dao.MetodoSpedizioneDAO;
+import it.petshop.dao.OrdineDAO;
+import it.petshop.dao.ProdottoDAO;
+import it.petshop.dto.Elemento;
+import it.petshop.dto.Indirizzo;
+import it.petshop.dto.MetodoPagamento;
+import it.petshop.dto.MetodoSpedizione;
+import it.petshop.dto.Ordine;
+import it.petshop.dto.Prodotto;
+import it.petshop.dto.Utente;
+import it.petshop.utility.PetShopException;
+
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +54,6 @@ import it.petshop.dto.MetodoSpedizione;
 import it.petshop.dto.Ordine;
 import it.petshop.dto.Prodotto;
 import it.petshop.dto.Utente;
-import it.petshop.utility.DataHelper;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 

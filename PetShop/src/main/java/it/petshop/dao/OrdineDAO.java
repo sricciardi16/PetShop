@@ -13,9 +13,10 @@ import javax.sql.DataSource;
 import it.petshop.dto.Elemento;
 import it.petshop.dto.Ordine;
 import it.petshop.dto.Utente;
+import it.petshop.utility.DatabaseUtil;
 import it.petshop.utility.PetShopException;
 
-public class OrdineDAO implements DAO<Ordine> {
+public class OrdineDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "ordine";
@@ -24,27 +25,9 @@ public class OrdineDAO implements DAO<Ordine> {
 		this.dataSource = dataSource;
 	}
 
-	@Override
-	public synchronized void create(Ordine ordine) throws PetShopException {
+	public synchronized int save(Ordine ordine) throws PetShopException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME + " (prezzo, id_utente, id_metodo_pagamento, id_metodo_spedizione, id_indirizzo) VALUES (?, ?, ?, ?, ?)";
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-
-			preparedStatement.setDouble(1, ordine.getPrezzo());
-			preparedStatement.setInt(2, ordine.getIdUtente());
-			preparedStatement.setInt(3, ordine.getIdMetodoPagamento());
-			preparedStatement.setInt(4, ordine.getIdMetodoSpedizione());
-			preparedStatement.setInt(5, ordine.getIdIndirizzo());
-
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante la creazione dell'ordine", 500, e);
-		}
-	}
-
-	public synchronized int createAndGetId(Ordine ordine) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (prezzo, id_utente, id_metodo_pagamento, id_metodo_spedizione, id_indirizzo) VALUES (?, ?, ?, ?, ?)";
-		int generatedId = -1; // Valore predefinito nel caso in cui l'ID non venga generato correttamente
+		int generatedId = -1;
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -54,14 +37,8 @@ public class OrdineDAO implements DAO<Ordine> {
 			preparedStatement.setInt(4, ordine.getIdMetodoSpedizione());
 			preparedStatement.setInt(5, ordine.getIdIndirizzo());
 
-			int affectedRows = preparedStatement.executeUpdate();
-			if (affectedRows > 0) {
-				try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-					if (generatedKeys.next()) {
-						generatedId = generatedKeys.getInt(1);
-					}
-				}
-			}
+			generatedId = DatabaseUtil.getAutoIncrementValue(preparedStatement);
+
 		} catch (SQLException e) {
 			throw new PetShopException("Errore durante la creazione dell'ordine", 500, e);
 		}
@@ -69,8 +46,7 @@ public class OrdineDAO implements DAO<Ordine> {
 		return generatedId;
 	}
 
-	@Override
-	public synchronized boolean delete(int id) throws PetShopException {
+	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -84,8 +60,7 @@ public class OrdineDAO implements DAO<Ordine> {
 		return result != 0;
 	}
 
-	@Override
-	public synchronized List<Ordine> retrieveAll(String order) throws PetShopException {
+	public synchronized List<Ordine> findAll(String order) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
 
 		String selectSQL = "SELECT * FROM " + TABLE_NAME;
@@ -116,12 +91,11 @@ public class OrdineDAO implements DAO<Ordine> {
 		return ordini;
 	}
 
-	public synchronized List<Ordine> retrieveAll() throws PetShopException {
-		return retrieveAll("");
+	public synchronized List<Ordine> findAll() throws PetShopException {
+		return findAll("");
 	}
 
-	@Override
-	public synchronized Ordine retrieveByKey(int id) throws PetShopException {
+	public synchronized Ordine findById(int id) throws PetShopException {
 		Ordine bean = new Ordine();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -147,7 +121,7 @@ public class OrdineDAO implements DAO<Ordine> {
 		return bean;
 	}
 
-	public List<Ordine> retrieveByUtente(Utente utente) throws PetShopException {
+	public List<Ordine> findAllByUtente(Utente utente) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ?";
 
@@ -174,34 +148,5 @@ public class OrdineDAO implements DAO<Ordine> {
 		}
 
 		return ordini;
-	}
-
-	public synchronized List<Elemento> getElementiOrdine(int idOrdine) throws PetShopException {
-		List<Elemento> elementi = new ArrayList<>();
-		String selectSQL = "SELECT * FROM elemento WHERE id_ordine = ?";
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-
-			preparedStatement.setInt(1, idOrdine);
-			try (ResultSet rs = preparedStatement.executeQuery()) {
-				while (rs.next()) {
-					Elemento bean = new Elemento();
-					bean.setId(rs.getInt("id"));
-					bean.setNome(rs.getString("nome"));
-					bean.setDescrizione(rs.getString("descrizione"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setImmagine(rs.getString("immagine"));
-					bean.setQuantita(rs.getInt("quantita"));
-					bean.setIdProdotto(rs.getInt("id_prodotto"));
-					bean.setIdOrdine(rs.getInt("id_ordine"));
-
-					elementi.add(bean);
-				}
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il recupero degli elementi dell'ordine", 500, e);
-		}
-
-		return elementi;
 	}
 }

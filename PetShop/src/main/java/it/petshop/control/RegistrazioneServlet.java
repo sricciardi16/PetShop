@@ -11,15 +11,18 @@ import javax.sql.DataSource;
 import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
 import it.petshop.dto.Utente;
+import it.petshop.utility.PetShopException;
 
 public class RegistrazioneServlet extends HttpServlet {
 	private DataSource dataSource;
 	private UtenteDAO utenteDao;
+	private UtenteDAO amministratoreDao;
 
 	@Override
 	public void init() throws ServletException {
 		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		utenteDao = new UtenteDAO(dataSource);
+		amministratoreDao = new UtenteDAO(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,14 +31,13 @@ public class RegistrazioneServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Aggiugnere verifica nomeutente univoco
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");
 		String nomeUtente = request.getParameter("nomeUtente");
 		String password = request.getParameter("password");
 		String telefono = request.getParameter("telefono");
-
+		
 		Utente utente = new Utente();
 		utente.setNome(nome);
 		utente.setCognome(cognome);
@@ -44,9 +46,15 @@ public class RegistrazioneServlet extends HttpServlet {
 		utente.setPassword(password);
 		utente.setTelefono(telefono);
 
-		utenteDao.create(utente);
-		response.sendRedirect(request.getContextPath());
-		// continuare qualcosa per vedere se andato a buon fine e redirect
+		// ---
+		if (utenteDao.findByNomeUtente(nomeUtente) != amministratoreDao.findByNomeUtente(nomeUtente))
+			throw new PetShopException("Nome Utente Gia' Esistente", HttpServletResponse.SC_CONFLICT);
+
+		utenteDao.save(utente);
+		// ---
+
+		request.setAttribute("status", "success");
+		request.setAttribute("message", "Registrazione Effettuata!");
 	}
 
 }

@@ -1,7 +1,6 @@
 package it.petshop.control;
 
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,9 @@ import javax.sql.DataSource;
 
 import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
-import it.petshop.utility.DataHelper;
+import it.petshop.dto.Amministratore;
+import it.petshop.dto.Utente;
+import it.petshop.utility.JsonResponseHelper;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,28 +37,24 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		HttpSession session = request.getSession();
 
-		boolean isUtente = utenteDao.exists(nomeUtente, password);
-		boolean isAmministratore = amministratoreDao.exists(nomeUtente, password);
+		// ---
+		Utente utente = utenteDao.findByNomeUtenteAndPassword(nomeUtente, password);
+		Amministratore amministratore = amministratoreDao.findByNomeUtenteAndPassword(nomeUtente, password);
+		String whoFound = utente != null ? "utente" : amministratore != null ? "amministratore" : null;
+		Object foundObj = utente != null ?  utente  : amministratore != null ?  amministratore  : null;
+		// ---
 
-		DataHelper data = new DataHelper();
+		JsonResponseHelper jresponse = new JsonResponseHelper();
 
-		if (isUtente) {
-			session.setAttribute("nomeUtente", nomeUtente);
-			session.setAttribute("utente", utenteDao.retrieveByNomeUtente(nomeUtente));
-			data.add("status", "success");
-			data.add("message", "Ciao " + nomeUtente);
-			data.sendAsJSON(response);
-		} else if (isAmministratore) {
-			session.setAttribute("nomeUtente", nomeUtente);
-			session.setAttribute("amministratore", amministratoreDao.retrieveByNomeUtente(nomeUtente));
-			data.add("status", "success");
-			data.add("message", "Ciao " + nomeUtente + ". Sei un Amministratore.");
-			data.sendAsJSON(response);
+		if (whoFound == null) {
+			jresponse.add("status", "error");
+			jresponse.add("message", "Errore. Credenziali non valide!");
 		} else {
-			data.add("status", "error");
-			data.add("message", "Errore. Credenziali non valide!");
-			data.sendAsJSON(response);
+			session.setAttribute("nomeUtente", nomeUtente);
+			session.setAttribute(whoFound, foundObj);
+			jresponse.add("status", "success");
 		}
+		jresponse.send(response);
 
 	}
 }

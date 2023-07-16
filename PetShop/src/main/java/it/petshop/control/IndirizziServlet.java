@@ -29,21 +29,21 @@ public class IndirizziServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getPathInfo() != null && !request.getPathInfo().equals("/new"))
-			throw new PetShopException("Percorso Errato", 404);
+			throw new PetShopException("Percorso Errato", HttpServletResponse.SC_NOT_FOUND);
 
 		boolean create = request.getPathInfo() != null ? true : false;
 
 		if (create) {
-			String redirect = request.getParameter("redirect");
-			if (redirect != null && !redirect.equals("checkout"))
-				throw new PetShopException("Errore Server: Pagina Non Esistente", 404);
-			redirect = redirect == null ? "user/indirizzi" : "user/checkout";
-			request.getSession(false).setAttribute("redirect", redirect);
+			request.setAttribute("callbackRedirect", request.getAttribute("callbackRedirect"));
 			request.getRequestDispatcher("/WEB-INF/views/utente/registrato/nuovoIndirizzo.jsp").forward(request, response);
 		} else {
 			HttpSession session = request.getSession(false);
 			Utente utente = (Utente) session.getAttribute("utente");
-			List<Indirizzo> indirizzi = indirizzoDao.retrieveByUtente(utente);
+			
+			// ---
+			List<Indirizzo> indirizzi = indirizzoDao.findAllByUtente(utente);
+			// ---
+			
 			request.setAttribute("indirizzi", indirizzi);
 			request.getRequestDispatcher("/WEB-INF/views/utente/registrato/indirizzi.jsp").forward(request, response);
 		}
@@ -71,16 +71,22 @@ public class IndirizziServlet extends HttpServlet {
 			indirizzo.setProvincia(provincia);
 			indirizzo.setPaese(paese);
 			indirizzo.setIdUtente(utente.getId());
-
-			indirizzoDao.create(indirizzo);
-
-			response.sendRedirect(request.getContextPath() + "/" + request.getSession(false).getAttribute("redirect"));
-			request.getSession().removeAttribute("redirect");
+			
+			// ---
+			indirizzoDao.save(indirizzo);
+			// ---
+			
+			request.setAttribute("redirect", request.getContextPath() + "/" + request.getAttribute("callbackRedirect"));
 		} else if (request.getPathInfo().equals("/delete")) {
-			indirizzoDao.delete(Integer.parseInt(request.getParameter("id")));
-			response.sendRedirect(request.getContextPath() + "/user/indirizzi");
+			int toDeleteId = Integer.parseInt(request.getParameter("id"));
+			
+			// ---
+			indirizzoDao.deleteById(toDeleteId);
+			// ---
+
+			request.setAttribute("redirect", request.getContextPath() + "/user/indirizzi");
 		} else {
-			throw new PetShopException("Errore Server", 500);
+			throw new PetShopException("Operazione Non Definita", HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 }

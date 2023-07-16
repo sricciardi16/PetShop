@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 import it.petshop.dao.CategoriaDAO;
 import it.petshop.dto.Categoria;
-import it.petshop.utility.DataHelper;
+import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.Param;
 import it.petshop.utility.PetShopException;
 
@@ -37,15 +37,18 @@ public class CategoriaServlet extends HttpServlet {
 			throw new PetShopException("Solo Cani e Gatti: Errore nei Parametri", 404);
 
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
+		
 		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
 		categoria.setTipologia(tipologia);
-
-		List<Categoria> categorie = categoriaDao.retrieve(categoria);
-
-		DataHelper data = new DataHelper();
+		
+		// ---
+		List<Categoria> categorie = categoriaDao.findAllByCategoria(categoria);
 		Set<String> tipologie = categorie.stream().map(tipologia.isBlank() ? Categoria::getTipologia : Categoria::getTipologiaIn).collect(Collectors.toCollection(LinkedHashSet::new));
-		data.add("tipologie", tipologie);
-		data.sendAsJSON(response);
+		// ---
+		
+		JsonResponseHelper jresponse = new JsonResponseHelper();
+		jresponse.add("tipologie", tipologie);
+		jresponse.send(response);
 	}
 }

@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-public class DataHelper {
+public class JsonResponseHelper {
 	private static final Gson gson = new Gson();
 	private Map<String, Object> data;
 
-	public DataHelper() {
+	public JsonResponseHelper() {
 		data = new HashMap<>();
 	}
 
@@ -22,15 +22,7 @@ public class DataHelper {
 		data.put(key, value);
 	}
 
-	public void setAsRequestAttribute(HttpServletRequest request) {
-		data.forEach(request::setAttribute);
-	}
-
-	public void setAsSessionAttribute(HttpSession session) {
-		data.forEach(session::setAttribute);
-	}
-
-	public void sendAsJSON(HttpServletResponse response) throws IOException {
+	public void send(HttpServletResponse response) throws IOException {
 		response.setContentType("application/json");
 		response.getWriter().write(gson.toJson(data));
 	}

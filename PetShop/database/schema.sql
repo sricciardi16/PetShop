@@ -7,7 +7,7 @@ CREATE TABLE amministratore (
 
 CREATE TABLE utente (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	nome_utente VARCHAR(32),
+	nome_utente VARCHAR(32), -- unique
 	password VARCHAR(32),
 	nome VARCHAR(32),
 	cognome VARCHAR(32),

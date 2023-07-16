@@ -16,7 +16,7 @@ import org.apache.catalina.connector.Response;
 import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
-import it.petshop.utility.DataHelper;
+import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.Param;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
@@ -57,16 +57,25 @@ public class ProdottiServlet extends HttpServlet {
 		categoria.setTipologia(tipologia);
 		categoria.setTipologiaIn(tipologiaIn);
 
-		AtomicBoolean asc = new AtomicBoolean();
-		Param.doOnMatch(direction, new String[] { "desc", "asc", "", null }, p -> asc.set(false), p -> asc.set(true), p -> asc.set(true), p -> asc.set(true), p -> asc.set(true));
+		boolean asc = true;
+		if (direction == null || direction.isEmpty() || direction.equals("asc"))
+			asc = true;
+		else if (direction.equals("desc"))
+			asc = false;
+		else
+			throw new PetShopException("Errore Parametri", HttpServletResponse.SC_NOT_FOUND);
 
-		List<Prodotto> prodotti = prodottoDao.retrieve(categoria, PRODOTTI_PER_PAGINA * (page - 1), PRODOTTI_PER_PAGINA, orderBy, asc.get());
-		int numeroPagine = prodottoDao.numeroPagine(categoria, PRODOTTI_PER_PAGINA);
+		// ---
+		int limit = PRODOTTI_PER_PAGINA * (page - 1);
+		int offset = PRODOTTI_PER_PAGINA;
+		List<Prodotto> prodotti = prodottoDao.findAllByCategoriaWithLimit(categoria, limit, offset, orderBy, asc);
+		int numeroPagine = prodottoDao.countPagine(categoria, PRODOTTI_PER_PAGINA);
+		// - - -
 
-		DataHelper data = new DataHelper();
-		data.add("prodotti", prodotti);
-		data.add("numeroPagine", numeroPagine);
-		data.sendAsJSON(response);
+		JsonResponseHelper jresponse = new JsonResponseHelper();
+		jresponse.add("prodotti", prodotti);
+		jresponse.add("numeroPagine", numeroPagine);
+		jresponse.send(response);
 
 	}
 }

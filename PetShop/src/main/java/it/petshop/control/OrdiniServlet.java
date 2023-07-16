@@ -32,12 +32,12 @@ public class OrdiniServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 		Utente utente = (Utente) session.getAttribute("utente");
-		List<Ordine> ordini = ordineDao.retrieveByUtente(utente);
+		
+		// ---
+		List<Ordine> ordini = ordineDao.findAllByUtente(utente);
+		// ---
 		request.setAttribute("ordini", ordini);
 		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/ordini.jsp").forward(request, response);
 
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 }
