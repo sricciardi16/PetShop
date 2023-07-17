@@ -70,71 +70,60 @@ span {
 	border: solid;
 	color: white;
 	border-radius: 10px;
-
 }
 
 .reset {
 	margin-left: 10%;
 }
 
-@media (max-width: 430px) {
+@media ( max-width : 430px) {
 	h2 {
 		font-size: 20px;
 	}
-
 	#aggForm {
-		font-size: small;	
+		font-size: small;
 	}
 	#content {
-	margin-left: 10%;
-	margin-right: 10%;
-}
-
+		margin-left: 10%;
+		margin-right: 10%;
+	}
 	.field {
 		font-size: small;
 		width: 100%;
 	}
-
 	span {
 		font-size: 10px;
 	}
-
 	.aggiungi input {
 		font-size: 10px;
 	}
 }
 
-@media (min-width: 431px) and (max-width: 767px) {
+@media ( min-width : 431px) and (max-width: 767px) {
 	h2 {
 		font-size: 30px;
 	}
-
 	#content {
 		margin-left: 18%;
 		margin-right: 18%;
 	}
-
 	#aggForm {
 		font-size: medium;
 	}
-	
 	.field {
 		font-size: small;
 		width: 100%;
 	}
-
 	span {
 		font-size: 13px;
 	}
-	
 	.aggiungi input {
 		font-size: 13px;
 	}
 }
 
-@media (min-width: 767px) and (max-width: 1390px) {
+@media ( min-width : 767px) and (max-width: 1390px) {
 	h2 {
 		font-size: 35px;
 	}
-
 }

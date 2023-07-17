@@ -12,7 +12,7 @@
 
 <body>
 	<jsp:include page="../../views/fragments/header.jsp" />
-	
+
 	<div id="content">
 		<div id="prodotti">
 			<h1>I nostri prodotti</h1>
@@ -31,7 +31,7 @@
 			</select>
 
 			<div id="productList"></div>
-						
+
 			<div id="prodotto"></div>
 			<div class="pagination">
 				<button class="pagination-btn" id="primaPagina">1</button>
@@ -44,7 +44,7 @@
 	</div>
 	<jsp:include page="../../views/fragments/footer.jsp" />
 	<jsp:include page="../../views/fragments/toast.jsp" />
-	
+
 	<script>
 		let imgProdottiPath = "${pageContext.request.contextPath}${initParam['imgProdottiPath']}";
 	</script>

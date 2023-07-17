@@ -114,7 +114,7 @@ div #home_redirect {
 
 .search-container {
 	width: 32%;
-	float:right;
+	float: right;
 	overflow: hidden;
 	display: table-row;
 	margin-right: 1%;
@@ -129,8 +129,8 @@ div #home_redirect {
 	margin: auto;
 	font-size: 17px;
 	border: none;
-	float:right;
-	width:50%;
+	float: right;
+	width: 50%;
 	padding: 3%;
 }
 
@@ -144,101 +144,106 @@ div #home_redirect {
 	width: 20px;
 }
 
-#element{
+#element {
 	border-bottom: 2px solid #333;
 	padding: 3%;
 	width: 80%;
-	margin:auto;
+	margin: auto;
 }
 
-#element h4{
-	word-wrap: break-word; 
+#element h4 {
+	word-wrap: break-word;
 }
 
-#element img{
-	width:30%;
+#element img {
+	width: 30%;
 }
 
-#element span{
+#element span {
 	font-weight: bold;
 }
 
-#elements{
+#elements {
 	width: 100%;
 	max-height: 300px;
 	max-width: 500px;
-	overflow-y: auto; 
+	overflow-y: auto;
 }
 
 .dropbtn-search {
-  background-color: #FA9D12;
-  color: white;
-  padding: 3.2%;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+	background-color: #FA9D12;
+	color: white;
+	padding: 3.2%;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
 }
 
 .dropbtn-search:hover, .dropbtn-search:focus {
-  background-color: #FA9D12;
+	background-color: #FA9D12;
 }
 
 #myInput {
-width:90%;
-  font-size: 16px;
-  border: none;
+	width: 90%;
+	font-size: 16px;
+	border: none;
 }
 
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {
+	outline: 3px solid #ddd;
+}
 
-.dropdown-search{
-  position: relative;
-  display: inline-block;
+.dropdown-search {
+	position: relative;
+	display: inline-block;
 }
 
 .dropdown-search-content {
-  display: none;
-  position: absolute;
-  background-color: #f6f6f6;
-  min-width: 230px;
-  overflow: auto;
-  border: 1px solid #ddd;
-  z-index: 1;
+	display: none;
+	position: absolute;
+	background-color: #f6f6f6;
+	min-width: 230px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	z-index: 1;
 }
 
-.dropdown-search a:hover {background-color: #ddd;}
-
-#input-text{
-	width:95%;
+.dropdown-search a:hover {
+	background-color: #ddd;
 }
 
-#input-text input[type="text"]{
+#input-text {
+	width: 95%;
+}
+
+#input-text input[type="text"] {
 	margin: 5% auto 5% auto;
 	border: 2px solid #FA9D12;
 }
-.show {display: block;}
 
-@media( max-width : 767px) {
+.show {
+	display: block;
+}
+
+@media ( max-width : 767px) {
 	body {
 		font-size: 14px;
 	}
-	
-	#myDropDown{
-	display:none;
+	#myDropDown {
+		display: none;
 	}
-	
-	.dropbtn-search{
-	display: none;
+	.dropbtn-search {
+		display: none;
 	}
-
-	.navbar{
-	display: flex;
-	justify-content: center;
-	align-content: center;
+	.navbar {
+		display: flex;
+		justify-content: center;
+		align-content: center;
 	}
 }
+
 @media ( min-width : 768px) and (max-width: 1023px) {
 	.search-container input[type=text] {
-	width:50%;
-}
+		width: 50%;
+	}
 }

@@ -13,22 +13,18 @@
 <body>
 	<jsp:include page="../../../views/fragments/header.jsp" />
 	<div id="content">
-	
-	<c:forEach var="elemento" items="${elementi}">
-		<div class="prodotto">
-			<img src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}">
-			<label class="nome">${elemento.nome}</label>
-			<label class="prezzo">${elemento.prezzo} &#8364</label> 
-			<label class="modificaQuantita">Quantità: ${elemento.quantita }</label> 
-			<label class="totale">Totale: ${elemento.quantita * elemento.prezzo} &#8364</label>
-			<button class="vaiAlProdotto" onclick="'">Vai al prodotto</button>
-		</div>
-	</c:forEach>
+
+		<c:forEach var="elemento" items="${elementi}">
+			<div class="prodotto">
+				<img src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}"> <label class="nome">${elemento.nome}</label> <label class="prezzo">${elemento.prezzo} &#8364</label> <label class="modificaQuantita">Quantità: ${elemento.quantita }</label> <label
+					class="totale">Totale: ${elemento.quantita * elemento.prezzo} &#8364</label>
+				<button class="vaiAlProdotto" onclick="'">Vai al prodotto</button>
+			</div>
+		</c:forEach>
 		<div class="checkout">
-			<label>Numero articoli: ${numeroProdotti}</label><br> <label>Totale
-				ordine: ${totaleOrdine} &#8364 </label><br>
+			<label>Numero articoli: ${numeroProdotti}</label><br> <label>Totale ordine: ${totaleOrdine} &#8364 </label><br>
 			<button id="checkout" onclick="window.location.href = '${pageContext.request.contextPath}/user/ordini'">
-				<b >I miei Ordini</b>
+				<b>I miei Ordini</b>
 			</button>
 		</div>
 	</div><jsp:include page="../../../views/fragments/footer.jsp" />

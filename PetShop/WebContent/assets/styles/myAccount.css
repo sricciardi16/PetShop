@@ -1,59 +1,55 @@
 @charset "ISO-8859-1";
 
-body{
+body {
 	font-family: sans-serif;
 	background-color: #787878;
 }
 
-#container{
-	width:60%;
-	margin:2% auto 2% auto;
-	padding:2%;
+#container {
+	width: 60%;
+	margin: 2% auto 2% auto;
+	padding: 2%;
 	background-color: #FA9D12;
 	border-radius: 5px;
-	
 }
 
-.element{
+.element {
 	display: flex;
-	width:50%;
+	width: 50%;
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 	padding-bottom: 1%;
 	padding-top: 1%;
 	border-bottom: 1px solid #787878;
 	margin: 1% auto 1% auto;
 }
 
-span{
+span {
 	background-color: white;
 	padding: 1%;
-	border:none;
+	border: none;
 	border-radius: 5px;
 	width: 70%;
-	margin-left:auto;
-	
+	margin-left: auto;
 }
 
-label{
+label {
 	font-weight: bold;
 	margin-left: auto;
 }
 
-.elements{
+.elements {
 	width: 100%;
-	border: 4px solid #333;	
+	border: 4px solid #333;
 	border-radius: 30px;
 }
 
-
-@media (max-width: 768px) {
-  #container {
-    width: 80%;
-  }
-  
-  .element {
-    margin: 1% auto 2% auto;
-  }
+@media ( max-width : 768px) {
+	#container {
+		width: 80%;
+	}
+	.element {
+		margin: 1% auto 2% auto;
+	}
 }

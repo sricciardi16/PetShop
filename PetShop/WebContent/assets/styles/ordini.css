@@ -1,39 +1,40 @@
-body{
-  font-family: sans-serif;
-}
-#content{
-  width: 100%;
-  border: 1px solid red;
-  text-align: center;
+body {
+	font-family: sans-serif;
 }
 
-table{
-    margin:auto;
-    width: 50%;
-    cellpadding: 10%;
-    text-align: center;
+#content {
+	width: 100%;
+	border: 1px solid red;
+	text-align: center;
 }
 
-th{
-  padding: 2%;
+table {
+	margin: auto;
+	width: 50%;
+	cellpadding: 10%;
+	text-align: center;
 }
 
-td{
-  padding: 2%;
-  background-color: white;
+th {
+	padding: 2%;
 }
 
-.stato{
-  background-color: green;
-  border-radius: 10px;
+td {
+	padding: 2%;
+	background-color: white;
 }
 
-a{
-  text-decoration: none;
-  color: black;
-  font-style: italic;
+.stato {
+	background-color: green;
+	border-radius: 10px;
 }
 
-a:hover{
-  text-decoration: underline;
+a {
+	text-decoration: none;
+	color: black;
+	font-style: italic;
+}
+
+a:hover {
+	text-decoration: underline;
 }

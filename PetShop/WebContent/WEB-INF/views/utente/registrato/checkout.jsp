@@ -30,20 +30,17 @@
 			<h4>Metodo di spedizione:</h4>
 			<div id="metodi-spedizione">
 				<c:forEach var="metodoSpedizione" items="${metodiSpedizione}" varStatus="status">
-    <div class="metodoSpedizione">
-        <input type="radio" name="metodoSpedizione" value="${metodoSpedizione.id}" ${status.first ? 'checked' : ''}> 
-        <span>${metodoSpedizione.descrizione}</span> 
-        <span>Consegna prevista in ${metodoSpedizione.giorniConsegnaPrevisti} giorni</span> 
-        <span><c:choose>
-            <c:when test="${metodoSpedizione.prezzo == 0}">
+					<div class="metodoSpedizione">
+						<input type="radio" name="metodoSpedizione" value="${metodoSpedizione.id}" ${status.first ? 'checked' : ''}> <span>${metodoSpedizione.descrizione}</span> <span>Consegna prevista in ${metodoSpedizione.giorniConsegnaPrevisti} giorni</span> <span><c:choose>
+								<c:when test="${metodoSpedizione.prezzo == 0}">
                 Gratis
             </c:when>
-            <c:otherwise>
+								<c:otherwise>
                 ${metodoSpedizione.prezzo}&euro;
             </c:otherwise>
-        </c:choose></span>
-    </div>
-</c:forEach>
+							</c:choose></span>
+					</div>
+				</c:forEach>
 
 			</div>
 			<h4>Metodo di pagamento:</h4>
@@ -60,7 +57,7 @@
 			</div>
 			<h4>Resoconto ordine:</h4>
 			<div id="resoconto">
-				<h6>${sessionScope.numeroProdottiCarrello} prodotti</h6>
+				<h6>${sessionScope.numeroProdottiCarrello}prodotti</h6>
 				<h6>Totale Parziale ${sessionScope.totaleCarrello}</h6>
 				<h6 id="prezzoSpedizione"></h6>
 				<h6 id="prezzoTotale"></h6>

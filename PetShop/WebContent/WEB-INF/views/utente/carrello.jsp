@@ -10,10 +10,10 @@
 
 <body>
 	<jsp:include page="../../views/fragments/header.jsp" />
-	
+
 	<div id="content">
 		<h1>Carrello</h1>
-		
+
 		<div id="prodotti"></div>
 
 		<div id="checkout" class="checkout"></div>

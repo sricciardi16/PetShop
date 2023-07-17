@@ -15,12 +15,12 @@ body {
 }
 
 #img-container {
-	width:55%;
+	width: 55%;
 	margin-right: 2%;
 }
 
 #img-container img {
-	width:70%;
+	width: 70%;
 	border: 4px solid #FA9D12;
 }
 
@@ -124,93 +124,93 @@ h1 {
 	body {
 		font-size: 14px;
 	}
-	#content{
-	width:90%;
-	margin: auto;
+	#content {
+		width: 90%;
+		margin: auto;
 	}
-	#img-container{
-	margin-top:20%;
-	width:50%;
+	#img-container {
+		margin-top: 20%;
+		width: 50%;
 	}
-	#img-container img{
-	width:80%;
+	#img-container img {
+		width: 80%;
 	}
-	#data-container{
-	width:30%;
-	margin-top: 5%;
+	#data-container {
+		width: 30%;
+		margin-top: 5%;
 	}
-	#data-container h1{
-	font-size: 12px;
+	#data-container h1 {
+		font-size: 12px;
 	}
-	#container-prezzo{
-	width:80%;
-	font-weight: bold;
-	font-size: 150%;
+	#container-prezzo {
+		width: 80%;
+		font-weight: bold;
+		font-size: 150%;
 	}
-	#container-quantita{
-	width:80%;
-	margin: auto;
+	#container-quantita {
+		width: 80%;
+		margin: auto;
 	}
-	#container-quantita input[type="number"]{
-	width:80%;
-	margin: auto;
+	#container-quantita input[type="number"] {
+		width: 80%;
+		margin: auto;
 	}
-	#container-quantita h4{
-	display:none;
+	#container-quantita h4 {
+		display: none;
 	}
-	#data-container button{
-	font-size: 8px;
-	margin-top: 10%;
+	#data-container button {
+		font-size: 8px;
+		margin-top: 10%;
 	}
-	#desc-container{
-	width: 95%;
+	#desc-container {
+		width: 95%;
 	}
 }
+
 @media ( min-width : 768px) and (max-width: 1023px) {
-		body {
+	body {
 		font-size: 14px;
 	}
-	#content{
-	width:90%;
-	margin: auto;
+	#content {
+		width: 90%;
+		margin: auto;
 	}
-	#img-container{
-	margin:auto;
-	margin-top: 10%;
-	width:50%;
+	#img-container {
+		margin: auto;
+		margin-top: 10%;
+		width: 50%;
 	}
-	#img-container img{
-	width:80%;
+	#img-container img {
+		width: 80%;
 	}
-	#data-container{
-	width:30%;
-	margin-top: 5%;
+	#data-container {
+		width: 30%;
+		margin-top: 5%;
 	}
-	#data-container h1{
-	font-size: 12px;
+	#data-container h1 {
+		font-size: 12px;
 	}
-	#container-prezzo{
-	width:80%;
-	font-weight: bold;
-	font-size: 250%;
+	#container-prezzo {
+		width: 80%;
+		font-weight: bold;
+		font-size: 250%;
 	}
-	#container-quantita{
-	width:80%;
-	margin: auto;
+	#container-quantita {
+		width: 80%;
+		margin: auto;
 	}
-	#container-quantita input[type="number"]{
-	width:80%;
-	margin: auto;
+	#container-quantita input[type="number"] {
+		width: 80%;
+		margin: auto;
 	}
-	#container-quantita h4{
-	display:none;
+	#container-quantita h4 {
+		display: none;
 	}
-	#data-container button{
-	font-size: 8px;
-	margin-top: 10%;
+	#data-container button {
+		font-size: 8px;
+		margin-top: 10%;
 	}
-	#desc-container{
-	width: 95%;
+	#desc-container {
+		width: 95%;
 	}
-	
 }

@@ -15,11 +15,7 @@
 		<c:forEach var="indirizzo" items="${indirizzi}">
 			<div class="indirizzo">
 				<h2>${indirizzo.alias}</h2>
-				<span>${sessionScope.utente.nome} ${sessionScope.utente.cognome}</span><br> 
-				<span>${indirizzo.via} ${indirizzo.numero}</span><br> 
-				<span>${indirizzo.codicePostale} ${indirizzo.citta}</span><br> 
-				<span>${indirizzo.provincia}</span><br> 
-				<span>${indirizzo.paese}</span><br>
+				<span>${sessionScope.utente.nome} ${sessionScope.utente.cognome}</span><br> <span>${indirizzo.via} ${indirizzo.numero}</span><br> <span>${indirizzo.codicePostale} ${indirizzo.citta}</span><br> <span>${indirizzo.provincia}</span><br> <span>${indirizzo.paese}</span><br>
 				<form method="POST" action="${pageContext.request.contextPath}/user/indirizzi/delete">
 					<input type="hidden" name="id" value="${indirizzo.id}">
 					<button type="submit" class="button">Elimina</button>

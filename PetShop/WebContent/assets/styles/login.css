@@ -31,21 +31,20 @@ h1 {
 	border-radius: 10px;
 }
 
-.credenziali label{
+.credenziali label {
 	font-weight: bold;
 }
 
-.credenziali input{
+.credenziali input {
 	font-size: medium;
 	border-radius: 5px;
-	
 }
 
 .form {
 	line-height: 3em;
 }
 
-.button{
+.button {
 	padding: 3%;
 	background: #333;
 	font-size: 15px;
@@ -55,21 +54,18 @@ h1 {
 }
 
 @media screen and (max-width: 767px) {
-  h1 {
-    font-size: 30px;
-  }
-
-  .credenziali {
-    padding: 1%;
-    font-size: 14px;
-  }
-
-  .button {
-    padding: 2%;
-    font-size: 12px;
-  }
-
-  span {
-    margin-left: 5%;
-  }
+	h1 {
+		font-size: 30px;
+	}
+	.credenziali {
+		padding: 1%;
+		font-size: 14px;
+	}
+	.button {
+		padding: 2%;
+		font-size: 12px;
+	}
+	span {
+		margin-left: 5%;
+	}
 }

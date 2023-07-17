@@ -14,30 +14,30 @@
 	<jsp:include page="../../../views/fragments/header.jsp" />
 	<div id="content">
 		<h3>I Miei ordini</h3>
-        <h5>Questi sono gli ordini che hai effettuato dal momento della creazione del tuo account</h5>
-        <table>
-          <tr>
-            <th>Codice</th>
-            <th>Data</th>
-            <th>Prezzo totale</th>
-            <th>Pagamento</th>
-            <th>Stato</th>
-            <th>Dettagli ordine</th>
-          </tr>
-          <c:forEach var="ordine" items="${ordini}">
-          <tr>
-            <td>${ordine.id}</td>
-            <td><fmt:formatDate value="${ordine.dataOra}" type="date" pattern="yyyy-MM-dd"/></td>
-            <td>${ordine.prezzo}</td>
-            <td><c:choose>
-                  <c:when test="${ordine.idMetodoPagamento == 1}">Contanti</c:when>
-                  <c:otherwise>Carta</c:otherwise>
-                </c:choose></td>
-            <td>${ordine.stato}</td>
-            <td><a href="${pageContext.request.contextPath}/user/ordine?id=${ordine.id}">Dettagli</a></td>
-          </tr>
-         </c:forEach>
-        </table>
+		<h5>Questi sono gli ordini che hai effettuato dal momento della creazione del tuo account</h5>
+		<table>
+			<tr>
+				<th>Codice</th>
+				<th>Data</th>
+				<th>Prezzo totale</th>
+				<th>Pagamento</th>
+				<th>Stato</th>
+				<th>Dettagli ordine</th>
+			</tr>
+			<c:forEach var="ordine" items="${ordini}">
+				<tr>
+					<td>${ordine.id}</td>
+					<td><fmt:formatDate value="${ordine.dataOra}" type="date" pattern="yyyy-MM-dd" /></td>
+					<td>${ordine.prezzo}</td>
+					<td><c:choose>
+							<c:when test="${ordine.idMetodoPagamento == 1}">Contanti</c:when>
+							<c:otherwise>Carta</c:otherwise>
+						</c:choose></td>
+					<td>${ordine.stato}</td>
+					<td><a href="${pageContext.request.contextPath}/user/ordine?id=${ordine.id}">Dettagli</a></td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
 	<jsp:include page="../../../views/fragments/footer.jsp" />
 </body>

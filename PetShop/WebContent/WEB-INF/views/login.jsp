@@ -23,7 +23,8 @@
 	<script>
 		let home = "${pageContext.request.contextPath}";
 	</script>
-	<script>let contextPath = "${pageContext.request.contextPath}";</script><script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
+	<script>let contextPath = "${pageContext.request.contextPath}";</script>
+	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/script/async/loginFormAsync.js"></script>
 </body>

@@ -26,18 +26,11 @@
 
 		<c:forEach var="entry" items="${prodottiConCategoria}">
 			<tr id="row_${entry.key.id}">
-				<td><input type="text" id="nome_${entry.key.id}"
-					value="${entry.key.nome}" /></td>
-				<td><input type="text" id="descrizione_${entry.key.id}"
-					value="${entry.key.descrizione}" /></td>
-				<td><input type="number" id="prezzo_${entry.key.id}"
-					value="${entry.key.prezzo}" /></td>
-				<td><img
-					src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${entry.key.immagine}"
-					width=100px height=100px><input type="file"
-					id="immagine_${entry.key.id}" /></td>
-				<td><input type="text" id="inMagazzino_${entry.key.id}"
-					value="${entry.key.inMagazzino}" /></td>
+				<td><input type="text" id="nome_${entry.key.id}" value="${entry.key.nome}" /></td>
+				<td><input type="text" id="descrizione_${entry.key.id}" value="${entry.key.descrizione}" /></td>
+				<td><input type="number" id="prezzo_${entry.key.id}" value="${entry.key.prezzo}" /></td>
+				<td><img src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${entry.key.immagine}" width=100px height=100px><input type="file" id="immagine_${entry.key.id}" /></td>
+				<td><input type="text" id="inMagazzino_${entry.key.id}" value="${entry.key.inMagazzino}" /></td>
 				<td>${entry.value.animale}</td>
 				<td>${entry.value.tipologia}</td>
 				<td>${entry.value.tipologiaIn}</td>
