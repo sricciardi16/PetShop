@@ -1,24 +1,46 @@
 package it.petshop.control;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+
+import it.petshop.dao.ProdottoDAO;
+import it.petshop.dto.Carrello;
+import it.petshop.dto.Prodotto;
+import it.petshop.utility.JsonResponseHelper;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import it.petshop.dao.ProdottoDAO;
-import it.petshop.dto.*;
+import it.petshop.dto.Carrello;
+import it.petshop.dto.Prodotto;
 import it.petshop.utility.JsonResponseHelper;
-import it.petshop.utility.Util;;
+import it.petshop.utility.Util;
 
 public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,93 +55,81 @@ public class CarrelloServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (!Util.isAjaxRequest(request))
+		if (!Util.isAjaxRequest(request)) {
 			request.getRequestDispatcher("/WEB-INF/views/utente/carrello.jsp").forward(request, response);
-
-		HttpSession session = request.getSession(false);
-		DataHelper data = new DataHelper();
-		Map<Prodotto, Integer> prodotti = getProdottiCarrello(session);
-		int numeroProdottiCarrello = 0;
-		double totaleCarrello = 0.0;
-
-		if (prodotti != null) {
-			List<JsonElement> prodottiCarrello = new ArrayList<>();
-			Gson gson = new Gson();
-			prodotti.forEach((prodotto, quantita) -> {
-				JsonElement element = gson.toJsonTree(prodotto);
-				element.getAsJsonObject().addProperty("quantita", quantita);
-				prodottiCarrello.add(element);
-			});
-
-			data.add("prodottiCarrello", prodottiCarrello);
-			numeroProdottiCarrello = (int) session.getAttribute("numeroProdottiCarrello");
-			totaleCarrello = (double) session.getAttribute("totaleCarrello");
+			return;
 		}
 
-		data.add("numeroProdottiCarrello", numeroProdottiCarrello);
-		data.add("totaleCarrello", totaleCarrello);
-		data.sendAsJSON(response);
+		HttpSession session = request.getSession(false);
+
+		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute("carrello")).orElse(new Carrello()) : new Carrello();
+		
+		Gson gson = new Gson();
+		
+		Function<Map.Entry<Prodotto, Integer>, JsonElement> prodottoConQuantita = entry -> {
+			Prodotto prodotto = entry.getKey();
+			Integer quantita = entry.getValue();
+			JsonElement element = gson.toJsonTree(prodotto);
+			element.getAsJsonObject().addProperty("quantita", quantita);
+			return element;
+		};
+		
+		List<JsonElement> prodottiCarrello = 
+				carrello.getProdotti().entrySet().stream().
+				map(prodottoConQuantita).
+				collect(Collectors.toList());
+		
+		
+		JsonResponseHelper jresponse = new JsonResponseHelper();
+		
+		jresponse.add("prodottiCarrello", prodottiCarrello);
+		jresponse.add("numeroProdottiCarrello", carrello.getNumeroProdotti());
+		jresponse.add("totaleCarrello", carrello.getTotale());
+
+		jresponse.send(response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		DataHelper status = new DataHelper();
-
-		Prodotto prodotto = prodottoDao.retrieveByKey(Integer.parseInt(request.getParameter("id")));
+		Prodotto prodotto = prodottoDao.findById(Integer.parseInt(request.getParameter("id")));
 		int quantita = Integer.parseInt(request.getParameter("quantita"));
 		String mode = request.getParameter("mode");
 		boolean increase = mode.equals("increase") ? true : false;
 
-		Map<Prodotto, Integer> prodotti = getProdottiCarrello(session);
+		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute("carrello")).orElse(new Carrello()) : new Carrello();
 
-		if (prodotti == null)
-			prodotti = new LinkedHashMap<>();
+		// --- 
+		int quantitaOld = carrello.getProdotti().getOrDefault(prodotto, 0);
 
-		int quantitaOld = prodotti.getOrDefault(prodotto, 0);
+		carrello.getProdotti().merge(prodotto, quantita, increase ? (o, n) -> o + n : (o, n) -> n);
 
-		prodotti.merge(prodotto, quantita, increase ? (o, n) -> o + n : (o, n) -> n);
-
-		if (prodotti.get(prodotto) > prodotto.getInMagazzino()) {
-			prodotti.put(prodotto, quantitaOld);
-			status.add("status", "error");
-			status.add("message", "Quantità non Disponibile!");
-			status.sendAsJSON(response);
-			setCarrello(session, prodotti);
-			return;
+		boolean quantitaDisponibile = true;
+		
+		if (carrello.getProdotti().get(prodotto) > prodotto.getInMagazzino()) {
+			carrello.getProdotti().put(prodotto, quantitaOld);
+			quantitaDisponibile = false;
 		}
-
-		prodotti.values().removeIf(q -> q == 0);
-
-		setCarrello(session, prodotti);
-
-		status.add("status", "success");
-		status.sendAsJSON(response);
+		
+		carrello.getProdotti().values().removeIf(q -> q == 0);
+		
+		int numeroProdottiCarrello = carrello.getProdotti().values().stream().mapToInt(i -> i.intValue()).reduce(0, (q, r) -> q + r);
+		double totaleCarrello = carrello.getProdotti().entrySet().stream().mapToDouble(c -> c.getKey().getPrezzo() * c.getValue()).reduce(0, (r, p) -> r + p);
+		totaleCarrello = Math.round(totaleCarrello * 100.0) / 100.0;
+		
+		carrello.setNumeroProdotti(numeroProdottiCarrello);
+		carrello.setTotale(totaleCarrello);
+		// ---
+		
+		session.setAttribute("carrello", carrello);
+		JsonResponseHelper jresponse = new JsonResponseHelper();
+		if (quantitaDisponibile) {
+			jresponse.add("status", "success");
+		} else {
+			jresponse.add("status", "error");
+			jresponse.add("message", "Quantità non Disponibile!");
+		}
+		jresponse.send(response);
 
 	}
-
-	@SuppressWarnings("unchecked")
-	private Map<Prodotto, Integer> getProdottiCarrello(HttpSession session) {
-		if (session == null)
-			return null;
-
-		Object prodottiObj = session.getAttribute("prodottiCarrello");
-
-		if (prodottiObj == null || !(prodottiObj instanceof LinkedHashMap))
-			return null;
-
-		return (Map<Prodotto, Integer>) prodottiObj;
-	}
-
-	private void setCarrello(HttpSession session, Map<Prodotto, Integer> prodotti) {
-		int numeroProdottiCarrello = prodotti.values().stream().mapToInt(i -> i.intValue()).reduce(0, (q, r) -> q + r);
-		double totaleCarrello = prodotti.entrySet().stream().mapToDouble(c -> c.getKey().getPrezzo() * c.getValue()).reduce(0, (r, p) -> r + p);
-
-		DataHelper sessionData = new DataHelper();
-		sessionData.add("prodottiCarrello", prodotti);
-		sessionData.add("numeroProdottiCarrello", numeroProdottiCarrello);
-		sessionData.add("totaleCarrello", Math.round(totaleCarrello * 100.0) / 100.0);
-		sessionData.setAsSessionAttribute(session);
-	}
-
 }
