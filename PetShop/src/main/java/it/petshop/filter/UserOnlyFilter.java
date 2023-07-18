@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.petshop.utility.DataHelper;
 
 public class UserOnlyFilter extends HttpFilter {
 
@@ -21,16 +20,13 @@ public class UserOnlyFilter extends HttpFilter {
 		if (session != null && session.getAttribute("utente") != null) {
 			chain.doFilter(request, response);
 		} else {
-
-			DataHelper status = new DataHelper();
-			status.add("status", "error");
+			request.setAttribute("status", "error");
 			if (session == null || session.getAttribute("utente") == null) {
-				status.add("message", "Effettua prima l'accesso!");
+				request.setAttribute("message", "Effettua prima l'accesso!");
 			} else {
-				status.add("message", "Sei un Amministratore");
+				request.setAttribute("message", "Sei un Amministratore");
 			}
 
-			status.setAsRequestAttribute(request);
 			request.getRequestDispatcher("/login").forward(request, response);
 		}
 

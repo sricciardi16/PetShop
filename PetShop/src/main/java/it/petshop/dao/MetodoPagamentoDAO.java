@@ -11,9 +11,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import it.petshop.dto.MetodoPagamento;
+import it.petshop.utility.DatabaseUtil;
 import it.petshop.utility.PetShopException;
 
-public class MetodoPagamentoDAO implements DAO<MetodoPagamento> {
+public class MetodoPagamentoDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "metodo_pagamento";
@@ -22,31 +23,15 @@ public class MetodoPagamentoDAO implements DAO<MetodoPagamento> {
 		this.dataSource = dataSource;
 	}
 
-	@Override
-	public synchronized void create(MetodoPagamento metodoPagamento) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-			preparedStatement.setString(1, metodoPagamento.getTipo());
-
-			preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
-		}
-	}
-
-	public synchronized int createAndReturnId(MetodoPagamento metodoPagamento) throws PetShopException {
+	public synchronized int save(MetodoPagamento metodoPagamento) throws PetShopException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME + " (tipo) VALUES (?)";
 		int generatedId = -1;
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
 			preparedStatement.setString(1, metodoPagamento.getTipo());
-			preparedStatement.executeUpdate();
 
-			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-			if (generatedKeys.next()) {
-				generatedId = generatedKeys.getInt(1);
-			}
+			generatedId = DatabaseUtil.getAutoIncrementValue(preparedStatement);
+
 		} catch (SQLException e) {
 			throw new PetShopException("Errore durante la creazione del metodo di pagamento", 500, e);
 		}
@@ -54,53 +39,7 @@ public class MetodoPagamentoDAO implements DAO<MetodoPagamento> {
 		return generatedId;
 	}
 
-	@Override
-	public synchronized boolean delete(int id) throws PetShopException {
-		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-			preparedStatement.setInt(1, id);
-			result = preparedStatement.executeUpdate();
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante l'eliminazione del metodo di pagamento", 500, e);
-		}
-
-		return result != 0;
-	}
-
-	@Override
-	public synchronized List<MetodoPagamento> retrieveAll(String order) throws PetShopException {
-		List<MetodoPagamento> metodiPagamento = new ArrayList<>();
-
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
-
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
-
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
-
-			while (rs.next()) {
-				MetodoPagamento bean = new MetodoPagamento();
-				bean.setId(rs.getInt("id"));
-				bean.setTipo(rs.getString("tipo"));
-
-				metodiPagamento.add(bean);
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il recupero dei metodi di pagamento", 500, e);
-		}
-
-		return metodiPagamento;
-	}
-
-	public synchronized List<MetodoPagamento> retrieveAll() throws PetShopException {
-		return retrieveAll("");
-	}
-
-	@Override
-	public synchronized MetodoPagamento retrieveByKey(int id) throws PetShopException {
+	public synchronized MetodoPagamento findById(int id) throws PetShopException {
 		MetodoPagamento bean = new MetodoPagamento();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -120,7 +59,7 @@ public class MetodoPagamentoDAO implements DAO<MetodoPagamento> {
 		return bean;
 	}
 
-	public synchronized MetodoPagamento retrieveByTipo(String tipo) throws PetShopException {
+	public synchronized MetodoPagamento findFirstByTipo(String tipo) throws PetShopException {
 		MetodoPagamento bean = new MetodoPagamento();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE tipo = ? LIMIT 1";
 

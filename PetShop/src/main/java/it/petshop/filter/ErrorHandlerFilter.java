@@ -13,7 +13,7 @@ import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.petshop.utility.DataHelper;
+import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 
@@ -29,9 +29,9 @@ public class ErrorHandlerFilter extends HttpFilter {
 				errorCode = ((PetShopException) exception).getErrorCode();
 			if (Util.isAjaxRequest(request)) {
 				response.setStatus(errorCode);
-				DataHelper errorData = new DataHelper();
+				JsonResponseHelper errorData = new JsonResponseHelper();
 				errorData.add("message", exception.getMessage());
-				errorData.sendAsJSON(response);
+				errorData.send(response);
 			} else {
 				response.sendError(errorCode, exception.getMessage());
 			}

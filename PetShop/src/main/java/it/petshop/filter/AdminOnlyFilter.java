@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.petshop.utility.DataHelper;
+import it.petshop.utility.JsonResponseHelper;
 
 public class AdminOnlyFilter extends HttpFilter {
 
@@ -21,15 +21,13 @@ public class AdminOnlyFilter extends HttpFilter {
 		if (session != null && session.getAttribute("amministratore") != null) {
 			chain.doFilter(request, response);
 		} else {
-			DataHelper status = new DataHelper();
-			status.add("status", "error");
+			request.setAttribute("status", "error");
 			if (session == null || session.getAttribute("utente") != null) {
-				status.add("message", "Effettua prima l'accesso!");
+				request.setAttribute("message", "Effettua prima l'accesso!");
 			} else {
-				status.add("message", "Non Sei un Amministratore");
+				request.setAttribute("message", "Non Sei un Amministratore");
 			}
 
-			status.setAsRequestAttribute(request);
 			request.getRequestDispatcher("").forward(request, response);
 		}
 

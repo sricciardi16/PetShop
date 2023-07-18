@@ -2,37 +2,9 @@ package it.petshop.control;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import it.petshop.dao.ElementoDAO;
-import it.petshop.dao.IndirizzoDAO;
-import it.petshop.dao.MetodoPagamentoDAO;
-import it.petshop.dao.MetodoSpedizioneDAO;
-import it.petshop.dao.OrdineDAO;
-import it.petshop.dao.ProdottoDAO;
-import it.petshop.dto.Elemento;
-import it.petshop.dto.Indirizzo;
-import it.petshop.dto.MetodoPagamento;
-import it.petshop.dto.MetodoSpedizione;
-import it.petshop.dto.Ordine;
-import it.petshop.dto.Prodotto;
-import it.petshop.dto.Utente;
-import it.petshop.utility.PetShopException;
-
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,13 +19,14 @@ import it.petshop.dao.MetodoPagamentoDAO;
 import it.petshop.dao.MetodoSpedizioneDAO;
 import it.petshop.dao.OrdineDAO;
 import it.petshop.dao.ProdottoDAO;
+import it.petshop.dto.Carrello;
 import it.petshop.dto.Elemento;
 import it.petshop.dto.Indirizzo;
 import it.petshop.dto.MetodoPagamento;
 import it.petshop.dto.MetodoSpedizione;
 import it.petshop.dto.Ordine;
-import it.petshop.dto.Prodotto;
 import it.petshop.dto.Utente;
+import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.PetShopException;
 import it.petshop.utility.Util;
 
@@ -90,14 +63,13 @@ public class CheckoutServlet extends HttpServlet {
 		}
 
 		Utente utente = (Utente) session.getAttribute("utente");
-		List<Indirizzo> indirizzi = indirizzoDao.retrieveByUtente(utente);
-		List<MetodoSpedizione> metodiSpedizione = metodoSpedizioneDao.retrieveAll();
-		MetodoPagamento contanti = metodoPagamentoDao.retrieveByTipo("contanti");
-		DataHelper data = new DataHelper();
-		data.add("indirizzi", indirizzi);
-		data.add("metodiSpedizione", metodiSpedizione);
-		data.add("contanti", contanti);
-		data.setAsRequestAttribute(request);
+		List<Indirizzo> indirizzi = indirizzoDao.findAllByUtente(utente);
+		List<MetodoSpedizione> metodiSpedizione = metodoSpedizioneDao.findAll();
+		MetodoPagamento contanti = metodoPagamentoDao.findFirstByTipo("contanti");
+		JsonResponseHelper data= new JsonResponseHelper();
+		request.setAttribute("indirizzi", indirizzi);
+		request.setAttribute("metodiSpedizione", metodiSpedizione);
+		request.setAttribute("contanti", contanti);
 		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/checkout.jsp").forward(request, response);
 	}
 
@@ -113,12 +85,12 @@ public class CheckoutServlet extends HttpServlet {
 		int idUtente = ((Utente) session.getAttribute("utente")).getId();
 		String metodoPagamentoParam = request.getParameter("metodoPagamento");
 		int idMetodoPagamento;
-		if ((metodoPagamentoDao.retrieveByTipo("contanti").getId() + "").equals(metodoPagamentoParam)) {
-			idMetodoPagamento = metodoPagamentoDao.retrieveByTipo("contanti").getId();
+		if ((metodoPagamentoDao.findFirstByTipo("contanti").getId() + "").equals(metodoPagamentoParam)) {
+			idMetodoPagamento = metodoPagamentoDao.findFirstByTipo("contanti").getId();
 		} else {
 			MetodoPagamento metodoPagamento = new MetodoPagamento();
 			metodoPagamento.setTipo(metodoPagamentoParam);
-			idMetodoPagamento = metodoPagamentoDao.createAndReturnId(metodoPagamento);
+			idMetodoPagamento = metodoPagamentoDao.save(metodoPagamento);
 		}
 		int idIndirizzo = Integer.parseInt(request.getParameter("indirizzo"));
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("metodoSpedizione"));
@@ -129,11 +101,11 @@ public class CheckoutServlet extends HttpServlet {
 		ordine.setIdMetodoPagamento(idMetodoPagamento);
 		ordine.setIdIndirizzo(idIndirizzo);
 		ordine.setIdMetodoSpedizione(idMetodoSpedizione);
-		int idOrdine = ordineDao.createAndGetId(ordine);
+		int idOrdine = ordineDao.save(ordine);
 
-		Map<Prodotto, Integer> prodotti = (Map<Prodotto, Integer>) session.getAttribute("prodottiCarrello");
-
-		prodotti.forEach((prodotto, quantita) -> {
+		Carrello carrello = (Carrello) session.getAttribute("carrello");
+		
+		carrello.getProdotti().forEach((prodotto, quantita) -> {
 			Elemento elemento = new Elemento();
 			elemento.setNome(prodotto.getNome());
 			elemento.setDescrizione(prodotto.getDescrizione());
@@ -142,35 +114,32 @@ public class CheckoutServlet extends HttpServlet {
 			elemento.setQuantita(quantita);
 			prodottoDao.updateInMagazzino(prodotto.getId(), quantita);
 			elemento.setIdOrdine(idOrdine);
-			int idElemento = elementoDao.createAndGetId(elemento);
+			int idElemento = elementoDao.save(elemento);
 			String nomeImmagine = idElemento + ".jpg";
 			salvaImmagine(prodotto.getImmagine(), nomeImmagine);
-			elementoDao.setImmagine(idElemento, nomeImmagine);
+			elementoDao.updateImmagineById(idElemento, nomeImmagine);
 		});
 
-		session.removeAttribute("prodottiCarrello");
-		session.removeAttribute("numeroProdottiCarrello");
-		session.removeAttribute("totaleCarrello");
+		session.removeAttribute("carrello");
 
-		DataHelper message = new DataHelper();
-		message.add("status", "success");
-		message.add("message", "Ordine Effettuato!");
-		message.setAsRequestAttribute(request);
+		JsonResponseHelper message = new JsonResponseHelper();
+		request.setAttribute("status", "success");
+		request.setAttribute("message", "Ordine Effettuato!");
 		request.getRequestDispatcher("/").forward(request, response);
 	}
 
 	private void setTotale(HttpServletRequest request, HttpSession session) {
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("idMetodoSpedizione"));
-		double prezzoSpedizione = metodoSpedizioneDao.retrieveByKey(idMetodoSpedizione).getPrezzo();
-		double totaleParziale = (double) session.getAttribute("totaleCarrello");
+		double prezzoSpedizione = metodoSpedizioneDao.findByKey(idMetodoSpedizione).getPrezzo();
+		double totaleParziale = ((Carrello) session.getAttribute("carrello")).getTotale();
 		session.setAttribute("totale", Math.round((prezzoSpedizione + totaleParziale) * 100.0) / 100.0);
 	}
 
 	private void getTotaleJSon(HttpServletResponse response, HttpSession session) throws IOException {
-		DataHelper data = new DataHelper();
+		JsonResponseHelper data = new JsonResponseHelper();
 		double totale = (double) session.getAttribute("totale");
 		data.add("totale", totale);
-		data.sendAsJSON(response);
+		data.send(response);
 	}
 
 	private void salvaImmagine(String prodotto, String elemento) {

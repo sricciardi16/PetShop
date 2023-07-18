@@ -66,8 +66,8 @@ public class ProdottiServlet extends HttpServlet {
 			throw new PetShopException("Errore Parametri", HttpServletResponse.SC_NOT_FOUND);
 
 		// ---
-		int limit = PRODOTTI_PER_PAGINA * (page - 1);
-		int offset = PRODOTTI_PER_PAGINA;
+		int limit = PRODOTTI_PER_PAGINA;
+		int offset = PRODOTTI_PER_PAGINA * (page - 1);
 		List<Prodotto> prodotti = prodottoDao.findAllByCategoriaWithLimit(categoria, limit, offset, orderBy, asc);
 		int numeroPagine = prodottoDao.countPagine(categoria, PRODOTTI_PER_PAGINA);
 		// - - -
