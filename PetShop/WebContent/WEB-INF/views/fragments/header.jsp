@@ -101,7 +101,7 @@
 				<a href="${pageContext.request.contextPath}/login" class="cart-icon" style="border-right: 2px solid #333;"> <img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" />
 				</a> <a href="carrello" class="cart-icon"><img src="${pageContext.request.contextPath}/assets/img/GUI/carrello.png" alt="Carrello" /></a>
 
-				<button onclick="myFunction()" class="dropbtn-search">${label},cerca qui</button>
+				<button onclick="myFunction()" class="dropbtn-search">${label},cercaqui</button>
 				<div id="myDropdown" class="dropdown-search-content">
 					<div id="input-text">
 						<input type="text" placeholder="Search.." id="myInput" onkeyup="myFunction2()" />

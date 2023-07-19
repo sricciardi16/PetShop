@@ -9,27 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 public class UserOnlyFilter extends HttpFilter {
 
-	@Override
-	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    @Override
+    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);
 
-		if (session != null && session.getAttribute("utente") != null) {
-			chain.doFilter(request, response);
-		} else {
-			request.setAttribute("status", "error");
-			if (session == null || session.getAttribute("utente") == null) {
-				request.setAttribute("message", "Effettua prima l'accesso!");
-			} else {
-				request.setAttribute("message", "Sei un Amministratore");
-			}
+        if (session != null && session.getAttribute("utente") != null) {
+            chain.doFilter(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
 
-			request.getRequestDispatcher("/login").forward(request, response);
-		}
-
-	}
-
+    }
 }
