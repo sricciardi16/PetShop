@@ -20,6 +20,8 @@ import it.petshop.dao.CategoriaDAO;
 import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
+import it.petshop.utility.JsonResponseHelper;
+import it.petshop.utility.PetShopException;
 
 /**
  * Servlet implementation class GestisciProdotti
@@ -40,18 +42,27 @@ public class GestisciProdottiServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Prodotto> prodotti;
-		
-
+		request.getRequestDispatcher("/WEB-INF/views/amministratore/gestisciProdotti.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if (request.getPathInfo().equals("/delete")) {
+			int toDeleteId = Integer.parseInt(request.getParameter("id"));
+		
+			// ---
+			prodottoDao.deleteById(toDeleteId);
+			// ---
+			
+			JsonResponseHelper jresponse = new JsonResponseHelper();
+			jresponse.add("status", "success");
+			jresponse.send(response);
+			
+			
+
+		} else {
+			throw new PetShopException("Operazione Non Definita", HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 }

@@ -12,9 +12,11 @@
 	</header>
 	<nav>
 		<ul>
-			<li><a href="${pageContext.request.contextPath}/admin/prodotti">Prodotti</a></li>
+			<li><a href="${pageContext.request.contextPath}/prodotti?animale=cane">Prodotti Cane</a></li>
+			<li><a href="${pageContext.request.contextPath}/prodotti?animale=gatto">Prodotti Gatto</a></li>
 			<li><a href=". . .">Spedizioni</a></li>
 			<li><a href=". . . ">Ordini</a></li>
+			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</ul>
 	</nav>
 </body>

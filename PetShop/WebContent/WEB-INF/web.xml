@@ -162,7 +162,7 @@
 
 	<servlet-mapping>
 		<servlet-name>GestisciProdottiServlet</servlet-name>
-		<url-pattern>/admin/prodotti</url-pattern>
+		<url-pattern>/admin/prodotti/*</url-pattern>
 	</servlet-mapping>
 
 
@@ -185,8 +185,6 @@
 		<filter-name>NotAdminFilter</filter-name>
 		<url-pattern>/user/*</url-pattern>
 		<url-pattern>/registrati</url-pattern>
-		<url-pattern>/prodotti</url-pattern>
-		<url-pattern>/categoria</url-pattern>
 		<url-pattern>/prodotto</url-pattern>
 		<url-pattern>/carrello</url-pattern>
 	</filter-mapping>

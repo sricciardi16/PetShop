@@ -48,9 +48,12 @@ public class ProdottiServlet extends HttpServlet {
 			throw new PetShopException("Parametri Errati nella Richiesta dei Prodotti", 404);
 
 		if (!Util.isAjaxRequest(request)) {
-			request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
+			if (request.getSession(false) != null && request.getSession(false).getAttribute("amministratore") != null )
+				request.getRequestDispatcher("/WEB-INF/views/amministratore/gestisciProdotti.jsp").forward(request, response);
+			else 
+				request.getRequestDispatcher("/WEB-INF/views/utente/listaProdotti.jsp").forward(request, response);
 			return;
-		}
+		} 
 
 		Categoria categoria = new Categoria();
 		categoria.setAnimale(animale);
