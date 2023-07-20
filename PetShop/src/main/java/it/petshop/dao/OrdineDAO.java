@@ -149,4 +149,68 @@ public class OrdineDAO {
 
 		return ordini;
 	}
+	
+	public List<Ordine> findAllByUtenteDataSorted(Utente utente, String startDate, String endDate, String ordinamento, String ordine) throws PetShopException {
+	    List<Ordine> ordini = new ArrayList<>();
+	    String baseSQL = "SELECT * FROM " + TABLE_NAME + " WHERE 1=1";
+	    String userCondition = (utente != null) ? " AND id_utente = ? " : "";
+	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? " AND data_ora >= ? " : "";
+	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? " AND data_ora <= ? " : "";
+	    String orderCondition = (ordinamento != null && ordine != null) ? " ORDER BY " + ordinamento + " " + ordine : "";
+
+	    String selectSQL = baseSQL + userCondition + startDateCondition + endDateCondition + orderCondition;
+
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+	        int paramIndex = 1;
+	        if (utente != null) {
+	            preparedStatement.setInt(paramIndex++, utente.getId());
+	        }
+	        if (startDate != null && !startDate.isBlank()) {
+	            preparedStatement.setString(paramIndex++, startDate);
+	        }
+	        if (endDate != null && !endDate.isBlank()) {
+	            preparedStatement.setString(paramIndex++, endDate);
+	        }
+
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                Ordine bean = new Ordine();
+	                bean.setId(rs.getInt("id"));
+	                bean.setDataOra(rs.getTimestamp("data_ora"));
+	                bean.setPrezzo(rs.getDouble("prezzo"));
+	                bean.setStato(rs.getString("stato"));
+	                bean.setIdUtente(rs.getInt("id_utente"));
+	                bean.setIdMetodoPagamento(rs.getInt("id_metodo_pagamento"));
+	                bean.setIdMetodoSpedizione(rs.getInt("id_metodo_spedizione"));
+	                bean.setIdIndirizzo(rs.getInt("id_indirizzo"));
+
+	                ordini.add(bean);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore durante il recupero degli ordini" + e.getMessage(), 500, e);
+	    }
+
+	    return ordini;
+	}
+	
+	public synchronized boolean updateStatoById(int id, String nuovoStato) throws PetShopException {
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET stato = ? WHERE id = ?";
+	    int affectedRows = 0;
+
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+	        preparedStatement.setString(1, nuovoStato);
+	        preparedStatement.setInt(2, id);
+	        affectedRows = preparedStatement.executeUpdate();
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore durante l'aggiornamento dello stato dell'ordine", 500, e);
+	    }
+	    System.out.println(affectedRows);
+	    return affectedRows > 0;
+	}
+
+
+
+
 }

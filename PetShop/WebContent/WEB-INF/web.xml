@@ -61,6 +61,16 @@
 		<servlet-name>ProdottiServlet</servlet-name>
 		<url-pattern>/prodotti</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CercaProdottiServlet</servlet-name>
+		<servlet-class>it.petshop.control.CercaProdottiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CercaProdottiServlet</servlet-name>
+		<url-pattern>/cerca</url-pattern>
+	</servlet-mapping>
 
 
 	<servlet>
@@ -164,6 +174,22 @@
 		<servlet-name>GestisciProdottiServlet</servlet-name>
 		<url-pattern>/admin/prodotti/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GestisciOrdiniServlet</servlet-name>
+		<servlet-class>it.petshop.control.GestisciOrdiniServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GestisciOrdiniServlet</servlet-name>
+		<url-pattern>/admin/ordini/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OrdineServlet</servlet-name>
+		<url-pattern>/admin/ordine</url-pattern>
+	</servlet-mapping>
+
 
 
 	<filter>

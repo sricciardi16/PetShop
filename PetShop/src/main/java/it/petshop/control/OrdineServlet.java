@@ -38,8 +38,11 @@ public class OrdineServlet extends HttpServlet {
 		// ---
 		Ordine ordine = ordineDao.findById(idOrdine);
 
-		if (!ordineDao.findAllByUtente(utente).contains(ordine))
-			throw new PetShopException("Accesso Negato Alla Risorsa", HttpServletResponse.SC_FORBIDDEN);
+
+        if (request.getServletPath().equals("/utente/ordine")) {
+        	if (!ordineDao.findAllByUtente(utente).contains(ordine))
+    			throw new PetShopException("Accesso Negato Alla Risorsa", HttpServletResponse.SC_FORBIDDEN);
+        }
 		
 		List<Elemento> elementi = elementoDao.findAllByIdOrdine(idOrdine);
 		int numeroProdotti = elementi.stream().mapToInt(Elemento::getQuantita).sum();
