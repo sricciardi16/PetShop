@@ -40,7 +40,7 @@ import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Carrello;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.JsonResponseHelper;
-import it.petshop.utility.Util;
+import it.petshop.utility.AjaxUtil;
 
 public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +55,7 @@ public class CarrelloServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (!Util.isAjaxRequest(request)) {
+		if (!AjaxUtil.isAjaxRequest(request)) {
 			request.getRequestDispatcher("/WEB-INF/views/utente/carrello.jsp").forward(request, response);
 			return;
 		}

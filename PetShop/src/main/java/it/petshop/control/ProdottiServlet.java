@@ -17,9 +17,8 @@ import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.JsonResponseHelper;
-import it.petshop.utility.Param;
 import it.petshop.utility.PetShopException;
-import it.petshop.utility.Util;
+import it.petshop.utility.AjaxUtil;
 
 public class ProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,10 +43,10 @@ public class ProdottiServlet extends HttpServlet {
 		String orderBy = Optional.ofNullable(request.getParameter("order")).orElse("in_magazzino");
 		String direction = Optional.ofNullable(request.getParameter("direction")).orElse("asc");
 
-		if (!Param.isValid(animale, "cane", "gatto") || !Param.isValid(direction, "asc", "desc"))
+		if ((animale == null || (!animale.equals("cane") && !animale.equals("gatto"))) && (direction == null || direction.equals("asc")))
 			throw new PetShopException("Parametri Errati nella Richiesta dei Prodotti", 404);
 
-		if (!Util.isAjaxRequest(request)) {
+		if (!AjaxUtil.isAjaxRequest(request)) {
 			if (request.getSession(false) != null && request.getSession(false).getAttribute("amministratore") != null )
 				request.getRequestDispatcher("/WEB-INF/views/amministratore/gestisciProdotti.jsp").forward(request, response);
 			else 
@@ -81,4 +80,8 @@ public class ProdottiServlet extends HttpServlet {
 		jresponse.send(response);
 
 	}
+	
+	
+	
+	
 }

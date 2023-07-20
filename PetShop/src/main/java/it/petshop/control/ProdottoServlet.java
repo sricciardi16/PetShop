@@ -21,7 +21,7 @@ import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.PetShopException;
-import it.petshop.utility.Util;
+import it.petshop.utility.AjaxUtil;
 
 public class ProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

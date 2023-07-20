@@ -28,7 +28,7 @@ import it.petshop.dto.Ordine;
 import it.petshop.dto.Utente;
 import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.PetShopException;
-import it.petshop.utility.Util;
+import it.petshop.utility.AjaxUtil;
 
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +57,7 @@ public class CheckoutServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		if (Util.isAjaxRequest(request)) {
+		if (AjaxUtil.isAjaxRequest(request)) {
 			getTotaleJSon(response, session);
 			return;
 		}
@@ -76,7 +76,7 @@ public class CheckoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 
-		if (Util.isAjaxRequest(request)) {
+		if (AjaxUtil.isAjaxRequest(request)) {
 			setTotale(request, session);
 			return;
 		}

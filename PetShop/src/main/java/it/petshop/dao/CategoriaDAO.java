@@ -53,5 +53,31 @@ public class CategoriaDAO {
 
 		return categorie;
 	}
+	
+	public synchronized int findIdByCategoria(Categoria categoria) throws PetShopException {
+	    int categoriaId = -1;
+
+	    String selectSQL = "SELECT id FROM " + TABLE_NAME + " WHERE animale = ? AND tipologia = ? AND tipologia_in = ?";
+
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+
+	        preparedStatement.setString(1, categoria.getAnimale());
+	        preparedStatement.setString(2, categoria.getTipologia());
+	        preparedStatement.setString(3, categoria.getTipologiaIn());
+
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            if (rs.next()) {
+	                categoriaId = rs.getInt("id");
+	            }
+	        }
+	    } catch (Exception e) {
+	        throw new PetShopException("Errore durante il recupero dell'id della categoria", 500, e);
+	    }
+
+	    return categoriaId;
+	}
+
+	
+	
 
 }

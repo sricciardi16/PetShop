@@ -152,18 +152,10 @@ function populateProducts(response) {
         <th>Prezzo</th>
         <th>Immagine</th>
         <th>In Magazzino</th>
-        <th>Azioni</th>
+        <th></th>
+        <th></th>
       </tr>
-      <tr>
-        <td><input type="text" class="nome" placeholder="Nome del prodotto"></td>
-        <td><input type="text" class="descrizione" placeholder="Descrizione del prodotto"></td>
-        <td><input type="text" class="prezzo" placeholder="Prezzo"></td>
-        <td>
-          <input type="file" class="immagine">
-        </td>
-        <td><input type="number" class="inMagazzino" placeholder="In Magazzino"></td>
-        <td><button id="nuovoProdotto">Nuovo Prodotto</button></td>
-      </tr>`);
+     `);
 
     numeroPagine = response.numeroPagine;
     
@@ -177,15 +169,17 @@ function populateProducts(response) {
                 '<img src="' + imgProdottiPath + prodotto.immagine  + '" alt="Anteprima dell\'immagine" style="width: 100px; height: 100px;">' +
             '</td>' +
             '<td><input type="number" class="inMagazzino" value="' + prodotto.inMagazzino + '"></td>' +
-            '<td><button class="aggiorna" data-id= "' + prodotto.id + '">Aggiorna</button></td>' +
-            '<td><button class="elimina" data-id= "' + prodotto.id + '">Elimina</button></td>' +
+            '<td><button class="aggiorna" data-id= "' + prodotto.id + '">Aggiorna</button>' +
+            '<button class="elimina" data-id= "' + prodotto.id + '">Elimina</button></td>' +
         '</tr><tr></tr>';
 
         $("#productList tbody").append(prodottoHTML);
-        $('#paginaCorrente').html(page);
+       
+    });
+     $('#paginaCorrente').html(page);
 		$('#ultimaPagina').html(numeroPagine);
 		eliminaProdotto();
-    });
+		modificaProdotto();
 }
 
 function eliminaProdotto() {
@@ -211,6 +205,45 @@ function eliminaProdotto() {
     });
 }
 
+function modificaProdotto() {
+    $('.aggiorna').click(function() {
+        let idProdotto = $(this).data('id');
+        let nome = $(this).closest('tr').find('.nome').val();
+        let descrizione = $(this).closest('tr').find('.descrizione').val();
+        let prezzo = $(this).closest('tr').find('.prezzo').val();
+        let inMagazzino = $(this).closest('tr').find('.inMagazzino').val();
+        let immagineInput = $(this).closest('tr').find('.immagine')[0];
+        let immagine = immagineInput.files.length > 0 ? immagineInput.files[0] : null;
+
+        let formData = new FormData();
+        formData.append('id', idProdotto);
+        formData.append('nome', nome);
+        formData.append('descrizione', descrizione);
+        formData.append('prezzo', prezzo);
+        formData.append('inMagazzino', inMagazzino);
+        
+        if (immagine) {
+            formData.append('immagine', immagine);
+        }
+
+        $.ajax({
+            url: contextPath + '/admin/prodotti/update',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.status === 'success') {
+                    loadProducts();
+                    showToast("Prodotto Aggiornato Con Successo !", "#34c759");
+                } else if (response.status === 'error') {
+                    showToast("Errore: " + response.message, "#ff3a30");
+                }
+            },
+            error: handleError
+        });
+    });
+}
 
 
 

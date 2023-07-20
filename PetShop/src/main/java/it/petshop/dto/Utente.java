@@ -16,6 +16,14 @@ public class Utente implements Serializable {
 	private String email;
 	private String telefono;
 
+	public Utente() {
+		
+	}
+	
+	public Utente (int id) {
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -9,6 +9,8 @@
 </head>
 
 <body>
+	<jsp:include page="../../../WEB-INF/views/fragments/adminHeader.jsp" />
+
 	<div id="content">
 		<div id="prodotti">
 			<h1>I nostri prodotti</h1>
@@ -28,8 +30,8 @@
 
 			<table id="productList">
 				<tbody>
-				
-				
+
+
 				</tbody>
 
 
@@ -45,6 +47,7 @@
 	</div>
 
 
+	<jsp:include page="../../../WEB-INF/views/fragments/footer.jsp" />
 	<jsp:include page="../../views/fragments/toast.jsp" />
 
 	<script>

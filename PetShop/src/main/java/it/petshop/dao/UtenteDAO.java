@@ -103,5 +103,57 @@ public class UtenteDAO {
 
 		return utente;
 	}
+	
+	public synchronized List<Utente> findAll() throws PetShopException {
+		List<Utente> utenti = new ArrayList<>();
+		String selectSQL = "SELECT * FROM " + TABLE_NAME;
+
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				while (rs.next()) {
+					Utente utente = new Utente();
+					utente.setId(rs.getInt("id"));
+					utente.setNomeUtente(rs.getString("nome_utente"));
+					utente.setPassword(rs.getString("password"));
+					utente.setNome(rs.getString("nome"));
+					utente.setCognome(rs.getString("cognome"));
+					utente.setEmail(rs.getString("email"));
+					utente.setTelefono(rs.getString("telefono"));
+					utenti.add(utente);
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero degli utenti", 500, e);
+		}
+
+		return utenti;
+	}
+	
+	public synchronized Utente findById(int id) throws PetShopException {
+		Utente utente = null;
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+
+		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+			preparedStatement.setInt(1, id);
+			try (ResultSet rs = preparedStatement.executeQuery()) {
+				if (rs.next()) {
+					utente = new Utente();
+					utente.setId(rs.getInt("id"));
+					utente.setNomeUtente(rs.getString("nome_utente"));
+					utente.setPassword(rs.getString("password"));
+					utente.setNome(rs.getString("nome"));
+					utente.setCognome(rs.getString("cognome"));
+					utente.setEmail(rs.getString("email"));
+					utente.setTelefono(rs.getString("telefono"));
+				}
+			}
+		} catch (SQLException e) {
+			throw new PetShopException("Errore durante il recupero dell'utente per ID", 500, e);
+		}
+
+		return utente;
+	}
+
+
 
 }
