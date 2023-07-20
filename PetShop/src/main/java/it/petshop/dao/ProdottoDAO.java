@@ -23,16 +23,15 @@ public class ProdottoDAO {
 	}
 
 	public synchronized void save(Prodotto prodotto) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-			preparedStatement.setInt(1, prodotto.getId());
-			preparedStatement.setString(2, prodotto.getNome());
-			preparedStatement.setString(3, prodotto.getDescrizione());
-			preparedStatement.setDouble(4, prodotto.getPrezzo());
-			preparedStatement.setString(5, prodotto.getImmagine());
-			preparedStatement.setInt(6, prodotto.getInMagazzino());
-			preparedStatement.setInt(7, prodotto.getIdCategoria());
+			preparedStatement.setString(1, prodotto.getNome());
+			preparedStatement.setString(2, prodotto.getDescrizione());
+			preparedStatement.setDouble(3, prodotto.getPrezzo());
+			preparedStatement.setString(4, prodotto.getImmagine());
+			preparedStatement.setInt(5, prodotto.getInMagazzino());
+			preparedStatement.setInt(6, prodotto.getIdCategoria());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -206,4 +205,51 @@ public class ProdottoDAO {
 			throw new PetShopException("Errore durante l'aggiornamento del prodotto", 500, e);
 		}
 	}
+	
+	public synchronized void updateById(Prodotto prodotto, int id) throws PetShopException {
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET nome = ?, descrizione = ?, prezzo = ?, immagine = ?, in_magazzino = ? WHERE id = ?";
+
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+	        preparedStatement.setString(1, prodotto.getNome());
+	        preparedStatement.setString(2, prodotto.getDescrizione());
+	        preparedStatement.setDouble(3, prodotto.getPrezzo());
+	        preparedStatement.setString(4, prodotto.getImmagine());
+	        preparedStatement.setInt(5, prodotto.getInMagazzino());
+	        preparedStatement.setInt(6, id);
+
+	        int rowsUpdated = preparedStatement.executeUpdate();
+	        if (rowsUpdated == 0) {
+	            throw new PetShopException("Nessun prodotto trovato con l'ID specificato.", 404);
+	        }
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore durante l'aggiornamento del prodotto", 500, e);
+	    }
+	}
+	
+	public synchronized List<Prodotto> findFirstLimitByNomeLike(String name, int limit) throws PetShopException {
+	    List<Prodotto> products = new ArrayList<>();
+	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome LIKE ? LIMIT ?";
+	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+	        preparedStatement.setString(1, "%" + name + "%");
+	        preparedStatement.setInt(2, limit);
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                Prodotto prodotto = new Prodotto();
+	                prodotto.setId(rs.getInt("id"));
+	                prodotto.setNome(rs.getString("nome"));
+	                prodotto.setDescrizione(rs.getString("descrizione"));
+	                prodotto.setPrezzo(rs.getDouble("prezzo"));
+	                prodotto.setImmagine(rs.getString("immagine"));
+	                prodotto.setInMagazzino(rs.getInt("in_magazzino"));
+	                prodotto.setIdCategoria(rs.getInt("id_categoria"));
+	                products.add(prodotto);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore durante il recupero dei prodotti", 500, e);
+	    }
+	    return products;
+	}
+
+
 }

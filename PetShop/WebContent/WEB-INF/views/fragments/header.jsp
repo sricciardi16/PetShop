@@ -107,36 +107,22 @@
 						<input type="text" placeholder="Search.." id="myInput" onkeyup="myFunction2()" />
 					</div>
 					<div id="elements">
-						<div id="element">
-							<img alt="foto" src="${pageContext.request.contextPath}/assets/img/prodotti/1000.jpg">
-							<h4>Titolo prodotto</h4>
-							<span>12.0$</span>
-						</div>
-						<div id="element">
-							<img alt="foto" src="${pageContext.request.contextPath}/assets/img/prodotti/1000.jpg">
-							<h4>Titolo prodotto</h4>
-							<span>12.0$</span>
-						</div>
-						<div id="element">
-							<img alt="foto" src="${pageContext.request.contextPath}/assets/img/prodotti/1000.jpg">
-							<h4>Titolo prodotto</h4>
-							<span>12.0$</span>
-						</div>
-						<div id="element">
-							<img alt="foto" src="${pageContext.request.contextPath}/assets/img/prodotti/1000.jpg">
-							<h4>Titolo prodotto</h4>
-							<span>12.0$</span>
-						</div>
-						<div id="element">
-							<img alt="foto" src="${pageContext.request.contextPath}/assets/img/prodotti/1000.jpg">
-							<h4>Titolo prodotto</h4>
-							<span>12.0$</span>
-						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		let imgProdottiPath = "${pageContext.request.contextPath}${initParam['imgProdottiPath']}";
+	</script>
+	<script>let contextPath = "${pageContext.request.contextPath}";</script>
+	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/script/async/cercaProdottiAsync.js"></script>
+	
+	
 </body>
 
 <script type="text/javascript">

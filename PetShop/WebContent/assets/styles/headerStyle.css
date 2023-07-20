@@ -144,22 +144,24 @@ div #home_redirect {
 	width: 20px;
 }
 
-#element {
+.element {
 	border-bottom: 2px solid #333;
 	padding: 3%;
 	width: 80%;
 	margin: auto;
 }
 
-#element h4 {
+.element h4 {
 	word-wrap: break-word;
 }
 
-#element img {
+.element img {
 	width: 30%;
 }
 
-#element span {
+
+
+.element span {
 	font-weight: bold;
 }
 
