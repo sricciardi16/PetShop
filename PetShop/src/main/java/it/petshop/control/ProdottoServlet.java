@@ -19,7 +19,7 @@ public class ProdottoServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		prodottoDao = new ProdottoDAO(dataSource);
 	}
 

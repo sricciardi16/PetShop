@@ -26,7 +26,7 @@ public class CategoriaServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		categoriaDao = new CategoriaDAO(dataSource);
 	}
 

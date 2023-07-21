@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		utenteDao = new UtenteDAO(dataSource);
 		amministratoreDao = new AmministratoreDAO(dataSource);
 	}

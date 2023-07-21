@@ -40,7 +40,7 @@ public class CheckoutServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		indirizzoDao = new IndirizzoDAO(dataSource);
 		metodoSpedizioneDao = new MetodoSpedizioneDAO(dataSource);
 		metodoPagamentoDao = new MetodoPagamentoDAO(dataSource);

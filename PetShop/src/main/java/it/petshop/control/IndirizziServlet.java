@@ -24,7 +24,7 @@ public class IndirizziServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		indirizzoDao = new IndirizzoDAO(dataSource);
 	}
 

@@ -25,7 +25,7 @@ public class OrdineServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		ordineDao = new OrdineDAO(dataSource);
 		elementoDao = new ElementoDAO(dataSource);
 	}

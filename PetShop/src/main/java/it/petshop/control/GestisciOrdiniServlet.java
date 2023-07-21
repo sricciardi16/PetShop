@@ -35,7 +35,7 @@ public class GestisciOrdiniServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
 		ordineDao = new OrdineDAO(dataSource);
 		utenteDao = new UtenteDAO(dataSource);
 		metodoPagamentoDao = new MetodoPagamentoDAO(dataSource);
