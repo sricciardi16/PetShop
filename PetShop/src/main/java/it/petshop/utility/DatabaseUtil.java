@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DatabaseUtil {
 
+	private DatabaseUtil() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static int getAutoIncrementValue(PreparedStatement preparedStatement) throws PetShopException {
 		int generatedId = -1;
 

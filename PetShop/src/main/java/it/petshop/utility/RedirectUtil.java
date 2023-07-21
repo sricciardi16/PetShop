@@ -8,6 +8,10 @@ import javax.servlet.http.HttpSession;
 
 public class RedirectUtil {
 	
+	private RedirectUtil() {
+		throw new IllegalStateException("Utility class");
+	}
+	
 	public static void storeCurrentUrlForRedirect(HttpServletRequest request) {
 		String requester = request.getRequestURI();
 		if (request.getQueryString() != null)
