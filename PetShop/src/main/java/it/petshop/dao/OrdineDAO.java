@@ -205,7 +205,6 @@ public class OrdineDAO {
 	    } catch (SQLException e) {
 	        throw new PetShopException("Errore durante l'aggiornamento dello stato dell'ordine", 500, e);
 	    }
-	    System.out.println(affectedRows);
 	    return affectedRows > 0;
 	}
 

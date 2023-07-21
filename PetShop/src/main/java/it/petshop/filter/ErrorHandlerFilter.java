@@ -30,7 +30,6 @@ public class ErrorHandlerFilter extends HttpFilter {
 			} else {
 				response.sendError(errorCode, exception.getMessage());
 			}
-			return;
 		}
 	}
 }

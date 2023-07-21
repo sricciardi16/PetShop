@@ -39,7 +39,7 @@ public class OrdineServlet extends HttpServlet {
 		Ordine ordine = ordineDao.findById(idOrdine);
 
 
-        if (request.getServletPath().equals("/utente/ordine") || !ordineDao.findAllByUtente(utente).contains(ordine)) {
+        if (request.getServletPath().equals("/user/ordine") && !ordineDao.findAllByUtente(utente).contains(ordine)) {
         		throw new PetShopException("Accesso Negato Alla Risorsa", HttpServletResponse.SC_FORBIDDEN);
         }
 		
