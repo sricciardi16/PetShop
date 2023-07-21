@@ -96,7 +96,7 @@ public class CarrelloServlet extends HttpServlet {
 		
 		carrello.getProdotti().values().removeIf(q -> q == 0);
 		
-		int numeroProdottiCarrello = carrello.getProdotti().values().stream().mapToInt(i -> i.intValue()).reduce(0, (q, r) -> q + r);
+		int numeroProdottiCarrello = carrello.getProdotti().values().stream().mapToInt(Number::intValue).reduce(0, (q, r) -> q + r);
 		double totaleCarrello = carrello.getProdotti().entrySet().stream().mapToDouble(c -> c.getKey().getPrezzo() * c.getValue()).reduce(0, (r, p) -> r + p);
 		totaleCarrello = Math.round(totaleCarrello * 100.0) / 100.0;
 		
