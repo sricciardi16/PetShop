@@ -30,6 +30,8 @@ import it.petshop.utility.JsonResponseHelper;
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	public static final String METODO_PAGAMENTO_CONTANTI = "contanti";
+	
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
 	private MetodoPagamentoDAO metodoPagamentoDao;
@@ -60,11 +62,11 @@ public class CheckoutServlet extends HttpServlet {
 		Utente utente = (Utente) session.getAttribute("utente");
 		List<Indirizzo> indirizzi = indirizzoDao.findAllByUtente(utente);
 		List<MetodoSpedizione> metodiSpedizione = metodoSpedizioneDao.findAll();
-		MetodoPagamento contanti = metodoPagamentoDao.findFirstByTipo("contanti");
+		MetodoPagamento contanti = metodoPagamentoDao.findFirstByTipo(METODO_PAGAMENTO_CONTANTI);
 
 		request.setAttribute("indirizzi", indirizzi);
 		request.setAttribute("metodiSpedizione", metodiSpedizione);
-		request.setAttribute("contanti", contanti);
+		request.setAttribute(METODO_PAGAMENTO_CONTANTI, contanti);
 		request.getRequestDispatcher("/WEB-INF/views/utente/registrato/checkout.jsp").forward(request, response);
 	}
 
@@ -80,8 +82,8 @@ public class CheckoutServlet extends HttpServlet {
 		int idUtente = ((Utente) session.getAttribute("utente")).getId();
 		String metodoPagamentoParam = request.getParameter("metodoPagamento");
 		int idMetodoPagamento;
-		if ((metodoPagamentoDao.findFirstByTipo("contanti").getId() + "").equals(metodoPagamentoParam)) {
-			idMetodoPagamento = metodoPagamentoDao.findFirstByTipo("contanti").getId();
+		if ((metodoPagamentoDao.findFirstByTipo(METODO_PAGAMENTO_CONTANTI).getId() + "").equals(metodoPagamentoParam)) {
+			idMetodoPagamento = metodoPagamentoDao.findFirstByTipo(METODO_PAGAMENTO_CONTANTI).getId();
 		} else {
 			MetodoPagamento metodoPagamento = new MetodoPagamento();
 			metodoPagamento.setTipo(metodoPagamentoParam);
