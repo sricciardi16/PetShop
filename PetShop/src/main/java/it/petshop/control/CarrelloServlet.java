@@ -25,6 +25,9 @@ import it.petshop.utility.JsonResponseHelper;
 
 public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String CARRELLO_SA = "carrello";
+	
 	private ProdottoDAO prodottoDao;
 
 	@Override
@@ -42,7 +45,7 @@ public class CarrelloServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute("carrello")).orElse(new Carrello()) : new Carrello();
+		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute(CARRELLO_SA)).orElse(new Carrello()) : new Carrello();
 		
 		Gson gson = new Gson();
 		
@@ -77,7 +80,7 @@ public class CarrelloServlet extends HttpServlet {
 		String mode = request.getParameter("mode");
 		boolean increase = mode.equals("increase") ? true : false;
 
-		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute("carrello")).orElse(new Carrello()) : new Carrello();
+		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute(CARRELLO_SA)).orElse(new Carrello()) : new Carrello();
 
 		// --- 
 		int quantitaOld = carrello.getProdotti().getOrDefault(prodotto, 0);
@@ -101,7 +104,7 @@ public class CarrelloServlet extends HttpServlet {
 		carrello.setTotale(totaleCarrello);
 		// ---
 		
-		session.setAttribute("carrello", carrello);
+		session.setAttribute(CARRELLO_SA, carrello);
 		JsonResponseHelper jresponse = new JsonResponseHelper();
 		if (quantitaDisponibile) {
 			jresponse.add("status", "success");
