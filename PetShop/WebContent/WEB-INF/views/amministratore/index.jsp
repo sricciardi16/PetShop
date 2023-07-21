@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Pannello di Amministrazione</title>
-<link rel="stylesheet" type="text/css" href="index.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/index.css">
+
 
 </head>
 <body>
