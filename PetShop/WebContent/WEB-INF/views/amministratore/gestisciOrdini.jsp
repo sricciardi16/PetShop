@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<html>
+<!DOCTYPE html>
 <head>
 <title>Gestisci Ordini</title>
 <link type="text/css" rel="stylesheet"
