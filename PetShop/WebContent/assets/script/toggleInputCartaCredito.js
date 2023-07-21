@@ -1,5 +1,5 @@
-var elementiInput = document.querySelectorAll(".metodoPagamento input[type='text']");
-var bottoneRadioContanti = document.getElementById("contanti-radio-button");
+let elementiInput = document.querySelectorAll(".metodoPagamento input[type='text']");
+let bottoneRadioContanti = document.getElementById("contanti-radio-button");
 
 function disabilitaInputCartaCredito() {
   elementiInput.forEach(function(elementoInput) {

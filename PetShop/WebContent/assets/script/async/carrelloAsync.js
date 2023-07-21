@@ -16,8 +16,8 @@ function loadProducts() {
 
 function populateProducts(response) {
 	$('#prodotti').empty(); 
-	numeroProdotti = response.numeroProdottiCarrello;
-	totale = response.totaleCarrello;
+	let numeroProdotti = response.numeroProdottiCarrello;
+	let totale = response.totaleCarrello;
 	
 	if (numeroProdotti > 0) {
 		response.prodottiCarrello.forEach(function(prodotto) {
