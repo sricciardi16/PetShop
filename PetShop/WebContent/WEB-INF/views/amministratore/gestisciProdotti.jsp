@@ -14,6 +14,7 @@
 	<div id="content">
 		<div id="prodotti">
 			<h1>I nostri prodotti</h1>
+			<div class="filter-container">
 			<h3 id="ordinaPer">Ordina per:</h3>
 			<select id="tipologia" name="tipologia">
 				<option value="tutte">Tutte</option>
@@ -27,14 +28,13 @@
 				<option value="asc">Crescente</option>
 				<option value="desc">Decrescente</option>
 			</select>
-
+			</div>
+			
 			<table id="productList">
 				<tbody>
 				
 				
 				</tbody>
-
-
 			</table>
 		</div>
 		<div class="pagination">

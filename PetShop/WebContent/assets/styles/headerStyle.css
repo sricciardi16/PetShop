@@ -3,7 +3,7 @@ body {
 	/* Imposta l'altezza del body al 100% dell'altezza del viewport */
 	margin: 0;
 	font-family: sans-serif;
-	min-width: 50%;
+	font-size: 17px;
 }
 
 .navbar {
@@ -11,6 +11,9 @@ body {
 	overflow: hidden;
 	border-top: 1px solid #787878;
 	min-width: 380px;
+	display:flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 div #home_redirect {
@@ -19,7 +22,7 @@ div #home_redirect {
 }
 
 .home {
-	background-color: #FA9D12;
+	width: 8%;
 	border-right: 4px solid #333;
 }
 
@@ -58,25 +61,28 @@ div #home_redirect {
 	float: left;
 	color: white;
 	text-align: center;
-	padding: 1% 1%;
+	padding: 1%;
 	text-decoration: none;
-	font-size: 17px;
 }
 
 .dropdown {
+	width:9%;
 	float: left;
 	overflow: hidden;
 }
 
+.dropdown img{
+		width: 15%;
+}
+
 .dropdown .dropbtn {
-	font-size: 17px;
 	border: none;
 	outline: none;
 	color: white;
-	padding: 14px 16px;
+	padding: 14% 14%;
 	background-color: inherit;
 	font-family: inherit;
-	margin: 0;
+	margin: auto;
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
@@ -118,6 +124,7 @@ div #home_redirect {
 	overflow: hidden;
 	display: table-row;
 	margin-right: 1%;
+	margin-left: 40%;
 }
 
 .search-container a {
@@ -125,23 +132,15 @@ div #home_redirect {
 	float: right;
 }
 
-.search-container input[type=text] {
-	margin: auto;
-	font-size: 17px;
-	border: none;
-	float: right;
-	width: 50%;
-	padding: 3%;
-}
-
 .cart-icon {
-	display: flex;
-	align-items: center;
 	background-color: #FA9D12;
+	width: 4.5%;
+	margin:auto;
 }
 
 .cart-icon img {
-	width: 20px;
+	width: 100%;
+	margin: auto;
 }
 
 .element {
@@ -158,8 +157,6 @@ div #home_redirect {
 .element img {
 	width: 30%;
 }
-
-
 
 .element span {
 	font-weight: bold;
@@ -227,25 +224,14 @@ div #home_redirect {
 	display: block;
 }
 
-@media ( max-width : 767px) {
-	body {
-		font-size: 14px;
+@media (max-width: 860px){
+	dropdown-search-content{
+	display:none;
 	}
-	#myDropDown {
-		display: none;
+	.dropbtn-search{
+	display:none;
 	}
-	.dropbtn-search {
-		display: none;
-	}
-	.navbar {
-		display: flex;
-		justify-content: center;
-		align-content: center;
-	}
-}
-
-@media ( min-width : 768px) and (max-width: 1023px) {
-	.search-container input[type=text] {
-		width: 50%;
-	}
+	.dropbtn{
+	font-size: 10px;
+	}	
 }

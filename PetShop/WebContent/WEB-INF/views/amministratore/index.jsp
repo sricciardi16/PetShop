@@ -4,24 +4,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Pannello di Amministrazione</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="index.css">
 
 </head>
 <body>
 		<jsp:include page="../fragments/adminHeader.jsp" />
-	
 		<h1>Ciao ${sessionScope.nomeUtente}, sei un Amministratore</h1>
-	
-	<nav>
-		<ul>
-			<li><a href="${pageContext.request.contextPath}/prodotti?animale=cane">Prodotti Cane</a></li>
-			<li><a href="${pageContext.request.contextPath}/prodotti?animale=gatto">Prodotti Gatto</a></li>
-			<li><a href="${pageContext.request.contextPath}/admin/prodotti/create">Nuovo Prodotto</a></li>
-			<li><a href="${pageContext.request.contextPath}/admin/ordini">Gestisci Ordini</a></li>
-			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-		</ul>
-	</nav>
-			<jsp:include page="../fragments/toast.jsp" />
+			<div id="content">
+	<div id="text">
+	</div>
+		<img alt="logo" src="${pageContext.request.contextPath}/assets/img/GUI/logo.png">
+    	</div>
+		<jsp:include page="../fragments/toast.jsp" />
 	<jsp:include page="../fragments/footer.jsp" />
 </body>
 </html>

@@ -9,7 +9,6 @@
 </head>
 <body>
 	<jsp:include page="WEB-INF/views/fragments/header.jsp" />
-
 	<div id="content">
 	<div id="text">
 			<h1 >Benvenuto!</h1>
