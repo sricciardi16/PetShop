@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+
 public class JsonResponseHelper {
+	
 	private static final Gson gson = new Gson();
 	private Map<String, Object> data;
 
@@ -23,6 +25,18 @@ public class JsonResponseHelper {
 	public void send(HttpServletResponse response) throws IOException {
 		response.setContentType("application/json");
 		response.getWriter().write(gson.toJson(data));
+	}
+	
+	public void addStatusSuccess() {
+		data.put("status", "success");
+	}
+	
+	public void addStatusError() {
+		data.put("status", "success");
+	}
+	
+	public void addMessage(String message) {
+		data.put("message", message);
 	}
 
 }

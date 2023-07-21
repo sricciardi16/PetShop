@@ -103,11 +103,11 @@ public class GestisciOrdiniServlet extends HttpServlet {
 		
 		JsonResponseHelper jresponse = new JsonResponseHelper();
 		if (updated) {
-			jresponse.add("status", "success");
-			jresponse.add("message", "Stato Ordine Aggiornato");
+			jresponse.addStatusSuccess();
+			jresponse.addMessage("Stato Ordine Aggiornato");
 		} else {
-			jresponse.add("status", "error");
-			jresponse.add("message", "Errore Stato Ordine");
+			jresponse.addStatusError();
+			jresponse.addMessage("Errore Stato Ordine");
 		}
 		jresponse.send(response);	
 		
