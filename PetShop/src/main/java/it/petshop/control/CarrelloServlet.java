@@ -78,7 +78,7 @@ public class CarrelloServlet extends HttpServlet {
 		Prodotto prodotto = prodottoDao.findById(Integer.parseInt(request.getParameter("id")));
 		int quantita = Integer.parseInt(request.getParameter("quantita"));
 		String mode = request.getParameter("mode");
-		boolean increase = mode.equals("increase") ? true : false;
+		boolean increase = mode.equals("increase");
 
 		Carrello carrello = session != null ? Optional.ofNullable((Carrello) session.getAttribute(CARRELLO_SA)).orElse(new Carrello()) : new Carrello();
 
