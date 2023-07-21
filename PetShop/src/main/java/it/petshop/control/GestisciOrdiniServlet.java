@@ -57,9 +57,10 @@ public class GestisciOrdiniServlet extends HttpServlet {
 			return;
 			
 		} 
-		
-		 
-		Utente utente = request.getParameter("clienteId") == null || request.getParameter("clienteId").isBlank() ? null : new Utente(Integer.parseInt(request.getParameter("clienteId")));
+		 Utente utente = null;
+		 String utenteIdParam = request.getParameter("clienteId");
+		 if (utenteIdParam != null && !utenteIdParam.isBlank())
+			 utente = new Utente(Integer.parseInt(utenteIdParam));
 		 String startDate = request.getParameter("startDate");
 	     String endDate = request.getParameter("endDate");
 	     String ordinamento = request.getParameter("ordinamento");
