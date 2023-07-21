@@ -31,7 +31,7 @@ public class IndirizziServlet extends HttpServlet {
 		if (request.getPathInfo() != null && !request.getPathInfo().equals("/new"))
 			throw new PetShopException("Percorso Errato", HttpServletResponse.SC_NOT_FOUND);
 
-		boolean create = request.getPathInfo() != null ? true : false;
+		boolean create = request.getPathInfo() != null;
 
 		if (create) {
 			String redirect = request.getParameter("redirect");
