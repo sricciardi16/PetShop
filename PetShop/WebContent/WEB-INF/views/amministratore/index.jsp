@@ -9,14 +9,13 @@
 
 </head>
 <body>
-		<jsp:include page="../fragments/adminHeader.jsp" />
-		<h1>Ciao ${sessionScope.nomeUtente}, sei un Amministratore</h1>
-			<div id="content">
-	<div id="text">
-	</div>
+	<jsp:include page="../fragments/adminHeader.jsp" />
+	<h1>Ciao ${sessionScope.nomeUtente}, sei un Amministratore</h1>
+	<div id="content">
+		<div id="text"></div>
 		<img alt="logo" src="${pageContext.request.contextPath}/assets/img/GUI/logo.png">
-    	</div>
-		<jsp:include page="../fragments/toast.jsp" />
+	</div>
+	<jsp:include page="../fragments/toast.jsp" />
 	<jsp:include page="../fragments/footer.jsp" />
 </body>
 </html>

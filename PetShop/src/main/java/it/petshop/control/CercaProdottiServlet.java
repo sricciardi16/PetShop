@@ -2,6 +2,7 @@ package it.petshop.control;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,6 @@ import javax.sql.DataSource;
 import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.JsonResponseHelper;
-import it.petshop.utility.PetShopException;
 
 public class CercaProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

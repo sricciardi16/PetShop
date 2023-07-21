@@ -60,14 +60,14 @@ td>* {
 	color: #FA9D12;
 }
 
-@media(max-width: 1300px) {
+@media ( max-width : 1300px) {
 	td {
 		font-size: 10px;
 	}
 }
 
-@media (max-width: 855px){
-		.filterContent {
+@media ( max-width : 855px) {
+	.filterContent {
 		display: grid;
 		grid-template-columns: 1fr;
 		margin-top: 1%;

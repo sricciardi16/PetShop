@@ -72,26 +72,26 @@ form {
 	padding: 3%;
 }
 
-@media (min-width : 875px) and (max-width: 1162px) {
+@media ( min-width : 875px) and (max-width: 1162px) {
 	form {
 		width: 40%;
 	}
 }
 
-@media (min-width : 700px) and (max-width : 875px) {
+@media ( min-width : 700px) and (max-width : 875px) {
 	form {
 		width: 55%;
 	}
 }
 
-@media (min-width : 414px) and (max-width : 700px) {
+@media ( min-width : 414px) and (max-width : 700px) {
 	form {
 		width: 85%;
 	}
 }
 
-@media (max-width: 414px) {
-	form{
+@media ( max-width : 414px) {
+	form {
 		width: 95%;
 	}
 }

@@ -19,7 +19,7 @@
 				<button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}';">Home</button>
 			</div>
 			<div class="dropdown">
-				<button  id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=cane';">Cani</button>
+				<button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=cane';">Cani</button>
 				<div class="dropdown-content">
 					<a href="${pageContext.request.contextPath}/prodotti?animale=cane&tipologia=cibo" class="bold">Cibo</a> <a href="${pageContext.request.contextPath}/prodotti?animale=cane&tipologia=cibo&tipologiaIn=secco">Cibo Secco</a> <a
 						href="${pageContext.request.contextPath}/prodotti?animale=cane&tipologia=cibo&tipologiaIn=secco%20dietetico">Cibo Secco Dietetico</a> <a href="${pageContext.request.contextPath}/prodotti?animale=cane&tipologia=cibo&tipologiaIn=snack">Snack</a> <a
@@ -89,13 +89,15 @@
 						href="${pageContext.request.contextPath}/prodotti?animale=gatto&tipologia=cucce%20lettini&tipologiaIn=cucce%20esterne">Cucce Esterne</a> <a href="${pageContext.request.contextPath}/prodotti?animale=gatto&tipologia=cucce%20lettini&tipologiaIn=cucce%20interne">Cucce Interne</a> <a
 						href="${pageContext.request.contextPath}/prodotti?animale=gatto&tipologia=cucce%20lettini&tipologiaIn=cuscini">Cuscini</a>
 				</div>
-			</div>	
-						<div class="dropdown">
-				<button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=gatto';" style="background-color: #FA9D12;"><img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" /></button>
+			</div>
+			<div class="dropdown">
+				<button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=gatto';" style="background-color: #FA9D12;">
+					<img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" />
+				</button>
 				<div class="dropdown-content">
 					<a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a> <a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a> <a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a> <a href="${pageContext.request.contextPath}/logout">Logout</a>
 				</div>
-			</div>		
+			</div>
 			<div class="search-container">
 				<c:choose>
 					<c:when test='${empty sessionScope.nomeUtente || empty sessionScope.role}'>
@@ -107,14 +109,12 @@
 				</c:choose>
 
 				<a href="carrello" class="cart-icon"><img src="${pageContext.request.contextPath}/assets/img/GUI/carrello.png" alt="Carrello" /></a>
-				<button id="responsiveButton" onclick="myFunction()" class="dropbtn-search">${label},cerca qui</button>
+				<button id="responsiveButton" onclick="myFunction()" class="dropbtn-search">${label},cercaqui</button>
 				<div id="myDropdown" class="dropdown-search-content">
 					<div id="input-text">
 						<input type="text" placeholder="Search.." id="myInput" onkeyup="myFunction2()" />
 					</div>
-					<div id="elements">
-						
-					</div>
+					<div id="elements"></div>
 				</div>
 			</div>
 		</div>

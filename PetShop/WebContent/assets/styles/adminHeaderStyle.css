@@ -14,9 +14,9 @@ body {
 
 #home {
 	background-color: #FA9D12;
-	width:10%;
+	width: 10%;
 	border-bottom: 5px solid #FA9D12;
-	margin:auto;
+	margin: auto;
 }
 
 .container-logo {
@@ -62,18 +62,18 @@ body {
 .dropdown {
 	float: left;
 	overflow: hidden;
-	width:15%;
-	margin:auto;
+	width: 15%;
+	margin: auto;
 }
 
 .dropbtn {
 	font-size: 15px;
 	border: none;
 	outline: none;
-	padding:8%;
+	padding: 8%;
 	color: white;
-	width:100%;
-	margin:auto;
+	width: 100%;
+	margin: auto;
 	background-color: inherit;
 	font-family: inherit;
 }
@@ -111,39 +111,39 @@ body {
 	display: block;
 }
 
-.logoutContainer{
-	width:30%;
+.logoutContainer {
+	width: 30%;
 	float: right;
-	margin:auto;
+	margin: auto;
 	overflow: hidden;
-display: table-row;
+	display: table-row;
 }
 
-.logoutContainer button{
-	width:100%;
-	margin:auto;
-	padding:4%;
+.logoutContainer button {
+	width: 100%;
+	margin: auto;
+	padding: 4%;
 }
 
-.alignToRight{
+.alignToRight {
 	float: right;
 }
 
-@media (min-width : 450px) and (max-width : 875px){
-	#home{
+@media ( min-width : 450px) and (max-width : 875px) {
+	#home {
 		padding-top: 1.8%;
 		padding-bottom: 1.8%;
 	}
 }
 
-@media (max-width : 450px) {
-	.dropbtn{
-	font-size: 9px;
-	padding:0;
+@media ( max-width : 450px) {
+	.dropbtn {
+		font-size: 9px;
+		padding: 0;
 	}
-    #home{
-    font-size: 9px;
-    }
+	#home {
+		font-size: 9px;
+	}
 	.navbar {
 		display: flex;
 		flex-direction: row;

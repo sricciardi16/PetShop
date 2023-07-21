@@ -22,7 +22,6 @@ import it.petshop.utility.FileUtil;
 import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.PetShopException;
 
-
 @MultipartConfig
 public class GestisciProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

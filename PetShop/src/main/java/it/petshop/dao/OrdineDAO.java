@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import it.petshop.dto.Elemento;
 import it.petshop.dto.Ordine;
 import it.petshop.dto.Utente;
 import it.petshop.utility.DatabaseUtil;

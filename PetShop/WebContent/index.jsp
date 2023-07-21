@@ -10,12 +10,12 @@
 <body>
 	<jsp:include page="WEB-INF/views/fragments/header.jsp" />
 	<div id="content">
-	<div id="text">
-			<h1 >Benvenuto!</h1>
-		<p >La soluzione completa per il tuo amico a quattro zampe!</p>
-	</div>
+		<div id="text">
+			<h1>Benvenuto!</h1>
+			<p>La soluzione completa per il tuo amico a quattro zampe!</p>
+		</div>
 		<img alt="logo" src="${pageContext.request.contextPath}/assets/img/GUI/logo.png">
-    	</div>
+	</div>
 	<jsp:include page="WEB-INF/views/fragments/toast.jsp" />
 	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />
 </body>

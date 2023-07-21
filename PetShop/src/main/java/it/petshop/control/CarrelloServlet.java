@@ -3,25 +3,6 @@ package it.petshop.control;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
-import it.petshop.dao.ProdottoDAO;
-import it.petshop.dto.Carrello;
-import it.petshop.dto.Prodotto;
-import it.petshop.utility.JsonResponseHelper;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -39,8 +20,8 @@ import com.google.gson.JsonElement;
 import it.petshop.dao.ProdottoDAO;
 import it.petshop.dto.Carrello;
 import it.petshop.dto.Prodotto;
-import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.AjaxUtil;
+import it.petshop.utility.JsonResponseHelper;
 
 public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

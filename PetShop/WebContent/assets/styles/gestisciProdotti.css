@@ -31,8 +31,7 @@ body {
 	margin-top: 1%;
 }
 
-th,
-td {
+th, td {
 	border-bottom: 1px solid black;
 	text-align: center;
 }
@@ -61,8 +60,7 @@ img {
 	margin-left: 1%;
 }
 
-.aggiorna,
-.elimina {
+.aggiorna, .elimina {
 	background-color: #FA9D12;
 	border: none;
 	color: white;
@@ -84,50 +82,41 @@ img {
 	margin: 1%;
 }
 
-
-@media (max-width: 848px) {
-
+@media ( max-width : 848px) {
 	.filter-container {
 		width: 60%;
 		margin: auto;
 		display: flex;
 		flex-direction: column;
 	}
-
 	#table-container {
-		margin:auto;
+		margin: auto;
 		overflow-x: auto;
 		min-width: 300px;
 	}
-
 	.immagine {
 		display: none;
 	}
-
 	.filter-container>* {
 		margin-top: 2%;
 		margin-bottom: 2%;
 	}
 }
 
-@media (max-width: 970px) {
-
+@media ( max-width : 970px) {
 	.filter-container {
 		width: 60%;
 		margin: auto;
 		display: flex;
 		flex-direction: column;
 	}
-
 	#productList {
 		width: 70%;
 		margin: auto;
 	}
-
 	.immagine {
 		display: none;
 	}
-
 	.filter-container>* {
 		margin-top: 2%;
 		margin-bottom: 2%;

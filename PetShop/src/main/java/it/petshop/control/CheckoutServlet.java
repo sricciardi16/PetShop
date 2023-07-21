@@ -1,11 +1,7 @@
 package it.petshop.control;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,12 +22,10 @@ import it.petshop.dto.Indirizzo;
 import it.petshop.dto.MetodoPagamento;
 import it.petshop.dto.MetodoSpedizione;
 import it.petshop.dto.Ordine;
-import it.petshop.dto.Prodotto;
 import it.petshop.dto.Utente;
-import it.petshop.utility.JsonResponseHelper;
-import it.petshop.utility.PetShopException;
 import it.petshop.utility.AjaxUtil;
 import it.petshop.utility.FileUtil;
+import it.petshop.utility.JsonResponseHelper;
 
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

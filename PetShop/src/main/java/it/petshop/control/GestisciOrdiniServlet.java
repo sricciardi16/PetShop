@@ -21,9 +21,9 @@ import it.petshop.dao.OrdineDAO;
 import it.petshop.dao.UtenteDAO;
 import it.petshop.dto.Ordine;
 import it.petshop.dto.Utente;
+import it.petshop.utility.AjaxUtil;
 import it.petshop.utility.JsonResponseHelper;
 import it.petshop.utility.PetShopException;
-import it.petshop.utility.AjaxUtil;
 
 public class GestisciOrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

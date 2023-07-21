@@ -11,10 +11,8 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.OrdineDAO;
-import it.petshop.dto.Indirizzo;
 import it.petshop.dto.Ordine;
 import it.petshop.dto.Utente;
-import it.petshop.utility.PetShopException;
 
 public class OrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

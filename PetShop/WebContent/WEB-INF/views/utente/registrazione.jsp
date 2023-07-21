@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="it">
-<head >
+<head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/registrazione.css">
 <script src="${pageContext.request.contextPath}/assets/script/common/validateForm.js"></script>
@@ -70,6 +70,6 @@
 	</div>
 	<jsp:include page="../fragments/toast.jsp" />
 	<jsp:include page="../fragments/footer.jsp" />
-	
+
 </body>
 </html>

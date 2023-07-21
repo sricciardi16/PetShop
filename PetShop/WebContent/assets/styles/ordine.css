@@ -8,8 +8,8 @@
 
 .prodotto {
 	width: 80%;
-	margin: 2% auto 2% auto; 
-	word-wrap : break-word;
+	margin: 2% auto 2% auto;
+	word-wrap: break-word;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -57,7 +57,7 @@
 	cursor: pointer;
 	color: white;
 	border-radius: 5px;
-	padding:1%;
+	padding: 1%;
 }
 
 .checkout {
@@ -84,13 +84,12 @@
 		overflow-x: auto;
 		min-width: 300px;
 	}
-	
-@media (min-width: 380px) and (max-width: 450px){
-	#content{
-	font-size: 10px;
+	@media ( min-width : 380px) and (max-width: 450px) {
+		#content {
+			font-size: 10px;
+		}
+		.vaiAlProdotto {
+			font-size: 10px;
+		}
 	}
-	.vaiAlProdotto{
-	font-size:10px;
-	}
-}
 }
