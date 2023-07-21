@@ -32,6 +32,7 @@ public class CheckoutServlet extends HttpServlet {
 
 	public static final String METODO_PAGAMENTO_CONTANTI = "contanti";
 	public static final String TOTALE_SA = "totale";
+	public static final String CARRELLO_SA = "carrello";
 	
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
@@ -93,7 +94,7 @@ public class CheckoutServlet extends HttpServlet {
 		int idIndirizzo = Integer.parseInt(request.getParameter("indirizzo"));
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("metodoSpedizione"));
 		
-		Carrello carrello = (Carrello) session.getAttribute("carrello");
+		Carrello carrello = (Carrello) session.getAttribute(CARRELLO_SA);
 		
 		Ordine ordine = new Ordine();
 		ordine.setPrezzo(prezzo);
@@ -123,7 +124,7 @@ public class CheckoutServlet extends HttpServlet {
 			elementoDao.updateImmagineById(idElemento, immagineElemento);
 		});
 
-		session.removeAttribute("carrello");
+		session.removeAttribute(CARRELLO_SA);
 		
 		request.setAttribute("status", "success");
 		request.setAttribute("message", "Ordine Effettuato!");
@@ -133,7 +134,7 @@ public class CheckoutServlet extends HttpServlet {
 	private void calculateAndStoreTotaleCheckout(HttpServletRequest request, HttpSession session) {
 		int idMetodoSpedizione = Integer.parseInt(request.getParameter("idMetodoSpedizione"));
 		double prezzoSpedizione = metodoSpedizioneDao.findByKey(idMetodoSpedizione).getPrezzo();
-		double totaleParziale = ((Carrello) session.getAttribute("carrello")).getTotale();
+		double totaleParziale = ((Carrello) session.getAttribute(CARRELLO_SA)).getTotale();
 		double totale = Math.round((prezzoSpedizione + totaleParziale) * 100.0) / 100.0;
 		
 		session.setAttribute(TOTALE_SA, totale);
