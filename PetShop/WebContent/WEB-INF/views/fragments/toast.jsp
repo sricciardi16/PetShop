@@ -5,46 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<style type="text/css">
-.toast {
-	visibility: hidden;
-	max-width: 250px;
-	height: auto;
-	background-color: #333;
-	color: #fff;
-	text-align: center;
-	border-radius: 25px;
-	padding: 20px;
-	position: fixed;
-	z-index: 1;
-	left: 50%;
-	top: -100px;
-	font-size: 17px;
-	margin-left: -125px;
-	box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
-	opacity: 0;
-	transition: top 0.5s ease, opacity 0.5s ease;
-}
-
-.toast.show {
-	visibility: visible;
-	top: 30px;
-	opacity: 1;
-	transition: top 0.5s ease, opacity 0.5s ease;
-}
-</style>
-<script>
-	function showToast(message, color) {
-		let toast = document.querySelector(".toast");
-		toast.textContent = message;
-		toast.classList.add("show");
-		toast.style.backgroundColor = color;
-
-		setTimeout(function() {
-			toast.classList.remove("show");
-		}, 3000);
-	}
-</script>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/toast.css">
+<script src="${pageContext.request.contextPath}/assets/script/toast.js"></script>
 </head>
 <body>
 	<div class="toast"></div>

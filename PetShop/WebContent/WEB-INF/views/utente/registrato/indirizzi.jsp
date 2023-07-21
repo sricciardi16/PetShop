@@ -10,7 +10,7 @@
 <title>I miei Indirizzi</title>
 </head>
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
+	<jsp:include page="../../fragments/header.jsp" />
 	<div id="content">
 		<c:forEach var="indirizzo" items="${indirizzi}">
 			<div class="indirizzo">
@@ -26,6 +26,6 @@
 			<button class="creaNuovoIndirizzo" onclick="window.location.href = '${pageContext.request.contextPath}/user/indirizzi/new'">Crea nuovo indirizzo</button>
 		</div>
 	</div>
-	<jsp:include page="../../../views/fragments/footer.jsp" />
-</body>
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" /></body>
 </html>

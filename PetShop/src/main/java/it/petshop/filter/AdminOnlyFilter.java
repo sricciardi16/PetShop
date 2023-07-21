@@ -16,19 +16,14 @@ public class AdminOnlyFilter extends HttpFilter {
 	@Override
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 
-		if (session != null && session.getAttribute("amministratore") != null) {
-			chain.doFilter(request, response);
+		if (session.getAttribute("amministratore") == null) {
+			// messaggio per dire che non è un amminsitratore
+						response.sendRedirect(request.getContextPath() + "/");
+			
 		} else {
-			request.setAttribute("status", "error");
-			if (session == null) {
-				request.setAttribute("message", "Effettua prima l'accesso!");
-			} else if (session.getAttribute("utente") != null) {
-				request.setAttribute("message", "Non Sei un Amministratore!");
-			}
-
-			request.getRequestDispatcher("").forward(request, response);
+			chain.doFilter(request, response);
 		}
 
 	}

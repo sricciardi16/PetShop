@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
+	<jsp:include page="../../fragments/header.jsp" />
 	<div id="content">
 		<form action="${pageContext.request.contextPath}/user/checkout" method="post">
 			<h4>Indirizzi:</h4>
@@ -24,7 +24,7 @@
 						<br>
 					</div>
 				</c:forEach>
-				<button type="button" onclick="window.location.href = '${pageContext.request.contextPath}/user/indirizzi/new?callbackRedirect=checkout'" name="addAddress">Aggiungi Un Nuovo Indirizzo</button>
+				<button type="button" onclick="window.location.href = '${pageContext.request.contextPath}/user/indirizzi/new?redirect=${pageContext.request.contextPath}/user/checkout'" name="addAddress">Aggiungi Un Nuovo Indirizzo</button>
 			</div>
 			<br>
 			<h4>Metodo di spedizione:</h4>
@@ -57,22 +57,17 @@
 			</div>
 			<h4>Resoconto ordine:</h4>
 			<div id="resoconto">
-				<h6>${sessionScope.numeroProdottiCarrello}prodotti</h6>
-				<h6>Totale Parziale ${sessionScope.totaleCarrello}</h6>
+				<h6>${sessionScope.carrello.numeroProdotti} prodotti</h6>
+				<h6>Totale Parziale ${sessionScope.carrello.totale}</h6>
 				<h6 id="prezzoSpedizione"></h6>
 				<h6 id="prezzoTotale"></h6>
 				<input type="submit" value="Invia ordine">
 			</div>
 		</form>
 	</div>
-	<jsp:include page="../../../views/fragments/footer.jsp" />
-	<jsp:include page="../../../views/fragments/toast.jsp" />
-	<script>let contextPath = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" />
 	<script src="${pageContext.request.contextPath}/assets/script/async/totaleConSpedizioneAsync.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/script/toggleInputCartaCredito.js"></script>
-
-
 </body>
 </html>

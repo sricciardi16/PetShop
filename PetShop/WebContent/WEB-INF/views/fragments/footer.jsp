@@ -17,6 +17,5 @@
 			<img alt="facebook" src="${pageContext.request.contextPath}/assets/img/GUI/facebook.png"> <img alt="instagram" src="${pageContext.request.contextPath}/assets/img/GUI/insta.png">
 		</div>
 	</div>
-
 </body>
 </html>

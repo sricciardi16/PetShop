@@ -113,16 +113,8 @@
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		let imgProdottiPath = "${pageContext.request.contextPath}${initParam['imgProdottiPath']}";
-	</script>
-	<script>let contextPath = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+	<jsp:include page="script.jsp" />
 	<script src="${pageContext.request.contextPath}/assets/script/async/cercaProdottiAsync.js"></script>
-	
-	
 </body>
 
 <script type="text/javascript">

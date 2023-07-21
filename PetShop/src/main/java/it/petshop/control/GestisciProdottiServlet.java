@@ -88,8 +88,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 	        productToUpdate.setDescrizione(getStringFromPart(request.getPart("descrizione")));
 	        productToUpdate.setPrezzo(Double.parseDouble(getStringFromPart(request.getPart("prezzo"))));
 	        productToUpdate.setInMagazzino(Integer.parseInt(getStringFromPart(request.getPart("inMagazzino"))));
-	        System.out.println("ok");
-
+	        
 	        Part filePart = request.getPart("immagine");
 	        if (filePart != null) {
 	        	ServletContext context = request.getServletContext();

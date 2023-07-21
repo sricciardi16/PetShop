@@ -9,18 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.petshop.utility.JsonResponseHelper;
+
 public class UserOnlyFilter extends HttpFilter {
 
-    @Override
-    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+	@Override
+	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("utente") != null) {
-            chain.doFilter(request, response);
-        } else {
-            response.sendRedirect(request.getContextPath() + "/login");
-        }
+		if (session != null && session.getAttribute("amministratore") != null) {
+			// messaggio per dire che è un amminsitratore
+			response.sendRedirect(request.getContextPath() + "/admin");
+		} else {
+			chain.doFilter(request, response);
+		}
 
-    }
+	}
+
 }

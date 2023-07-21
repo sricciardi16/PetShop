@@ -14,6 +14,7 @@ import it.petshop.dao.IndirizzoDAO;
 import it.petshop.dto.Indirizzo;
 import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
+import it.petshop.utility.RedirectUtil;
 
 public class IndirizziServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,10 +35,12 @@ public class IndirizziServlet extends HttpServlet {
 		boolean create = request.getPathInfo() != null ? true : false;
 
 		if (create) {
-			request.setAttribute("callbackRedirect", request.getAttribute("callbackRedirect"));
+			String redirect = request.getParameter("redirect");
+			if (redirect != null)
+				RedirectUtil.storeUrlForRedirect(request, redirect);
 			request.getRequestDispatcher("/WEB-INF/views/utente/registrato/nuovoIndirizzo.jsp").forward(request, response);
 		} else {
-			HttpSession session = request.getSession(false);
+			HttpSession session = request.getSession();
 			Utente utente = (Utente) session.getAttribute("utente");
 			
 			// ---
@@ -75,16 +78,16 @@ public class IndirizziServlet extends HttpServlet {
 			// ---
 			indirizzoDao.save(indirizzo);
 			// ---
-			
-			request.setAttribute("redirect", request.getContextPath() + "/" + request.getAttribute("callbackRedirect"));
+			if (!RedirectUtil.redirectToStoredUrl(session, response))
+				response.sendRedirect(request.getContextPath() + "/user/indirizzi");
 		} else if (request.getPathInfo().equals("/delete")) {
 			int toDeleteId = Integer.parseInt(request.getParameter("id"));
 			
 			// ---
 			indirizzoDao.deleteById(toDeleteId);
 			// ---
-
-			request.setAttribute("redirect", request.getContextPath() + "/user/indirizzi");
+			
+			response.sendRedirect(request.getContextPath() + "/user/indirizzi");
 		} else {
 			throw new PetShopException("Operazione Non Definita", HttpServletResponse.SC_NOT_FOUND);
 		}

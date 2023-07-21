@@ -4,7 +4,7 @@
 <title>Gestisci Ordini</title>
 </head>
 <body>
-<jsp:include page="../../../WEB-INF/views/fragments/adminHeader.jsp" />
+<jsp:include page="../fragments/adminHeader.jsp" />
 	<label for="selectClienti">Clienti: </label>
 	<select id="selectClienti">
 		<option value="">Tutti</option>
@@ -48,12 +48,8 @@
 	
 	</tbody>
 	</table>
-	<jsp:include page="../../../WEB-INF/views/fragments/footer.jsp" />
-	
-	<jsp:include page="../../views/fragments/toast.jsp" />
-	<script>let contextPath = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+	<jsp:include page="../fragments/toast.jsp" />
+	<jsp:include page="../fragments/footer.jsp" />
 	<script src="${pageContext.request.contextPath}/assets/script/async/gestisciOrdiniAsync.js"></script>
 </body>
 </html>

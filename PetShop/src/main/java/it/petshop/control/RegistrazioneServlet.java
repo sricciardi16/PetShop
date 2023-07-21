@@ -6,12 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import it.petshop.dao.AmministratoreDAO;
 import it.petshop.dao.UtenteDAO;
 import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
+import it.petshop.utility.RedirectUtil;
 
 public class RegistrazioneServlet extends HttpServlet {
 	private DataSource dataSource;
@@ -31,13 +33,14 @@ public class RegistrazioneServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
 		String email = request.getParameter("email");
 		String nomeUtente = request.getParameter("nomeUtente");
 		String password = request.getParameter("password");
 		String telefono = request.getParameter("telefono");
-		
+
 		Utente utente = new Utente();
 		utente.setNome(nome);
 		utente.setCognome(cognome);
@@ -55,6 +58,10 @@ public class RegistrazioneServlet extends HttpServlet {
 
 		request.setAttribute("status", "success");
 		request.setAttribute("message", "Registrazione Effettuata!");
+
+		if (!RedirectUtil.redirectToStoredUrl(session, response))
+			response.sendRedirect(request.getContextPath() + "/");
+
 	}
 
 }

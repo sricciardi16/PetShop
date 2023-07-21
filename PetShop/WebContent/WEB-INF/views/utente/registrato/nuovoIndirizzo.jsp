@@ -9,8 +9,7 @@
 <title>Nuovo indirizzo</title>
 </head>
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
-
+<jsp:include page="../../fragments/header.jsp" />
 	<h2>Inserisci i dati per aggiungere un nuovo indirizzo</h2>
 
 	<div id="content">
@@ -78,7 +77,8 @@
 			</div>
 		</form>
 	</div>
-	<jsp:include page="../../../views/fragments/footer.jsp" />
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" />
 
 	<!-- validare il form -->
 </body>

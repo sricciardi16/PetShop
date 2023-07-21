@@ -5,7 +5,7 @@
     <title>Crea un nuovo prodotto</title>
 </head>
 <body>
-	<jsp:include page="../../../WEB-INF/views/fragments/adminHeader.jsp" />
+	<jsp:include page="../fragments/adminHeader.jsp" />
     <form action="${pageContext.request.contextPath}/admin/prodotti/create" method="POST" enctype="multipart/form-data">
         <label for="nome">Nome:</label><br>
         <input type="text" id="nome" name="nome" required><br>
@@ -34,10 +34,9 @@
         <input type="file" id="immagine" name="immagine" required><br>
         <input type="submit" value="Crea prodotto">
     </form>
-    <script>let contextPath = "${pageContext.request.contextPath}";</script>
-	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+    <jsp:include page="../fragments/toast.jsp" />
+	<jsp:include page="../fragments/footer.jsp" />
 	<script src="${pageContext.request.contextPath}/assets/script/async/nuovoProdottoCategoriaAsync.js"></script>
-	<jsp:include page="../../../WEB-INF/views/fragments/footer.jsp" />
+
 </body>
 </html>

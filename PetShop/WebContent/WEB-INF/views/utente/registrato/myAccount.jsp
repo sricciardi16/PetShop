@@ -9,7 +9,7 @@
 <title>Il Mio Account</title>
 </head>
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
+	<jsp:include page="../../fragments/header.jsp" />
 	<div id="container">
 		<h2>Dati del Mio Account</h2>
 		<div class="elements">
@@ -34,6 +34,7 @@
 		</div>
 		<a href="${pageContext.request.contextPath}/logout">logout</a>
 	</div>
-	<jsp:include page="../../../views/fragments/footer.jsp" />
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" />
 </body>
 </html>

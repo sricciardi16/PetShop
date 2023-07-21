@@ -11,7 +11,7 @@
 <title>I Miei Ordini</title>
 </head>
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
+	<jsp:include page="../../fragments/header.jsp" />
 	<div id="content">
 		<h3>I Miei ordini</h3>
 		<h5>Questi sono gli ordini che hai effettuato dal momento della creazione del tuo account</h5>
@@ -39,6 +39,7 @@
 			</c:forEach>
 		</table>
 	</div>
-	<jsp:include page="../../../views/fragments/footer.jsp" />
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" />
 </body>
 </html>

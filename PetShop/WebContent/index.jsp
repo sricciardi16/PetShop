@@ -17,7 +17,7 @@
 		<a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a> <a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a> <a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a> <a href="${pageContext.request.contextPath}/logout">Logout</a>
 
 	</div>
-	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />
 	<jsp:include page="WEB-INF/views/fragments/toast.jsp" />
+	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />
 </body>
 </html>

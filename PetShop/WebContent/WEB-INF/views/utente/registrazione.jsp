@@ -67,6 +67,7 @@
 			</div>
 		</form>
 	</div>
+	<jsp:include page="../fragments/toast.jsp" />
 	<jsp:include page="../fragments/footer.jsp" />
 	<%-- Script per validare form --%>
 </body>

@@ -11,14 +11,15 @@
 <title>Ordine ${ordine.id}</title>
 </head>
 <body>
-	<jsp:include page="../../../views/fragments/header.jsp" />
+	<jsp:include page="../../fragments/header.jsp" />
 	<div id="content">
 
 		<c:forEach var="elemento" items="${elementi}">
 			<div class="prodotto">
 				<img src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}"> <label class="nome">${elemento.nome}</label> <label class="prezzo">${elemento.prezzo} &#8364</label> <label class="modificaQuantita">Quantità: ${elemento.quantita }</label> <label
 					class="totale">Totale: ${elemento.quantita * elemento.prezzo} &#8364</label>
-				<button class="vaiAlProdotto" onclick="'">Vai al prodotto</button>
+				<button class="vaiAlProdotto" onclick="window.location.href='${pageContext.request.contextPath}/prodotto?id=${elemento.idProdotto}'" ${elemento.idProdotto == 0 ? 'disabled' : ''}>Vai al prodotto</button>
+
 			</div>
 		</c:forEach>
 		<div class="checkout">
@@ -27,6 +28,8 @@
 				<b>Indietro</b>
 			</button>
 		</div>
-	</div><jsp:include page="../../../views/fragments/footer.jsp" />
+	</div>
+	<jsp:include page="../../fragments/toast.jsp" />
+	<jsp:include page="../../fragments/footer.jsp" />
 </body>
 </html>

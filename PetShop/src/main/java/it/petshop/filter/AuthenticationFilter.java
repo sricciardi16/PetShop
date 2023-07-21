@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import it.petshop.utility.RedirectUtil;
 
 public class AuthenticationFilter extends HttpFilter {
 
@@ -16,11 +17,13 @@ public class AuthenticationFilter extends HttpFilter {
 
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("nomeUtente") == null) {
-			request.setAttribute("status", "error");
-			request.setAttribute("message", "Non hai effettuato il login");
-			request.getRequestDispatcher("/").forward(request, response);
+		HttpSession session = request.getSession();
+		if (session.getAttribute("nomeUtente") == null) {
+
+			RedirectUtil.storeCurrentUrlForRedirect(request);
+
+			response.sendRedirect(request.getContextPath() + "/login");
+
 		} else {
 			chain.doFilter(request, response);
 		}

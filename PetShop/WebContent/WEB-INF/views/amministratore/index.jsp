@@ -8,7 +8,7 @@
 
 </head>
 <body>
-		<jsp:include page="../../../WEB-INF/views/fragments/adminHeader.jsp" />
+		<jsp:include page="../fragments/adminHeader.jsp" />
 	
 		<h1>Ciao ${sessionScope.nomeUtente}, sei un Amministratore</h1>
 	
@@ -21,6 +21,7 @@
 			<li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
 		</ul>
 	</nav>
-			<jsp:include page="../../../WEB-INF/views/fragments/footer.jsp" />
+			<jsp:include page="../fragments/toast.jsp" />
+	<jsp:include page="../fragments/footer.jsp" />
 </body>
 </html>

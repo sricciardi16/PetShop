@@ -31,10 +31,8 @@
 			<p id="descrizione">${prodotto.descrizione}</p>
 		</div>
 	</div>
-	<script>let contextPath = "${pageContext.request.contextPath}";
-	</script>
-	<script src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
+	<jsp:include page="../fragments/toast.jsp" />
+	<jsp:include page="../fragments/footer.jsp" />
 	<script src="${pageContext.request.contextPath}/assets/script/common/carrello.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/script/async/aggiungiCarrelloDaPaginaProdottoAsync.js"></script>
 </body>
