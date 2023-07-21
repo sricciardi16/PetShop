@@ -12,7 +12,7 @@ public class AmministratoreServlet extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/amministratore/").forward(request, response);;
+		request.getRequestDispatcher("/WEB-INF/views/amministratore/").forward(request, response);
 	}
 
 }
