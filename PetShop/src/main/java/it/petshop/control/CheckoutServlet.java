@@ -31,6 +31,7 @@ public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public static final String METODO_PAGAMENTO_CONTANTI = "contanti";
+	public static final String TOTALE_SA = "totale";
 	
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
@@ -78,7 +79,7 @@ public class CheckoutServlet extends HttpServlet {
 			return;
 		}
 
-		double prezzo = (double) session.getAttribute("totale");
+		double prezzo = (double) session.getAttribute(TOTALE_SA);
 		int idUtente = ((Utente) session.getAttribute("utente")).getId();
 		String metodoPagamentoParam = request.getParameter("metodoPagamento");
 		int idMetodoPagamento;
@@ -135,14 +136,14 @@ public class CheckoutServlet extends HttpServlet {
 		double totaleParziale = ((Carrello) session.getAttribute("carrello")).getTotale();
 		double totale = Math.round((prezzoSpedizione + totaleParziale) * 100.0) / 100.0;
 		
-		session.setAttribute("totale", totale);
+		session.setAttribute(TOTALE_SA, totale);
 	}
 
 	private void sendTotaleCheckoutAsJson(HttpServletResponse response, HttpSession session) throws IOException {
-		double totale = (double) session.getAttribute("totale");
+		double totale = (double) session.getAttribute(TOTALE_SA);
 		
 		JsonResponseHelper jresponse = new JsonResponseHelper();
-		jresponse.add("totale", totale);
+		jresponse.add(TOTALE_SA, totale);
 		jresponse.send(response);
 	}
 
