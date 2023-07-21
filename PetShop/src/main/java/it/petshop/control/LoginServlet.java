@@ -40,8 +40,16 @@ public class LoginServlet extends HttpServlet {
 		// ---
 		Utente utente = utenteDao.findByNomeUtenteAndPassword(nomeUtente, password);
 		Amministratore amministratore = amministratoreDao.findByNomeUtenteAndPassword(nomeUtente, password);
-		String whoFound = utente != null ? "utente" : amministratore != null ? "amministratore" : null;
-		Object foundObj = utente != null ?  utente  : amministratore != null ?  amministratore  : null;
+		String whoFound = null;
+		if (utente != null)
+			whoFound = "utente";
+		else if (amministratore != null)
+			whoFound = "amministratore";
+		Object foundObj = null;
+		if (utente != null)
+			foundObj = utente;
+		else if (amministratore != null)
+			foundObj = amministratore;
 		// ---
 
 		JsonResponseHelper jresponse = new JsonResponseHelper();
