@@ -64,10 +64,10 @@ span {
 
 .bottoneRegistrazione input {
 	padding: 2%;
-	background: #333;
+	background: white;
 	font-size: 15px;
-	border: solid;
-	color: white;
+	border: 2px solid black;
+	color: #FA9D12;
 	border-radius: 10px;
 }
 

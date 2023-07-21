@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<!DOCTYPE html>
+<html lang="it">
 <head>
 <title>Gestisci Ordini</title>
 <link type="text/css" rel="stylesheet"
@@ -68,14 +68,7 @@
 	<jsp:include page="../../../WEB-INF/views/fragments/footer.jsp" />
 
 	<jsp:include page="../../views/fragments/toast.jsp" />
-	<script>
-		let contextPath = "${pageContext.request.contextPath}";
-	</script>
-	<script
-		src="${pageContext.request.contextPath}/assets/script/lib/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/script/common/error.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/script/async/gestisciOrdiniAsync.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/assets/script/async/gestisciOrdiniAsync.js"></script>
 </body>
 </html>

@@ -1,35 +1,38 @@
 @charset "UTF-8";
 
-body{
+body {
 	font-family: sans-serif;
 	width: 100%;
 }
-#prodotti{
-	width:100%;
-	margin:auto;
+
+#prodotti {
+	margin: auto;
+	width: 100%;
 }
 
-#prodotti h1{
+#prodotti h1 {
 	text-align: center;
 	font-size: 30px;
 }
 
-#ordinaPer{
+#ordinaPer {
 	font-size: medium;
 }
 
-#prodotti select{
+#prodotti select {
 	margin-right: 1%;
 	border-radius: 5px;
 }
 
-table{
+#productList {
+	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid black; 
-	margin-top: 1%; 
+	border: 1px solid black;
+	margin-top: 1%;
 }
 
-th,td{
+th,
+td {
 	border-bottom: 1px solid black;
 	text-align: center;
 }
@@ -38,27 +41,28 @@ th {
 	font-size: large;
 }
 
-input{
+input {
 	text-align: center;
 	border: hidden;
-	padding: 2%;	
+	padding: 2%;
 }
 
-img{
+img {
 	width: 30%;
 	height: 30%;
 }
 
-.rigaImg input{
+.rigaImg input {
 	padding: 0;
 	margin: 1%;
 }
 
-.rigaImg img{
-	margin-left: 1%;	
+.rigaImg img {
+	margin-left: 1%;
 }
 
-.aggiorna , .elimina{
+.aggiorna,
+.elimina {
 	background-color: #FA9D12;
 	border: none;
 	color: white;
@@ -67,11 +71,11 @@ img{
 	margin: 1%;
 }
 
-.pagination{
+.pagination {
 	margin-left: 40%;
 }
 
-.pagination button{
+.pagination button {
 	padding: 1%;
 	background-color: #FA9D12;
 	border: none;
@@ -80,19 +84,52 @@ img{
 	margin: 1%;
 }
 
-@media (max-width: 500px){
-	
-	.filter-container{
-	width:60%;
-	margin:auto;
-	display: flex;
-	flex-direction: column;
+
+@media (max-width: 848px) {
+
+	.filter-container {
+		width: 60%;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
 	}
-	.immagine{
-	display:none;
+
+	#table-container {
+		margin:auto;
+		overflow-x: auto;
+		min-width: 300px;
 	}
-	.filter-container > *{
-		margin-top:2%;
+
+	.immagine {
+		display: none;
+	}
+
+	.filter-container>* {
+		margin-top: 2%;
+		margin-bottom: 2%;
+	}
+}
+
+@media (max-width: 970px) {
+
+	.filter-container {
+		width: 60%;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
+	}
+
+	#productList {
+		width: 70%;
+		margin: auto;
+	}
+
+	.immagine {
+		display: none;
+	}
+
+	.filter-container>* {
+		margin-top: 2%;
 		margin-bottom: 2%;
 	}
 }
