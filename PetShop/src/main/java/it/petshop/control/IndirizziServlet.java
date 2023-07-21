@@ -19,7 +19,6 @@ import it.petshop.utility.RedirectUtil;
 public class IndirizziServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private DataSource dataSource;
 	private IndirizzoDAO indirizzoDao;
 
 	@Override

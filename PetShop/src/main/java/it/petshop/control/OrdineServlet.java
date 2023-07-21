@@ -19,7 +19,7 @@ import it.petshop.utility.PetShopException;
 
 public class OrdineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private DataSource dataSource;
+
 	private OrdineDAO ordineDao;
 	private ElementoDAO elementoDao;
 

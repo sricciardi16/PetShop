@@ -15,7 +15,7 @@ import it.petshop.utility.PetShopException;
 import it.petshop.utility.RedirectUtil;
 
 public class RegistrazioneServlet extends HttpServlet {
-	private DataSource dataSource;
+
 	private UtenteDAO utenteDao;
 	private UtenteDAO amministratoreDao;
 

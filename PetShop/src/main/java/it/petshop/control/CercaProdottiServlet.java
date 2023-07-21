@@ -18,7 +18,6 @@ public class CercaProdottiServlet extends HttpServlet {
 	
 	public static final int LIMIT = 5;
 	
-	private DataSource dataSource;
 	private ProdottoDAO prodottoDao;
 
 	@Override

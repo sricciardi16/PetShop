@@ -17,7 +17,6 @@ import it.petshop.dto.Utente;
 public class OrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private DataSource dataSource;
 	private OrdineDAO ordineDao;
 
 	@Override

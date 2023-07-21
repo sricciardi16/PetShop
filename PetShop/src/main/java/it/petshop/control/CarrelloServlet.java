@@ -25,7 +25,6 @@ import it.petshop.utility.JsonResponseHelper;
 
 public class CarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private DataSource dataSource;
 	private ProdottoDAO prodottoDao;
 
 	@Override

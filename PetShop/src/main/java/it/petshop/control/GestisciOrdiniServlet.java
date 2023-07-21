@@ -28,7 +28,6 @@ import it.petshop.utility.PetShopException;
 public class GestisciOrdiniServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private DataSource dataSource;
 	private OrdineDAO ordineDao;
 	private UtenteDAO utenteDao;
 	private MetodoPagamentoDAO metodoPagamentoDao;

@@ -30,7 +30,6 @@ import it.petshop.utility.JsonResponseHelper;
 public class CheckoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private DataSource dataSource;
 	private IndirizzoDAO indirizzoDao;
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
 	private MetodoPagamentoDAO metodoPagamentoDao;

@@ -22,7 +22,6 @@ public class ProdottiServlet extends HttpServlet {
 
 	private static final int PRODOTTI_PER_PAGINA = 12;
 
-	private DataSource dataSource;
 	private ProdottoDAO prodottoDao;
 
 	@Override

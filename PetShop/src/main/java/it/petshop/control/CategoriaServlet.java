@@ -20,8 +20,6 @@ import it.petshop.utility.PetShopException;
 
 public class CategoriaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private DataSource dataSource;
 	private CategoriaDAO categoriaDao;
 
 	@Override

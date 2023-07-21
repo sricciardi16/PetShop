@@ -17,7 +17,7 @@ import it.petshop.utility.JsonResponseHelper;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private DataSource dataSource;
+
 	private UtenteDAO utenteDao;
 	private AmministratoreDAO amministratoreDao;
 
