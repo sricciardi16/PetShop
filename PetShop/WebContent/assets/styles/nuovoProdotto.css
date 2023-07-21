@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+form {
+	width: 30%;
+	margin: auto;
+	margin-top: 3%;
+	margin-bottom: 3%;
+	font-size: 12px;
+	line-height: 3em;
+	border: 5px solid #FA9D12;
+	border-radius: 5px;
+	padding: 2%;
+	min-width: 30%;
+}
+
+.boldLabel {
+	text-align: right;
+	font-weight: bold;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+	min-width: 85%;
+	width: 85%;
+	padding: 2%;
+	margin: auto;
+	display: grid;
+	place-items: initial;
+}
+
+.input {
+	width: 90%;
+	margin: auto;
+}
+
+.input input {
+	padding: 1%;
+	float: right;
+	margin-top: 1.5%;
+}
+
+.input select {
+	float: right;
+	font-size: initial;
+	font-size: 12px;
+	padding: 1%;
+	border-radius: 5px;
+}
+
+#immagine {
+	float: right;
+}
+
+.input-img {
+	width: 90%;
+	margin: auto;
+	float: right;
+}
+
+.input-img input {
+	width: 70%;
+	float: right;
+	margin-top: 2%;
+}
+
+.creaProdotto {
+	border-radius: 5px;
+	margin-top: 0.7%;
+	background-color: #FA9D12;
+	color: white;
+	border: none;
+	padding: 3%;
+}
+
+@media (min-width : 875px) and (max-width: 1162px) {
+	form {
+		width: 40%;
+	}
+}
+
+@media (min-width : 700px) and (max-width : 875px) {
+	form {
+		width: 55%;
+	}
+}
+
+@media (min-width : 414px) and (max-width : 700px) {
+	form {
+		width: 85%;
+	}
+}
+
+@media (max-width: 414px) {
+	form{
+		width: 95%;
+	}
+}

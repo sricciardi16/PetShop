@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+}
+#prodotti{
+	width:100%;
+}
+
+#prodotti h1{
+	text-align: center;
+	font-size: 30px;
+}
+
+#ordinaPer{
+	font-size: medium;
+}
+
+#prodotti select{
+	margin-right: 1%;
+	border-radius: 5px;
+}
+
+table{
+	border-collapse: collapse;
+	border: 1px solid black; 
+	margin-top: 1%; 
+}
+
+th,td{
+	border-bottom: 1px solid black;
+	text-align: center;
+	padding: 1%;
+}
+
+th {
+	font-size: large;
+}
+
+td {
+	
+	width: 15%;
+}
+
+input{
+	text-align: center;
+	border: hidden;
+	padding: 2%;	
+}
+
+img{
+	width: 30%;
+	height: 30%;
+}
+
+.rigaImg input{
+	padding: 0;
+	margin: 1%;
+}
+
+.rigaImg img{
+	margin-left: 1%;	
+}
+
+button{
+	background-color: #FA9D12;
+	border: none;
+	color: white;
+	padding: 4%;
+	border-radius: 10px;
+	margin: 1%;
+}
+
+.pagination{
+	margin-left: 40%;
+}
+
+.pagination button{
+	padding: 1%;
+	
+}

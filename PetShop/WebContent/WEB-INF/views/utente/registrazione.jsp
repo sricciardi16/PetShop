@@ -49,7 +49,7 @@
 					<label>Password:</label>
 				</div>
 				<div>
-					<input class="field" type="password" name="password" id="password" placeholder="Inserisci Password">
+					<input class="field" type="password" name="password" id="password" placeholder="Inserisci Password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorPassword'), passwordErrorMessage)"><span id="errorPassword"></span>
 				</div>
 			</div>
 			<div class="input">
@@ -69,6 +69,6 @@
 	</div>
 	<jsp:include page="../fragments/toast.jsp" />
 	<jsp:include page="../fragments/footer.jsp" />
-	<%-- Script per validare form --%>
+	
 </body>
 </html>

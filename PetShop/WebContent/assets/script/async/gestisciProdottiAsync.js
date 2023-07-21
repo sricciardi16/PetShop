@@ -153,7 +153,6 @@ function populateProducts(response) {
         <th>Immagine</th>
         <th>In Magazzino</th>
         <th></th>
-        <th></th>
       </tr>
      `);
 

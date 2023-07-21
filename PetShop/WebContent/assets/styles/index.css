@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+#content {
+	text-align: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding-top: 2%;
+	background-color: #cfcecc;
+}
+
+#content h1 {
+	color: #333;
+	margin-bottom: 2%;
+	font-size: 60px;
+}
+
+#text {
+	width: 80%;
+	margin: auto;
+}
+
+#content img {
+	margin: auto;
+	width:90%;
+}
+
+#content p {
+	font-size: 20px;
+}

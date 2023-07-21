@@ -9,21 +9,20 @@
 </head>
 
 <body>
-	<jsp:include page="../fragments/header.jsp" />
-	<div id="content">
+	<jsp:include page="../../views/fragments/header.jsp" />
+
+	<div id="contentCarrello">
 		<h1>Carrello</h1>
 
 		<div id="prodotti"></div>
 
 		<div id="checkout" class="checkout"></div>
-
-
-
 	</div>
 
 
-	<jsp:include page="../fragments/toast.jsp" />
-	<jsp:include page="../fragments/footer.jsp" />
+	<jsp:include page="../../views/fragments/footer.jsp" />
+	<jsp:include page="../../views/fragments/toast.jsp" />
+	
 	<script src="${pageContext.request.contextPath}/assets/script/common/carrello.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/script/async/carrelloAsync.js"></script>
 </body>

@@ -5,18 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>PetShop Home</title>
-<!-- <link rel="stylesheet" type="text/css" href="assets/styles/main.css"> -->
+<link rel="stylesheet" type="text/css" href="assets/styles/index.css">
 </head>
 <body>
 	<jsp:include page="WEB-INF/views/fragments/header.jsp" />
 
 	<div id="content">
-		<h1>Ciao PetShop!</h1>
-
-		<p>La soluzione completa per tutte le esigenze del tuo animale domestico</p>
-		<a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a> <a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a> <a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a> <a href="${pageContext.request.contextPath}/logout">Logout</a>
-
+	<div id="text">
+			<h1 >Benvenuto!</h1>
+		<p >La soluzione completa per il tuo amico a quattro zampe!</p>
 	</div>
+		<img alt="logo" src="${pageContext.request.contextPath}/assets/img/GUI/logo.png">
+    	</div>
 	<jsp:include page="WEB-INF/views/fragments/toast.jsp" />
 	<jsp:include page="WEB-INF/views/fragments/footer.jsp" />
 </body>

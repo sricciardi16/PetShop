@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+.content {
+	width: 100%;
+}
+
+.filterContent {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	padding: 1%;
+	margin: auto;
+	width: 80%;
+}
+
+.filterContent div {
+	font-size: medium;
+	font-weight: bold;
+	margin: 1%;
+}
+
+.filterContent div select {
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.filterContent div input {
+	border: 1px thin black;
+	border-radius: 5px;
+}
+
+.tableContainer {
+	overflow-x: auto;
+	min-width: 414px;
+	width: 90%;
+	margin: 2% auto 2% auto;
+}
+
+#tableOrdini {
+	font-family: sans-serif;
+	width: 100%;
+	padding: 1%;
+}
+
+#tableOrdini select {
+	border-radius: 5px;
+	width: 58%;
+}
+
+td {
+	text-align: center;
+	border-bottom: 3px solid #333;
+}
+
+td>* {
+	margin: 4%;
+}
+
+.tableContainer a {
+	color: #FA9D12;
+}
+
+@media(max-width: 1300px) {
+	td {
+		font-size: 10px;
+	}
+}
+
+@media (max-width: 855px){
+		.filterContent {
+		display: grid;
+		grid-template-columns: 1fr;
+		margin-top: 1%;
+		width: 98%;
+	}
+}

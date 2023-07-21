@@ -32,7 +32,6 @@
 				<label>Telefono: </label><span><c:out value="${sessionScope.utente.telefono}" /></span>
 			</div>
 		</div>
-		<a href="${pageContext.request.contextPath}/logout">logout</a>
 	</div>
 	<jsp:include page="../../fragments/toast.jsp" />
 	<jsp:include page="../../fragments/footer.jsp" />
