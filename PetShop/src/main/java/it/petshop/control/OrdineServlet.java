@@ -40,8 +40,9 @@ public class OrdineServlet extends HttpServlet {
 
 
         if (request.getServletPath().equals("/utente/ordine")) {
-        	if (!ordineDao.findAllByUtente(utente).contains(ordine))
-    			throw new PetShopException("Accesso Negato Alla Risorsa", HttpServletResponse.SC_FORBIDDEN);
+        	if (!ordineDao.findAllByUtente(utente).contains(ordine)) {
+        		throw new PetShopException("Accesso Negato Alla Risorsa", HttpServletResponse.SC_FORBIDDEN);
+        	}
         }
 		
 		List<Elemento> elementi = elementoDao.findAllByIdOrdine(idOrdine);
