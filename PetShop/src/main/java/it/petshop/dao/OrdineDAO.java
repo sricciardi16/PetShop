@@ -15,6 +15,8 @@ import it.petshop.dto.Utente;
 import it.petshop.utility.DatabaseUtil;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class OrdineDAO {
 
 	private DataSource dataSource;
@@ -55,7 +57,7 @@ public class OrdineDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -70,7 +72,7 @@ public class OrdineDAO {
 	public synchronized List<Ordine> findAll(String order) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
 			selectSQL += " ORDER BY " + order;
@@ -104,7 +106,7 @@ public class OrdineDAO {
 
 	public synchronized Ordine findById(int id) throws PetShopException {
 		Ordine bean = new Ordine();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -130,7 +132,7 @@ public class OrdineDAO {
 
 	public List<Ordine> findAllByUtente(Utente utente) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID_UTENTE + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID_UTENTE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -159,7 +161,7 @@ public class OrdineDAO {
 	
 	public List<Ordine> findAllByUtenteDataSorted(Utente utente, String startDate, String endDate, String ordinamento, String ordine) throws PetShopException {
 	    List<Ordine> ordini = new ArrayList<>();
-	    String baseSQL = "SELECT * FROM " + TABLE_NAME + " WHERE 1=1";
+	    String baseSQL = SELECT_ALL_FROM + TABLE_NAME + " WHERE 1=1";
 	    String userCondition = (utente != null) ? " AND " + COLUMN_NAME_ID_UTENTE + " = ? " : "";
 	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " >= ? " : "";
 	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " <= ? " : "";

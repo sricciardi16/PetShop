@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import it.petshop.dto.MetodoSpedizione;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class MetodoSpedizioneDAO {
 
 	private DataSource dataSource;
@@ -28,7 +30,7 @@ public class MetodoSpedizioneDAO {
 	public synchronized List<MetodoSpedizione> findAll() throws PetShopException {
 		List<MetodoSpedizione> metodiSpedizione = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME;
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL); ResultSet rs = preparedStatement.executeQuery()) {
 
@@ -50,7 +52,7 @@ public class MetodoSpedizioneDAO {
 
 	public synchronized MetodoSpedizione findByKey(int id) throws PetShopException {
 		MetodoSpedizione bean = new MetodoSpedizione();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 

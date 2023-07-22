@@ -14,6 +14,8 @@ import it.petshop.dto.Elemento;
 import it.petshop.utility.DatabaseUtil;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class ElementoDAO {
 
 	private DataSource dataSource;
@@ -55,7 +57,7 @@ public class ElementoDAO {
 
 	public synchronized List<Elemento> findAllByIdOrdine(int idOrdine) throws PetShopException {
 		List<Elemento> elementi = new ArrayList<>();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID_ORDINE + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID_ORDINE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 

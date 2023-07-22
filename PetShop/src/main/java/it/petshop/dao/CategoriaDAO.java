@@ -11,6 +11,8 @@ import javax.sql.DataSource;
 import it.petshop.dto.Categoria;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class CategoriaDAO {
 
 	private DataSource dataSource;
@@ -27,7 +29,7 @@ public class CategoriaDAO {
 	public synchronized List<Categoria> findAllByCategoria(Categoria categoria) throws PetShopException {
 		List<Categoria> categorie = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ANIMALE + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ANIMALE + " = ?";
 
 		if (!categoria.getTipologia().isBlank())
 			selectSQL += " AND " + COLUMN_NAME_TIPOLOGIA + " = ?";
@@ -60,7 +62,7 @@ public class CategoriaDAO {
 	public synchronized int findIdByCategoria(Categoria categoria) throws PetShopException {
 	    int categoriaId = -1;
 
-	    String selectSQL = "SELECT " + COLUMN_NAME_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ANIMALE + " = ? AND " + COLUMN_NAME_TIPOLOGIA + " = ? AND " + COLUMN_NAME_TIPOLOGIA_IN + " = ?";
+	    String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ANIMALE + " = ? AND " + COLUMN_NAME_TIPOLOGIA + " = ? AND " + COLUMN_NAME_TIPOLOGIA_IN + " = ?";
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 

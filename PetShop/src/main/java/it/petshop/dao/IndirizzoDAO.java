@@ -13,6 +13,8 @@ import it.petshop.dto.Indirizzo;
 import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class IndirizzoDAO {
 
 	private DataSource dataSource;
@@ -52,7 +54,7 @@ public class IndirizzoDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -67,7 +69,7 @@ public class IndirizzoDAO {
 	public synchronized List<Indirizzo> findAllByUtente(Utente utente) throws PetShopException {
 		List<Indirizzo> indirizzi = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID_UTENTE + " = ? ORDER BY " + COLUMN_NAME_ID + " DESC";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID_UTENTE + " = ? ORDER BY " + COLUMN_NAME_ID + " DESC";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 

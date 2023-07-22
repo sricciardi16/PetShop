@@ -13,6 +13,8 @@ import it.petshop.dto.Categoria;
 import it.petshop.dto.Prodotto;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class ProdottoDAO {
 
 	private DataSource dataSource;
@@ -48,7 +50,7 @@ public class ProdottoDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -62,7 +64,7 @@ public class ProdottoDAO {
 
 	public synchronized Prodotto findById(int id) throws PetShopException {
 		Prodotto bean = new Prodotto();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -106,7 +108,7 @@ public class ProdottoDAO {
 	public synchronized List<Prodotto> findAllByCategoriaWithLimit(Categoria categoria, int limit, int offset, String order, boolean asc) throws PetShopException {
 		List<Prodotto> prodotti = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + ", categoria WHERE " + COLUMN_NAME_ID_CATEGORIA + " = categoria.id AND animale = ? AND " + COLUMN_NAME_IN_MAGAZZINO + " != 0 ";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + ", categoria WHERE " + COLUMN_NAME_ID_CATEGORIA + " = categoria.id AND animale = ? AND " + COLUMN_NAME_IN_MAGAZZINO + " != 0 ";
 
 		if (!categoria.getTipologia().isBlank())
 			selectSQL += " AND tipologia = ?";
@@ -161,7 +163,7 @@ public class ProdottoDAO {
 	public synchronized int countPagine(Categoria categoria, int limit) throws PetShopException {
 		int result = 0;
 
-		String countSQL = "SELECT COUNT(*) AS count FROM " + TABLE_NAME + ", " + CategoriaDAO.TABLE_NAME + " WHERE " + COLUMN_NAME_ID_CATEGORIA + " = " + CategoriaDAO.TABLE_NAME + "." + CategoriaDAO.COLUMN_NAME_ID + "AND animale = ?";
+		String countSQL = SELECT_ALL_FROM + TABLE_NAME + ", " + CategoriaDAO.TABLE_NAME + WHERE + COLUMN_NAME_ID_CATEGORIA + " = " + CategoriaDAO.TABLE_NAME + "." + CategoriaDAO.COLUMN_NAME_ID + " AND animale = ?";
 		if (!categoria.getTipologia().isBlank())
 			countSQL += " AND tipologia = ?";
 
@@ -213,7 +215,7 @@ public class ProdottoDAO {
 	}
 	
 	public synchronized void updateById(Prodotto prodotto, int id) throws PetShopException {
-	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_NOME + " = ?, " + COLUMN_NAME_DESCRIZIONE + " = ?, " + COLUMN_NAME_PREZZO + " = ?, " + COLUMN_NAME_IMMAGINE + " = ?, " + COLUMN_NAME_IN_MAGAZZINO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_NOME + EQUALS_PARAM + COLUMN_NAME_DESCRIZIONE + EQUALS_PARAM + COLUMN_NAME_PREZZO + EQUALS_PARAM + COLUMN_NAME_IMMAGINE + EQUALS_PARAM + COLUMN_NAME_IN_MAGAZZINO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 	        preparedStatement.setString(1, prodotto.getNome());
@@ -234,7 +236,7 @@ public class ProdottoDAO {
 	
 	public synchronized List<Prodotto> findFirstLimitByNomeLike(String name, int limit) throws PetShopException {
 	    List<Prodotto> products = new ArrayList<>();
-	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME + " LIKE ? LIMIT ?";
+	    String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_NOME + " LIKE ? LIMIT ?";
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 	        preparedStatement.setString(1, "%" + name + "%");
 	        preparedStatement.setInt(2, limit);

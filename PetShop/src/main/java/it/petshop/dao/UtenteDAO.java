@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import it.petshop.dto.Utente;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class UtenteDAO {
 
 	private DataSource dataSource;
@@ -48,7 +50,7 @@ public class UtenteDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -62,7 +64,7 @@ public class UtenteDAO {
 
 	public synchronized Utente findByNomeUtente(String nomeUtente) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_NOME_UTENTE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setString(1, nomeUtente);
@@ -87,7 +89,7 @@ public class UtenteDAO {
 
 	public synchronized Utente findByNomeUtenteAndPassword(String nomeUtente, String password) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ? AND " + COLUMN_NAME_PASSWORD + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_NOME_UTENTE + " = ? AND " + COLUMN_NAME_PASSWORD + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setString(1, nomeUtente);
@@ -113,7 +115,7 @@ public class UtenteDAO {
 	
 	public synchronized List<Utente> findAll() throws PetShopException {
 		List<Utente> utenti = new ArrayList<>();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME;
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -138,7 +140,7 @@ public class UtenteDAO {
 	
 	public synchronized Utente findById(int id) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setInt(1, id);

@@ -12,6 +12,8 @@ import it.petshop.dto.MetodoPagamento;
 import it.petshop.utility.DatabaseUtil;
 import it.petshop.utility.PetShopException;
 
+import static it.petshop.utility.DatabaseUtil.*;
+
 public class MetodoPagamentoDAO {
 
 	private DataSource dataSource;
@@ -41,7 +43,7 @@ public class MetodoPagamentoDAO {
 
 	public synchronized MetodoPagamento findById(int id) throws PetShopException {
 		MetodoPagamento bean = new MetodoPagamento();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -61,7 +63,7 @@ public class MetodoPagamentoDAO {
 
 	public synchronized MetodoPagamento findFirstByTipo(String tipo) throws PetShopException {
 		MetodoPagamento bean = new MetodoPagamento();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_TIPO + " = ? LIMIT 1";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_TIPO + " = ? LIMIT 1";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
