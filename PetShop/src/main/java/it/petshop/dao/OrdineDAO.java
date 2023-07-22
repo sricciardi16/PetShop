@@ -162,9 +162,9 @@ public class OrdineDAO {
 	public List<Ordine> findAllByUtenteDataSorted(Utente utente, String startDate, String endDate, String ordinamento, String ordine) throws PetShopException {
 	    List<Ordine> ordini = new ArrayList<>();
 	    String baseSQL = SELECT_ALL_FROM + TABLE_NAME + " WHERE 1=1";
-	    String userCondition = (utente != null) ? " AND " + COLUMN_NAME_ID_UTENTE + " = ? " : "";
-	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " >= ? " : "";
-	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " <= ? " : "";
+	    String userCondition = (utente != null) ? AND + COLUMN_NAME_ID_UTENTE + " = ? " : "";
+	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? AND + COLUMN_NAME_DATA_ORA + " >= ? " : "";
+	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? AND + COLUMN_NAME_DATA_ORA + " <= ? " : "";
 	    String orderCondition = (ordinamento != null && ordine != null) ? " ORDER BY " + ordinamento + " " + ordine : "";
 
 	    String selectSQL = baseSQL + userCondition + startDateCondition + endDateCondition + orderCondition;

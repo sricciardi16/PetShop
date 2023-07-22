@@ -38,8 +38,7 @@ public class CheckoutServlet extends HttpServlet {
 	private MetodoSpedizioneDAO metodoSpedizioneDao;
 	private MetodoPagamentoDAO metodoPagamentoDao;
 	private OrdineDAO ordineDao;
-	private ElementoDAO elementoDao;
-	private ProdottoDAO prodottoDao;
+
 
 	@Override
 	public void init() throws ServletException {
@@ -48,8 +47,6 @@ public class CheckoutServlet extends HttpServlet {
 		metodoSpedizioneDao = new MetodoSpedizioneDAO(dataSource);
 		metodoPagamentoDao = new MetodoPagamentoDAO(dataSource);
 		ordineDao = new OrdineDAO(dataSource);
-		elementoDao = new ElementoDAO(dataSource);
-		prodottoDao = new ProdottoDAO(dataSource);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -106,6 +103,9 @@ public class CheckoutServlet extends HttpServlet {
 		
 		int idOrdine = ordineDao.save(ordine);
 		
+		DataSource dataSource = (DataSource) getServletContext().getAttribute("DataSource");
+		ElementoDAO elementoDao = new ElementoDAO(dataSource);
+		ProdottoDAO prodottoDao = new ProdottoDAO(dataSource);
 		
 		carrello.getProdotti().forEach((prodotto, quantita) -> {
 			Elemento elemento = new Elemento();
