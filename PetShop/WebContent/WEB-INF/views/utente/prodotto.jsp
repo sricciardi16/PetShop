@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<title>Prodotto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/prodottoStyle.css">
 
@@ -13,7 +14,7 @@
 	<jsp:include page="../../views/fragments/toast.jsp" />
 	<div id="content">
 		<div id="img-container">
-			<img src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${prodotto.immagine}">
+			<img alt="img" src="${pageContext.request.contextPath}${initParam['imgProdottiPath']}${prodotto.immagine}">
 		</div>
 		<div id="data-container">
 			<h1>${prodotto.nome}</h1>

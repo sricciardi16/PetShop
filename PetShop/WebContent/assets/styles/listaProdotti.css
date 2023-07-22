@@ -45,8 +45,7 @@ body {
 	animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-@
--webkit-keyframes fadein {
+@-webkit-keyframes fadein {
 	from {bottom: 0;
 	opacity: 0;
 }
@@ -57,8 +56,7 @@ to {
 }
 
 }
-@
-keyframes fadein {
+@keyframes fadein {
 	from {bottom: 0;
 	opacity: 0;
 }
@@ -69,8 +67,7 @@ to {
 }
 
 }
-@
--webkit-keyframes fadeout {
+@-webkit-keyframes fadeout {
 	from {bottom: 30px;
 	opacity: 1;
 }
@@ -81,8 +78,7 @@ to {
 }
 
 }
-@
-keyframes fadeout {
+@keyframes fadeout {
 	from {bottom: 30px;
 	opacity: 1;
 }

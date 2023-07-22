@@ -15,7 +15,7 @@
 		<div id="content">
 			<c:forEach var="elemento" items="${elementi}">
 				<div class="prodotto">
-					<img src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}">
+					<img alt="ordine" src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}">
 					<label class="nome">${elemento.nome}</label> 
 					<label class="prezzo">${elemento.prezzo} &#8364</label> 
 					<label class="modificaQuantita">Quantità: ${elemento.quantita }</label> 

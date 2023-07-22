@@ -16,6 +16,7 @@
 		<h3>I Miei ordini</h3>
 		<h5>Questi sono gli ordini che hai effettuato dal momento della creazione del tuo account</h5>
 		<table>
+		<caption>Tabella ordini</caption>
 			<tr>
 				<th>Codice</th>
 				<th>Data</th>

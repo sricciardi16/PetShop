@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
 #content {
+	width:100%;
 	text-align: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding-top: 2%;
 	background-color: #cfcecc;
+	min-width: 700px;
 }
 
 #content h1 {

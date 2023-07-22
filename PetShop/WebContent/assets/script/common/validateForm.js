@@ -1,8 +1,8 @@
 const nameOrLastnamePattern = /^[A-Za-z\s]+$/;
 const aliasCittaProvinciaPattern = /^[A-Za-z\s]+$/;
 const emailPattern = /^\S+@\S+\.\S+$/;
-const phonePattern = /^[0-9]{10}$/;
-const capPattern = /^[0-9]{5}$/;
+const phonePattern = /^\d{10}$/;
+const capPattern = /^\d{5}$/;
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 const nameErrorMessage = "Un nome valido puo' contere solo lettere";
 const aliasErrorMessage = "Un alias valido puo' contere solo lettere";

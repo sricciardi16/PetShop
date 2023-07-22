@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <title>Gestisci Ordini</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/gestisciOrdini.css">
 </head>
 <body>
@@ -39,6 +41,7 @@
 		</div>
 		<div class="tableContainer">
 			<table id="tableOrdini">
+			<caption>Tabella ordini</caption>
 				<thead>
 					<tr>
 						<th>Codice</th>

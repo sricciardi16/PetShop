@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
@@ -6,7 +7,8 @@
 <meta charset="UTF-8">
 <title>PetShop Products</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/gestisciProdotti.css">
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/styles/gestisciProdotti.css">
 </head>
 
 <body>
@@ -32,13 +34,13 @@
 
 			<div id="table-container">
 				<table id="productList">
+				<caption>Lista prodotti</caption>
+					<thead>
+					</thead>
 					<tbody>
-
-
 					</tbody>
 				</table>
 			</div>
-
 		</div>
 		<div class="pagination">
 			<button class="pagination-btn" id="primaPagina">1</button>
@@ -52,6 +54,7 @@
 	<jsp:include page="../../views/fragments/footer.jsp" />
 	<jsp:include page="../../views/fragments/toast.jsp" />
 
-	<script src="${pageContext.request.contextPath}/assets/script/async/gestisciProdottiAsync.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/assets/script/async/gestisciProdottiAsync.js"></script>
 </body>
 </html>

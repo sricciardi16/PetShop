@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<title>Admin Header</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/adminHeaderStyle.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -88,8 +89,6 @@
 						href="${pageContext.request.contextPath}/prodotti?animale=gatto&tipologia=cucce%20lettini&tipologiaIn=cuscini">Cuscini</a>
 				</div>
 			</div>
-			<!-- 				<button  id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=cane';">Cani</button>
-			 -->
 			<div class="dropdown">
 				<button class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/admin/prodotti/create';">Nuovo prodotto</button>
 			</div>

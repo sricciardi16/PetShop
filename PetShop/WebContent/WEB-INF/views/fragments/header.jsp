@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<title>Header</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/styles/headerStyle.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

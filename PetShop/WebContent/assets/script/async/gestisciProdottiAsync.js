@@ -145,8 +145,8 @@ function loadProducts() {
 }
 
 function populateProducts(response) {
-   $("#productList tbody").empty();
-   $("#productList tbody").append(`<tr>
+	$("#productList tbody").empty();
+	$("#productList tbody").append(`<tr>
         <th>Nome</th>
         <th>Descrizione</th>
         <th>Prezzo</th>
@@ -156,92 +156,92 @@ function populateProducts(response) {
       </tr>
      `);
 
-    numeroPagine = response.numeroPagine;
-    
-    response.prodotti.forEach(function(prodotto) {
-        let prodottoHTML = '<tr>' +
-            '<td><input type="text" class="nome" value="' + prodotto.nome + '"></td>' +
-            '<td><input type="text" class="descrizione" value="' + prodotto.descrizione + '"></td>' +
-            '<td><input type="text" class="prezzo" value="' + prodotto.prezzo + '"></td>' +
-            '<td>' +
-                '<input type="file" class="immagine">' +
-                '<img src="' + imgProdottiPath + prodotto.immagine  + '" alt="Anteprima dell\'immagine" style="width: 100px; height: 100px;">' +
-            '</td>' +
-            '<td><input type="number" class="inMagazzino" value="' + prodotto.inMagazzino + '"></td>' +
-            '<td><button class="aggiorna" data-id= "' + prodotto.id + '">Aggiorna</button>' +
-            '<button class="elimina" data-id= "' + prodotto.id + '">Elimina</button></td>' +
-        '</tr><tr></tr>';
+	numeroPagine = response.numeroPagine;
 
-        $("#productList tbody").append(prodottoHTML);
-       
-    });
-     $('#paginaCorrente').html(page);
-		$('#ultimaPagina').html(numeroPagine);
-		eliminaProdotto();
-		modificaProdotto();
+	response.prodotti.forEach(function(prodotto) {
+		let prodottoHTML = '<tr>' +
+			'<td><input type="text" class="nome" value="' + prodotto.nome + '"></td>' +
+			'<td><input type="text" class="descrizione" value="' + prodotto.descrizione + '"></td>' +
+			'<td><input type="text" class="prezzo" value="' + prodotto.prezzo + '"></td>' +
+			'<td>' +
+			'<input type="file" class="immagine">' +
+			'<img src="' + imgProdottiPath + prodotto.immagine + '" alt="Anteprima dell\'immagine" style="width: 100px; height: 100px;">' +
+			'</td>' +
+			'<td><input type="number" class="inMagazzino" value="' + prodotto.inMagazzino + '"></td>' +
+			'<td><button class="aggiorna" data-id= "' + prodotto.id + '">Aggiorna</button>' +
+			'<button class="elimina" data-id= "' + prodotto.id + '">Elimina</button></td>' +
+			'</tr><tr></tr>';
+
+		$("#productList tbody").append(prodottoHTML);
+
+	});
+	$('#paginaCorrente').html(page);
+	$('#ultimaPagina').html(numeroPagine);
+	eliminaProdotto();
+	modificaProdotto();
 }
 
 function eliminaProdotto() {
-    $('.elimina').click(function() {
-        let idProdotto = $(this).data('id');
-        $.ajax({
-        url: contextPath + '/admin/prodotti/delete',
-        type: 'POST',
-        data: { 
-            id: idProdotto
-        }, 
-        success: function(response) {
-            if (response.status === 'success') {
-				loadProducts();
-				showToast("Prodotto Eliminato Con Successo !", "#34c759");
-			} else if (response.status === 'error') {
-				showToast("Errore: " + response.message, "#ff3a30");
-				errorCallback();
-			}
-        },
-        error: handleError
-    });
-    });
+	$('.elimina').click(function() {
+		let idProdotto = $(this).data('id');
+		$.ajax({
+			url: contextPath + '/admin/prodotti/delete',
+			type: 'POST',
+			data: {
+				id: idProdotto
+			},
+			success: function(response) {
+				if (response.status === 'success') {
+					loadProducts();
+					showToast("Prodotto Eliminato Con Successo !", "#34c759");
+				} else if (response.status === 'error') {
+					showToast("Errore: " + response.message, "#ff3a30");
+					errorCallback();
+				}
+			},
+			error: handleError
+		});
+	});
 }
 
 function modificaProdotto() {
-    $('.aggiorna').click(function() {
-        let idProdotto = $(this).data('id');
-        let nome = $(this).closest('tr').find('.nome').val();
-        let descrizione = $(this).closest('tr').find('.descrizione').val();
-        let prezzo = $(this).closest('tr').find('.prezzo').val();
-        let inMagazzino = $(this).closest('tr').find('.inMagazzino').val();
-        let immagineInput = $(this).closest('tr').find('.immagine')[0];
-        let immagine = immagineInput.files.length > 0 ? immagineInput.files[0] : null;
+	$('.aggiorna').click(function() {
+		let idProdotto = $(this).data('id');
+		let nome = $(this).closest('tr').find('.nome').val();
+		let descrizione = $(this).closest('tr').find('.descrizione').val();
+		let prezzo = $(this).closest('tr').find('.prezzo').val();
+		let inMagazzino = $(this).closest('tr').find('.inMagazzino').val();
+		let immagineInput = $(this).closest('tr').find('.immagine')[0];
+		let immagine = immagineInput.files.length > 0 ? immagineInput.files[0] : null;
 
-        let formData = new FormData();
-        formData.append('id', idProdotto);
-        formData.append('nome', nome);
-        formData.append('descrizione', descrizione);
-        formData.append('prezzo', prezzo);
-        formData.append('inMagazzino', inMagazzino);
-        
-        if (immagine) {
-            formData.append('immagine', immagine);
-        }
+		let formData = new FormData();
+		formData.append('id', idProdotto);
+		formData.append('nome', nome);
+		formData.append('descrizione', descrizione);
+		formData.append('prezzo', prezzo);
+		formData.append('inMagazzino', inMagazzino);
 
-        $.ajax({
-            url: contextPath + '/admin/prodotti/update',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.status === 'success') {
-                    loadProducts();
-                    showToast("Prodotto Aggiornato Con Successo !", "#34c759");
-                } else if (response.status === 'error') {
-                    showToast("Errore: " + response.message, "#ff3a30");
-                }
-            },
-            error: handleError
-        });
-    });
+		if (immagine) {
+			formData.append('immagine', immagine);
+		}
+
+		$.ajax({
+			url: contextPath + '/admin/prodotti/update',
+			type: 'POST',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(response) {
+				if (response.status === 'success') {
+					loadProducts();
+					showToast("Prodotto Aggiornato Con Successo !", "#34c759");
+				} else if (response.status === 'error') {
+					showToast("Errore: " + response.message, "#ff3a30");
+				}
+			},
+			error: handleError
+		});
+	});
 }
 
 

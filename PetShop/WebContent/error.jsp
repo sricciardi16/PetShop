@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Oops!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<jsp:include page="WEB-INF/views/fragments/header.jsp" />

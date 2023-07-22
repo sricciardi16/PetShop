@@ -20,7 +20,6 @@ body {
 .element {
 	display: flex;
 	width: 50%;
-	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding-bottom: 1%;

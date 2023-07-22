@@ -7,8 +7,7 @@
 	animation: fadeIn 1s;
 }
 
-@
-keyframes fadeIn {
+@keyframes fadeIn {
 	from {opacity: 0;
 }
 
@@ -28,10 +27,10 @@ to {
 }
 
 #productList .grid-item h2 a {
-	font-size: 1em;
-	margin: 10px 0;
+	font-size: 1.0em;
+	margin: 1% 0;
 	color: #FA9D12;
-	font-family: 'Arial', sans-serif;
+	font-family: sans-serif;
 	text-decoration: none;
 	transition: color .3s ease;
 }
@@ -40,7 +39,7 @@ to {
 	font-size: 1.5em;
 	color: #FA9D12;
 	font-weight: bold;
-	margin-bottom: 10px;
+	margin-bottom: 1%;
 }
 
 #productList .grid-item:hover {
@@ -59,8 +58,8 @@ to {
 }
 
 #productList .grid-item h2 {
-	font-size: 1.5em;
-	margin: 10px 0;
+	font-size: 1.0em;
+	margin: 1% 0;
 	color: #9e5f00;
 }
 
@@ -100,8 +99,8 @@ to {
 }
 
 .pagination-btn {
-	padding: 10px 20px;
-	margin: 0 5px;
+	padding: 1% 2%;
+	margin: 0 1%;
 	background-color: #FA9D12;
 	color: #fff;
 	border: none;
@@ -115,14 +114,14 @@ to {
 }
 
 .current-page {
-	padding: 10px;
+	padding: 2%;
 	margin: 0 5px;
 	color: #333;
 	font-weight: bold;
 }
 
 select {
-	padding: 10px;
+	padding: 2%;;
 	border-radius: 5px;
 	border: none;
 	background-color: #9e5f00;
@@ -150,7 +149,7 @@ select:hover {
 }
 
 select option {
-	padding: 10px;
+	padding: 2%;
 	font-size: 1em;
 }
 

@@ -57,7 +57,7 @@
 			</div>
 			<h4>Resoconto ordine:</h4>
 			<div id="resoconto">
-				<h6>${sessionScope.carrello.numeroProdotti}prodotti</h6>
+				<h6>${sessionScope.carrello.numeroProdotti} prodotti</h6>
 				<h6>Totale Parziale ${sessionScope.carrello.totale}</h6>
 				<h6 id="prezzoSpedizione"></h6>
 				<h6 id="prezzoTotale"></h6>
