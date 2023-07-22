@@ -30,9 +30,6 @@ public class CategoriaServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String animale = request.getParameter("animale");
-		
-		if (animale == null || (!animale.equals("cane") && !animale.equals("gatto")))
-			throw new PetShopException("Solo Cani e Gatti: Errore nei Parametri", 404);
 
 		String tipologia = Optional.ofNullable(request.getParameter("tipologia")).orElse("");
 		

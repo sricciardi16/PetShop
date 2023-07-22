@@ -25,6 +25,7 @@ public class UtenteDAO {
 	private static final String COLUMN_NAME_COGNOME = "cognome";
 	private static final String COLUMN_NAME_EMAIL = "email";
 	private static final String COLUMN_NAME_TELEFONO = "telefono";
+	private static final String COLUMN_NAME_DATA_REGISTRAZIONE = "data_registrazione";
 
 	public UtenteDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -103,6 +104,7 @@ public class UtenteDAO {
 					utente.setNome(rs.getString(COLUMN_NAME_NOME));
 					utente.setCognome(rs.getString(COLUMN_NAME_COGNOME));
 					utente.setEmail(rs.getString(COLUMN_NAME_EMAIL));
+					utente.setDataRegistrazione(rs.getTimestamp(COLUMN_NAME_DATA_REGISTRAZIONE));
 					utente.setTelefono(rs.getString(COLUMN_NAME_TELEFONO));
 				}
 			}

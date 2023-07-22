@@ -45,7 +45,7 @@ function populateProducts(response) {
 		$('#checkout').append(checkoutHTML);
 
 	} else {
-		$('#content').append('<div class="carrelloVuoto" align="center"><h2>Spiacenti, ma il carrello è vuoto</h2><br></div>');
+		$('#contentCarrello').append('<div class="carrelloVuoto" align="center"><h2>Spiacenti, ma il carrello è vuoto</h2><br></div>');
 		$('#checkout').empty(); 
 	}
 }

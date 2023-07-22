@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -23,8 +24,8 @@
 				<label>Cognome: </label><span><c:out value="${sessionScope.utente.cognome}" /></span>
 			</div>
 			<div id="data_registrazione" class="element">
-				<label>Registrazione: </label><span><c:out value="${sessionScope.utente.dataRegistrazione}" /></span>
-			</div>
+	<label>Registrazione: </label><span><fmt:formatDate value="${sessionScope.utente.dataRegistrazione}" pattern="dd/MM/yyyy" /></span>
+</div>
 			<div id="email" class="element">
 				<label>Email: </label><span><c:out value="${sessionScope.utente.email}" /></span>
 			</div>

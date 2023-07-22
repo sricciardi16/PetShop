@@ -91,13 +91,24 @@
 				</div>
 			</div>
 			<div class="dropdown">
-				<button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/prodotti?animale=gatto';" style="background-color: #FA9D12;">
-					<img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" />
-				</button>
-				<div class="dropdown-content">
-					<a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a> <a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a> <a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a> <a href="${pageContext.request.contextPath}/logout">Logout</a>
-				</div>
-			</div>
+    <button id="responsiveButton" class="dropbtn" onclick="window.location.href = '${pageContext.request.contextPath}/login';" style="background-color: #FA9D12;">
+        <img src="${pageContext.request.contextPath}/assets/img/GUI/area-personale.png" alt="MYpetshop" />
+    </button>
+    <div class="dropdown-content">
+        <c:choose>
+            <c:when test="${not empty sessionScope.nomeUtente}">
+                <a href="${pageContext.request.contextPath}/user/myAccount">Il Mio Account</a>
+                <a href="${pageContext.request.contextPath}/user/indirizzi">I Miei Indirizzi</a>
+                <a href="${pageContext.request.contextPath}/user/ordini">I Miei Ordini</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+            </c:when>
+            <c:otherwise>
+                <a href="${pageContext.request.contextPath}/login">Login</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
+
 			<div class="search-container">
 				<c:choose>
 					<c:when test='${empty sessionScope.nomeUtente || empty sessionScope.role}'>

@@ -27,7 +27,7 @@
 			<c:forEach var="ordine" items="${ordini}">
 				<tr>
 					<td>${ordine.id}</td>
-					<td><fmt:formatDate value="${ordine.dataOra}" type="date" pattern="yyyy-MM-dd" /></td>
+					<td><fmt:formatDate value="${ordine.dataOra}" type="date" pattern="dd/MM/yyyy" /></td>
 					<td>${ordine.prezzo}</td>
 					<td><c:choose>
 							<c:when test="${ordine.idMetodoPagamento == 1}">Contanti</c:when>
