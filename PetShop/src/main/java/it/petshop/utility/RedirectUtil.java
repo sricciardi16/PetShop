@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 public class RedirectUtil {
 	
+	public static final String URL_TO_REDIRECT_PARAM_NAME = "requester";
+	
 	private RedirectUtil() {
 		throw new IllegalStateException("Utility class");
 	}
@@ -17,17 +19,17 @@ public class RedirectUtil {
 		if (request.getQueryString() != null)
 			requester += "?" + request.getQueryString();
 
-		request.getSession().setAttribute("requester", requester);
+		request.getSession().setAttribute(URL_TO_REDIRECT_PARAM_NAME, requester);
 	}
 	
 	public static void storeUrlForRedirect(HttpServletRequest request, String url) {
-		request.getSession().setAttribute("requester", url);
+		request.getSession().setAttribute(URL_TO_REDIRECT_PARAM_NAME, url);
 	}
 	
 	
 	public static boolean redirectToStoredUrl(HttpSession session, HttpServletResponse response) throws IOException {
-		String requester = (String) session.getAttribute("requester");
-		session.removeAttribute("requester");
+		String requester = (String) session.getAttribute(URL_TO_REDIRECT_PARAM_NAME);
+		session.removeAttribute(URL_TO_REDIRECT_PARAM_NAME);
 
 		if (requester != null) {
 			response.sendRedirect(requester);
