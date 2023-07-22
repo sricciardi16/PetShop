@@ -161,42 +161,45 @@ public class ProdottoDAO {
 	}
 
 	public synchronized int countPagine(Categoria categoria, int limit) throws PetShopException {
-		int result = 0;
+	    int result = 0;
 
-		String countSQL = SELECT_ALL_FROM + TABLE_NAME + ", " + CategoriaDAO.TABLE_NAME + WHERE + COLUMN_NAME_ID_CATEGORIA + " = " + CategoriaDAO.TABLE_NAME + "." + CategoriaDAO.COLUMN_NAME_ID + " AND animale = ?";
-		if (!categoria.getTipologia().isBlank())
-			countSQL += " AND tipologia = ?";
+	    String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + ", " + CategoriaDAO.TABLE_NAME + " WHERE " + COLUMN_NAME_ID_CATEGORIA + " = " + CategoriaDAO.TABLE_NAME + "." + CategoriaDAO.COLUMN_NAME_ID + " AND animale = ?";
+	    
+	    if (!categoria.getTipologia().isBlank())
+	        countSQL += " AND tipologia = ?";
 
-		if (!categoria.getTipologiaIn().isBlank())
-			countSQL += " AND tipologia_in = ?";
+	    if (!categoria.getTipologiaIn().isBlank())
+	        countSQL += " AND tipologia_in = ?";
 
-		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(countSQL)) {
+	    try (Connection connection = dataSource.getConnection(); 
+	         PreparedStatement preparedStatement = connection.prepareStatement(countSQL)) {
 
-			int index = 1;
-			preparedStatement.setString(index++, categoria.getAnimale());
+	        int index = 1;
+	        preparedStatement.setString(index++, categoria.getAnimale());
 
-			if (!categoria.getTipologia().isBlank())
-				preparedStatement.setString(index++, categoria.getTipologia());
+	        if (!categoria.getTipologia().isBlank())
+	            preparedStatement.setString(index++, categoria.getTipologia());
 
-			if (!categoria.getTipologiaIn().isBlank())
-				preparedStatement.setString(index++, categoria.getTipologiaIn());
+	        if (!categoria.getTipologiaIn().isBlank())
+	            preparedStatement.setString(index++, categoria.getTipologiaIn());
 
-			try (ResultSet rs = preparedStatement.executeQuery()) {
-				while (rs.next()) {
-					int count = rs.getInt("count");
-					result = count / limit;
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                int count = rs.getInt(1); 
+	                result = count / limit;
 
-					if (count % limit != 0) {
-						result++;
-					}
-				}
-			}
-		} catch (SQLException e) {
-			throw new PetShopException("Errore durante il calcolo del numero di pagine", 500, e);
-		}
+	                if (count % limit != 0) {
+	                    result++;
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        throw new PetShopException("Errore durante il calcolo del numero di pagine", 500, e);
+	    }
 
-		return result;
+	    return result;
 	}
+
 
 	public synchronized void updateInMagazzino(int idProdotto, int quantita) throws PetShopException {
 		String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_IN_MAGAZZINO + " = " + COLUMN_NAME_IN_MAGAZZINO + " - ? WHERE " + COLUMN_NAME_ID + " = ?";
@@ -215,7 +218,7 @@ public class ProdottoDAO {
 	}
 	
 	public synchronized void updateById(Prodotto prodotto, int id) throws PetShopException {
-	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_NOME + EQUALS_PARAM + COLUMN_NAME_DESCRIZIONE + EQUALS_PARAM + COLUMN_NAME_PREZZO + EQUALS_PARAM + COLUMN_NAME_IMMAGINE + EQUALS_PARAM + COLUMN_NAME_IN_MAGAZZINO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_NOME + " = ?, " + COLUMN_NAME_DESCRIZIONE + " = ?, " + COLUMN_NAME_PREZZO + " = ?, " + COLUMN_NAME_IMMAGINE + " = ?, " + COLUMN_NAME_IN_MAGAZZINO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 	        preparedStatement.setString(1, prodotto.getNome());

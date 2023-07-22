@@ -11,7 +11,6 @@ public class DatabaseUtil {
 	public static final String SELECT_ALL_FROM = "SELECT * FROM ";
 	public static final String WHERE = " WHERE ";
 	public static final String AND = " AND ";
-	public static final String EQUALS_PARAM = " = ?, ";
 
 	private DatabaseUtil() {
 		throw new IllegalStateException("Utility class");
