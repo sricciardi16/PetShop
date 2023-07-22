@@ -3,15 +3,14 @@
 body {
 	background-color: white;
 	font-family: sans-serif;
-	font-weight: 600;
-	font-size: 15px;
 	min-width: 500px;
-	overflow: auto;
 }
 
 #contentCarrello {
 	width: 75%;
 	margin: auto;
+	font-weight: 600;
+	font-size: 15px;
 }
 
 h1 {

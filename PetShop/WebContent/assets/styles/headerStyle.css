@@ -146,12 +146,17 @@ div #home_redirect {
 .element {
 	border-bottom: 2px solid #333;
 	padding: 3%;
-	width: 80%;
+	width: 90%;
 	margin: auto;
+	background-color: #FA9D12;
 }
 
 .element h4 {
 	word-wrap: break-word;
+}
+
+.element a{
+		color: #333;
 }
 
 .element img {
@@ -159,6 +164,7 @@ div #home_redirect {
 }
 
 .element span {
+	color: #333;
 	font-weight: bold;
 }
 
@@ -213,10 +219,13 @@ div #home_redirect {
 
 #input-text {
 	width: 95%;
+	margin: auto;
 }
 
 #input-text input[type="text"] {
-	margin: 5% auto 5% auto;
+	margin: 4% auto 4% auto;
+	padding: 2%;
+	width:90%;
 	border: 2px solid #FA9D12;
 }
 
