@@ -146,15 +146,7 @@ function loadProducts() {
 
 function populateProducts(response) {
 	$("#productList tbody").empty();
-	$("#productList tbody").append(`<tr>
-        <th>Nome</th>
-        <th>Descrizione</th>
-        <th>Prezzo</th>
-        <th>Immagine</th>
-        <th>In Magazzino</th>
-        <th></th>
-      </tr>
-     `);
+	
 
 	numeroPagine = response.numeroPagine;
 

@@ -42,7 +42,7 @@
 
 			<div class="input">
 
-				<label class="boldLabel" for="tipologiaIn">Sotto Tipologia:</label> <select id="tipologiaIn" name="tipologiaIn" required>
+				<label class="boldLabel" for="tipologiaIn">SottoTipologia:</label> <select id="tipologiaIn" name="tipologiaIn" required>
 					<option value="seleziona" disabled selected>Seleziona</option>
 				</select>
 

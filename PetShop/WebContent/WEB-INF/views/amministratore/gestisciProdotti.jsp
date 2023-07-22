@@ -36,6 +36,13 @@
 				<table id="productList">
 				<caption>Lista prodotti</caption>
 					<thead>
+					<tr>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <th>Prezzo</th>
+        <th>Immagine</th>
+        <th>In Magazzino</th>
+        <th></th>
 					</thead>
 					<tbody>
 					</tbody>
