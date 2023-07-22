@@ -121,19 +121,15 @@ to {
 }
 
 select {
-	padding: 2%;;
+	padding: 2%;
 	border-radius: 5px;
 	border: none;
-	background-color: #9e5f00;
 	color: black;
 	font-size: 1em;
 	box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-	appearance: none; /* rimuove lo stile predefinito in alcuni browser */
+	appearance: none;
 	-webkit-appearance: none;
-	/* rimuove lo stile predefinito in Safari e Chrome */
-	-moz-appearance: none; /* rimuove lo stile predefinito in Firefox */
 	background: url("dropdown-icon.png") 96%/15% no-repeat #f6f6f6;
-	/* aggiunge un'icona personalizzata per il menu a discesa */
 	cursor: pointer;
 	transition: background-color .3s ease;
 }
