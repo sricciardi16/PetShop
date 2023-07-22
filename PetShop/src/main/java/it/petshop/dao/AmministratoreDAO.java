@@ -14,13 +14,16 @@ public class AmministratoreDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "amministratore";
+	private static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_NOME_UTENTE = "nome_utente";
+	private static final String COLUMN_NAME_PASSWORD = "password";
 
 	public AmministratoreDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	public synchronized void save(Amministratore amministratore) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome_utente, password) VALUES (?, ?, ?)";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_NAME_ID + ", " + COLUMN_NAME_NOME_UTENTE + ", " + COLUMN_NAME_PASSWORD + ") VALUES (?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setInt(1, amministratore.getId());
@@ -35,7 +38,7 @@ public class AmministratoreDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -49,7 +52,7 @@ public class AmministratoreDAO {
 
 	public synchronized Amministratore findByNomeUtente(String nomeUtente) throws PetShopException {
 		Amministratore bean = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -57,9 +60,9 @@ public class AmministratoreDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
 					bean = new Amministratore();
-					bean.setId(rs.getInt("id"));
-					bean.setNomeUtente(rs.getString("nome_utente"));
-					bean.setPassword(rs.getString("password"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					bean.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
 				}
 			}
 		} catch (SQLException e) {
@@ -71,7 +74,7 @@ public class AmministratoreDAO {
 
 	public synchronized Amministratore findByNomeUtenteAndPassword(String nomeUtente, String password) throws PetShopException {
 		Amministratore amministratore = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ? AND password = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ? AND " + COLUMN_NAME_PASSWORD + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setString(1, nomeUtente);
@@ -80,9 +83,9 @@ public class AmministratoreDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
 					amministratore = new Amministratore();
-					amministratore.setId(rs.getInt("id"));
-					amministratore.setNomeUtente(rs.getString("nome_utente"));
-					amministratore.setPassword(rs.getString("password"));
+					amministratore.setId(rs.getInt(COLUMN_NAME_ID));
+					amministratore.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					amministratore.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
 				}
 			}
 		} catch (SQLException e) {
@@ -91,5 +94,4 @@ public class AmministratoreDAO {
 
 		return amministratore;
 	}
-
 }

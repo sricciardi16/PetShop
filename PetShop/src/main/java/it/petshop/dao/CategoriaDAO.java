@@ -14,7 +14,11 @@ import it.petshop.utility.PetShopException;
 public class CategoriaDAO {
 
 	private DataSource dataSource;
-	private static final String TABLE_NAME = "categoria";
+	public static final String TABLE_NAME = "categoria";
+	public static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_ANIMALE = "animale";
+	private static final String COLUMN_NAME_TIPOLOGIA = "tipologia";
+	private static final String COLUMN_NAME_TIPOLOGIA_IN = "tipologia_in";
 
 	public CategoriaDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -23,10 +27,10 @@ public class CategoriaDAO {
 	public synchronized List<Categoria> findAllByCategoria(Categoria categoria) throws PetShopException {
 		List<Categoria> categorie = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE animale = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ANIMALE + " = ?";
 
 		if (!categoria.getTipologia().isBlank())
-			selectSQL += " AND tipologia = ?";
+			selectSQL += " AND " + COLUMN_NAME_TIPOLOGIA + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -38,10 +42,10 @@ public class CategoriaDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
 					Categoria bean = new Categoria();
-					bean.setId(rs.getInt("id"));
-					bean.setAnimale(rs.getString("animale"));
-					bean.setTipologia(rs.getString("tipologia"));
-					bean.setTipologiaIn(rs.getString("tipologia_in"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setAnimale(rs.getString(COLUMN_NAME_ANIMALE));
+					bean.setTipologia(rs.getString(COLUMN_NAME_TIPOLOGIA));
+					bean.setTipologiaIn(rs.getString(COLUMN_NAME_TIPOLOGIA_IN));
 
 					categorie.add(bean);
 				}
@@ -52,11 +56,11 @@ public class CategoriaDAO {
 
 		return categorie;
 	}
-	
+
 	public synchronized int findIdByCategoria(Categoria categoria) throws PetShopException {
 	    int categoriaId = -1;
 
-	    String selectSQL = "SELECT id FROM " + TABLE_NAME + " WHERE animale = ? AND tipologia = ? AND tipologia_in = ?";
+	    String selectSQL = "SELECT " + COLUMN_NAME_ID + " FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ANIMALE + " = ? AND " + COLUMN_NAME_TIPOLOGIA + " = ? AND " + COLUMN_NAME_TIPOLOGIA_IN + " = ?";
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -66,7 +70,7 @@ public class CategoriaDAO {
 
 	        try (ResultSet rs = preparedStatement.executeQuery()) {
 	            if (rs.next()) {
-	                categoriaId = rs.getInt("id");
+	                categoriaId = rs.getInt(COLUMN_NAME_ID);
 	            }
 	        }
 	    } catch (Exception e) {
@@ -75,8 +79,4 @@ public class CategoriaDAO {
 
 	    return categoriaId;
 	}
-
-	
-	
-
 }

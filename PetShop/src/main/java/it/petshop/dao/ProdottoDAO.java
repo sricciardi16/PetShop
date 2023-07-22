@@ -17,13 +17,20 @@ public class ProdottoDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "prodotto";
+	private static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_NOME = "nome";
+	private static final String COLUMN_NAME_DESCRIZIONE = "descrizione";
+	private static final String COLUMN_NAME_PREZZO = "prezzo";
+	private static final String COLUMN_NAME_IMMAGINE = "immagine";
+	private static final String COLUMN_NAME_IN_MAGAZZINO = "in_magazzino";
+	private static final String COLUMN_NAME_ID_CATEGORIA = "id_categoria";
 
 	public ProdottoDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	public synchronized void save(Prodotto prodotto) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (nome, descrizione, prezzo, immagine, in_magazzino, id_categoria) VALUES (?, ?, ?, ?, ?, ?)";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_NAME_NOME + ", " + COLUMN_NAME_DESCRIZIONE + ", " + COLUMN_NAME_PREZZO + ", " + COLUMN_NAME_IMMAGINE + ", " + COLUMN_NAME_IN_MAGAZZINO + ", " + COLUMN_NAME_ID_CATEGORIA + ") VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setString(1, prodotto.getNome());
@@ -41,7 +48,7 @@ public class ProdottoDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -55,20 +62,20 @@ public class ProdottoDAO {
 
 	public synchronized Prodotto findById(int id) throws PetShopException {
 		Prodotto bean = new Prodotto();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
-					bean.setId(rs.getInt("id"));
-					bean.setNome(rs.getString("nome"));
-					bean.setDescrizione(rs.getString("descrizione"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setImmagine(rs.getString("immagine"));
-					bean.setInMagazzino(rs.getInt("in_magazzino"));
-					bean.setIdCategoria(rs.getInt("id_categoria"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setNome(rs.getString(COLUMN_NAME_NOME));
+					bean.setDescrizione(rs.getString(COLUMN_NAME_DESCRIZIONE));
+					bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+					bean.setImmagine(rs.getString(COLUMN_NAME_IMMAGINE));
+					bean.setInMagazzino(rs.getInt(COLUMN_NAME_IN_MAGAZZINO));
+					bean.setIdCategoria(rs.getInt(COLUMN_NAME_ID_CATEGORIA));
 				}
 			}
 		} catch (SQLException e) {
@@ -86,7 +93,7 @@ public class ProdottoDAO {
 			preparedStatement.setInt(1, idElemento);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
-					prodottoId = rs.getInt("id");
+					prodottoId = rs.getInt(COLUMN_NAME_ID);
 				}
 			}
 		} catch (SQLException e) {
@@ -99,7 +106,7 @@ public class ProdottoDAO {
 	public synchronized List<Prodotto> findAllByCategoriaWithLimit(Categoria categoria, int limit, int offset, String order, boolean asc) throws PetShopException {
 		List<Prodotto> prodotti = new ArrayList<>();
 
-		String selectSQL = "SELECT * FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ? AND prodotto.in_magazzino != 0 ";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + ", categoria WHERE " + COLUMN_NAME_ID_CATEGORIA + " = categoria.id AND animale = ? AND " + COLUMN_NAME_IN_MAGAZZINO + " != 0 ";
 
 		if (!categoria.getTipologia().isBlank())
 			selectSQL += " AND tipologia = ?";
@@ -133,16 +140,15 @@ public class ProdottoDAO {
 
 				while (rs.next()) {
 					Prodotto bean = new Prodotto();
-					bean.setId(rs.getInt("id"));
-					bean.setNome(rs.getString("nome"));
-					bean.setDescrizione(rs.getString("descrizione"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setImmagine(rs.getString("immagine"));
-					bean.setInMagazzino(rs.getInt("in_magazzino"));
-					bean.setIdCategoria(rs.getInt("id_categoria"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setNome(rs.getString(COLUMN_NAME_NOME));
+					bean.setDescrizione(rs.getString(COLUMN_NAME_DESCRIZIONE));
+					bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+					bean.setImmagine(rs.getString(COLUMN_NAME_IMMAGINE));
+					bean.setInMagazzino(rs.getInt(COLUMN_NAME_IN_MAGAZZINO));
+					bean.setIdCategoria(rs.getInt(COLUMN_NAME_ID_CATEGORIA));
 
 					prodotti.add(bean);
-
 				}
 			}
 		} catch (Exception e) {
@@ -155,7 +161,7 @@ public class ProdottoDAO {
 	public synchronized int countPagine(Categoria categoria, int limit) throws PetShopException {
 		int result = 0;
 
-		String countSQL = "SELECT COUNT(*) AS count FROM prodotto, categoria WHERE prodotto.id_categoria = categoria.id AND animale = ?";
+		String countSQL = "SELECT COUNT(*) AS count FROM " + TABLE_NAME + ", " + CategoriaDAO.TABLE_NAME + " WHERE " + COLUMN_NAME_ID_CATEGORIA + " = " + CategoriaDAO.TABLE_NAME + "." + CategoriaDAO.COLUMN_NAME_ID + "AND animale = ?";
 		if (!categoria.getTipologia().isBlank())
 			countSQL += " AND tipologia = ?";
 
@@ -191,7 +197,7 @@ public class ProdottoDAO {
 	}
 
 	public synchronized void updateInMagazzino(int idProdotto, int quantita) throws PetShopException {
-		String updateSQL = "UPDATE " + TABLE_NAME + " SET in_magazzino = in_magazzino - ? WHERE id = ?";
+		String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_IN_MAGAZZINO + " = " + COLUMN_NAME_IN_MAGAZZINO + " - ? WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 			preparedStatement.setInt(1, quantita);
@@ -207,7 +213,7 @@ public class ProdottoDAO {
 	}
 	
 	public synchronized void updateById(Prodotto prodotto, int id) throws PetShopException {
-	    String updateSQL = "UPDATE " + TABLE_NAME + " SET nome = ?, descrizione = ?, prezzo = ?, immagine = ?, in_magazzino = ? WHERE id = ?";
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_NOME + " = ?, " + COLUMN_NAME_DESCRIZIONE + " = ?, " + COLUMN_NAME_PREZZO + " = ?, " + COLUMN_NAME_IMMAGINE + " = ?, " + COLUMN_NAME_IN_MAGAZZINO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
 	        preparedStatement.setString(1, prodotto.getNome());
@@ -228,20 +234,20 @@ public class ProdottoDAO {
 	
 	public synchronized List<Prodotto> findFirstLimitByNomeLike(String name, int limit) throws PetShopException {
 	    List<Prodotto> products = new ArrayList<>();
-	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome LIKE ? LIMIT ?";
+	    String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME + " LIKE ? LIMIT ?";
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 	        preparedStatement.setString(1, "%" + name + "%");
 	        preparedStatement.setInt(2, limit);
 	        try (ResultSet rs = preparedStatement.executeQuery()) {
 	            while (rs.next()) {
 	                Prodotto prodotto = new Prodotto();
-	                prodotto.setId(rs.getInt("id"));
-	                prodotto.setNome(rs.getString("nome"));
-	                prodotto.setDescrizione(rs.getString("descrizione"));
-	                prodotto.setPrezzo(rs.getDouble("prezzo"));
-	                prodotto.setImmagine(rs.getString("immagine"));
-	                prodotto.setInMagazzino(rs.getInt("in_magazzino"));
-	                prodotto.setIdCategoria(rs.getInt("id_categoria"));
+	                prodotto.setId(rs.getInt(COLUMN_NAME_ID));
+	                prodotto.setNome(rs.getString(COLUMN_NAME_NOME));
+	                prodotto.setDescrizione(rs.getString(COLUMN_NAME_DESCRIZIONE));
+	                prodotto.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+	                prodotto.setImmagine(rs.getString(COLUMN_NAME_IMMAGINE));
+	                prodotto.setInMagazzino(rs.getInt(COLUMN_NAME_IN_MAGAZZINO));
+	                prodotto.setIdCategoria(rs.getInt(COLUMN_NAME_ID_CATEGORIA));
 	                products.add(prodotto);
 	            }
 	        }
@@ -250,6 +256,4 @@ public class ProdottoDAO {
 	    }
 	    return products;
 	}
-
-
 }

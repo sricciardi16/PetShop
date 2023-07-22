@@ -16,13 +16,20 @@ public class UtenteDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "utente";
+	private static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_NOME_UTENTE = "nome_utente";
+	private static final String COLUMN_NAME_PASSWORD = "password";
+	private static final String COLUMN_NAME_NOME = "nome";
+	private static final String COLUMN_NAME_COGNOME = "cognome";
+	private static final String COLUMN_NAME_EMAIL = "email";
+	private static final String COLUMN_NAME_TELEFONO = "telefono";
 
 	public UtenteDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	public synchronized void save(Utente utente) throws PetShopException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (id, nome_utente, password, nome, cognome, email, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (" + COLUMN_NAME_ID + ", " + COLUMN_NAME_NOME_UTENTE + ", " + COLUMN_NAME_PASSWORD + ", " + COLUMN_NAME_NOME + ", " + COLUMN_NAME_COGNOME + ", " + COLUMN_NAME_EMAIL + ", " + COLUMN_NAME_TELEFONO + ") VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 			preparedStatement.setInt(1, utente.getId());
@@ -41,7 +48,7 @@ public class UtenteDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -55,20 +62,20 @@ public class UtenteDAO {
 
 	public synchronized Utente findByNomeUtente(String nomeUtente) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setString(1, nomeUtente);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
 					utente = new Utente();
-					utente.setId(rs.getInt("id"));
-					utente.setNomeUtente(rs.getString("nome_utente"));
-					utente.setPassword(rs.getString("password"));
-					utente.setNome(rs.getString("nome"));
-					utente.setCognome(rs.getString("cognome"));
-					utente.setEmail(rs.getString("email"));
-					utente.setTelefono(rs.getString("telefono"));
+					utente.setId(rs.getInt(COLUMN_NAME_ID));
+					utente.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					utente.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
+					utente.setNome(rs.getString(COLUMN_NAME_NOME));
+					utente.setCognome(rs.getString(COLUMN_NAME_COGNOME));
+					utente.setEmail(rs.getString(COLUMN_NAME_EMAIL));
+					utente.setTelefono(rs.getString(COLUMN_NAME_TELEFONO));
 				}
 			}
 		} catch (SQLException e) {
@@ -80,7 +87,7 @@ public class UtenteDAO {
 
 	public synchronized Utente findByNomeUtenteAndPassword(String nomeUtente, String password) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE nome_utente = ? AND password = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_NOME_UTENTE + " = ? AND " + COLUMN_NAME_PASSWORD + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setString(1, nomeUtente);
@@ -88,13 +95,13 @@ public class UtenteDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
 					utente = new Utente();
-					utente.setId(rs.getInt("id"));
-					utente.setNomeUtente(rs.getString("nome_utente"));
-					utente.setPassword(rs.getString("password"));
-					utente.setNome(rs.getString("nome"));
-					utente.setCognome(rs.getString("cognome"));
-					utente.setEmail(rs.getString("email"));
-					utente.setTelefono(rs.getString("telefono"));
+					utente.setId(rs.getInt(COLUMN_NAME_ID));
+					utente.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					utente.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
+					utente.setNome(rs.getString(COLUMN_NAME_NOME));
+					utente.setCognome(rs.getString(COLUMN_NAME_COGNOME));
+					utente.setEmail(rs.getString(COLUMN_NAME_EMAIL));
+					utente.setTelefono(rs.getString(COLUMN_NAME_TELEFONO));
 				}
 			}
 		} catch (SQLException e) {
@@ -112,13 +119,13 @@ public class UtenteDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
 					Utente utente = new Utente();
-					utente.setId(rs.getInt("id"));
-					utente.setNomeUtente(rs.getString("nome_utente"));
-					utente.setPassword(rs.getString("password"));
-					utente.setNome(rs.getString("nome"));
-					utente.setCognome(rs.getString("cognome"));
-					utente.setEmail(rs.getString("email"));
-					utente.setTelefono(rs.getString("telefono"));
+					utente.setId(rs.getInt(COLUMN_NAME_ID));
+					utente.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					utente.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
+					utente.setNome(rs.getString(COLUMN_NAME_NOME));
+					utente.setCognome(rs.getString(COLUMN_NAME_COGNOME));
+					utente.setEmail(rs.getString(COLUMN_NAME_EMAIL));
+					utente.setTelefono(rs.getString(COLUMN_NAME_TELEFONO));
 					utenti.add(utente);
 				}
 			}
@@ -131,20 +138,20 @@ public class UtenteDAO {
 	
 	public synchronized Utente findById(int id) throws PetShopException {
 		Utente utente = null;
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				if (rs.next()) {
 					utente = new Utente();
-					utente.setId(rs.getInt("id"));
-					utente.setNomeUtente(rs.getString("nome_utente"));
-					utente.setPassword(rs.getString("password"));
-					utente.setNome(rs.getString("nome"));
-					utente.setCognome(rs.getString("cognome"));
-					utente.setEmail(rs.getString("email"));
-					utente.setTelefono(rs.getString("telefono"));
+					utente.setId(rs.getInt(COLUMN_NAME_ID));
+					utente.setNomeUtente(rs.getString(COLUMN_NAME_NOME_UTENTE));
+					utente.setPassword(rs.getString(COLUMN_NAME_PASSWORD));
+					utente.setNome(rs.getString(COLUMN_NAME_NOME));
+					utente.setCognome(rs.getString(COLUMN_NAME_COGNOME));
+					utente.setEmail(rs.getString(COLUMN_NAME_EMAIL));
+					utente.setTelefono(rs.getString(COLUMN_NAME_TELEFONO));
 				}
 			}
 		} catch (SQLException e) {
@@ -153,7 +160,4 @@ public class UtenteDAO {
 
 		return utente;
 	}
-
-
-
 }

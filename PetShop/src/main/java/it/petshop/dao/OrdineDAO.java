@@ -19,6 +19,14 @@ public class OrdineDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "ordine";
+	private static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_DATA_ORA = "data_ora";
+	private static final String COLUMN_NAME_PREZZO = "prezzo";
+	private static final String COLUMN_NAME_STATO = "stato";
+	private static final String COLUMN_NAME_ID_UTENTE = "id_utente";
+	private static final String COLUMN_NAME_ID_METODO_PAGAMENTO = "id_metodo_pagamento";
+	private static final String COLUMN_NAME_ID_METODO_SPEDIZIONE = "id_metodo_spedizione";
+	private static final String COLUMN_NAME_ID_INDIRIZZO = "id_indirizzo";
 
 	public OrdineDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -47,7 +55,7 @@ public class OrdineDAO {
 
 	public synchronized boolean deleteById(int id) throws PetShopException {
 		int result = 0;
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
 			preparedStatement.setInt(1, id);
@@ -72,14 +80,14 @@ public class OrdineDAO {
 
 			while (rs.next()) {
 				Ordine bean = new Ordine();
-				bean.setId(rs.getInt("id"));
-				bean.setDataOra(rs.getTimestamp("data_ora"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
-				bean.setStato(rs.getString("stato"));
-				bean.setIdUtente(rs.getInt("id_utente"));
-				bean.setIdMetodoPagamento(rs.getInt("id_metodo_pagamento"));
-				bean.setIdMetodoSpedizione(rs.getInt("id_metodo_spedizione"));
-				bean.setIdIndirizzo(rs.getInt("id_indirizzo"));
+				bean.setId(rs.getInt(COLUMN_NAME_ID));
+				bean.setDataOra(rs.getTimestamp(COLUMN_NAME_DATA_ORA));
+				bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+				bean.setStato(rs.getString(COLUMN_NAME_STATO));
+				bean.setIdUtente(rs.getInt(COLUMN_NAME_ID_UTENTE));
+				bean.setIdMetodoPagamento(rs.getInt(COLUMN_NAME_ID_METODO_PAGAMENTO));
+				bean.setIdMetodoSpedizione(rs.getInt(COLUMN_NAME_ID_METODO_SPEDIZIONE));
+				bean.setIdIndirizzo(rs.getInt(COLUMN_NAME_ID_INDIRIZZO));
 
 				ordini.add(bean);
 			}
@@ -96,21 +104,21 @@ public class OrdineDAO {
 
 	public synchronized Ordine findById(int id) throws PetShopException {
 		Ordine bean = new Ordine();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
-					bean.setId(rs.getInt("id"));
-					bean.setDataOra(rs.getTimestamp("data_ora"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setStato(rs.getString("stato"));
-					bean.setIdUtente(rs.getInt("id_utente"));
-					bean.setIdMetodoPagamento(rs.getInt("id_metodo_pagamento"));
-					bean.setIdMetodoSpedizione(rs.getInt("id_metodo_spedizione"));
-					bean.setIdIndirizzo(rs.getInt("id_indirizzo"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setDataOra(rs.getTimestamp(COLUMN_NAME_DATA_ORA));
+					bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+					bean.setStato(rs.getString(COLUMN_NAME_STATO));
+					bean.setIdUtente(rs.getInt(COLUMN_NAME_ID_UTENTE));
+					bean.setIdMetodoPagamento(rs.getInt(COLUMN_NAME_ID_METODO_PAGAMENTO));
+					bean.setIdMetodoSpedizione(rs.getInt(COLUMN_NAME_ID_METODO_SPEDIZIONE));
+					bean.setIdIndirizzo(rs.getInt(COLUMN_NAME_ID_INDIRIZZO));
 				}
 			}
 		} catch (SQLException e) {
@@ -122,7 +130,7 @@ public class OrdineDAO {
 
 	public List<Ordine> findAllByUtente(Utente utente) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID_UTENTE + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
@@ -130,14 +138,14 @@ public class OrdineDAO {
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
 					Ordine bean = new Ordine();
-					bean.setId(rs.getInt("id"));
-					bean.setDataOra(rs.getTimestamp("data_ora"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setStato(rs.getString("stato"));
-					bean.setIdUtente(rs.getInt("id_utente"));
-					bean.setIdMetodoPagamento(rs.getInt("id_metodo_pagamento"));
-					bean.setIdMetodoSpedizione(rs.getInt("id_metodo_spedizione"));
-					bean.setIdIndirizzo(rs.getInt("id_indirizzo"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setDataOra(rs.getTimestamp(COLUMN_NAME_DATA_ORA));
+					bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+					bean.setStato(rs.getString(COLUMN_NAME_STATO));
+					bean.setIdUtente(rs.getInt(COLUMN_NAME_ID_UTENTE));
+					bean.setIdMetodoPagamento(rs.getInt(COLUMN_NAME_ID_METODO_PAGAMENTO));
+					bean.setIdMetodoSpedizione(rs.getInt(COLUMN_NAME_ID_METODO_SPEDIZIONE));
+					bean.setIdIndirizzo(rs.getInt(COLUMN_NAME_ID_INDIRIZZO));
 
 					ordini.add(bean);
 				}
@@ -152,9 +160,9 @@ public class OrdineDAO {
 	public List<Ordine> findAllByUtenteDataSorted(Utente utente, String startDate, String endDate, String ordinamento, String ordine) throws PetShopException {
 	    List<Ordine> ordini = new ArrayList<>();
 	    String baseSQL = "SELECT * FROM " + TABLE_NAME + " WHERE 1=1";
-	    String userCondition = (utente != null) ? " AND id_utente = ? " : "";
-	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? " AND data_ora >= ? " : "";
-	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? " AND data_ora <= ? " : "";
+	    String userCondition = (utente != null) ? " AND " + COLUMN_NAME_ID_UTENTE + " = ? " : "";
+	    String startDateCondition = (startDate != null && !startDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " >= ? " : "";
+	    String endDateCondition = (endDate != null && !endDate.isBlank()) ? " AND " + COLUMN_NAME_DATA_ORA + " <= ? " : "";
 	    String orderCondition = (ordinamento != null && ordine != null) ? " ORDER BY " + ordinamento + " " + ordine : "";
 
 	    String selectSQL = baseSQL + userCondition + startDateCondition + endDateCondition + orderCondition;
@@ -175,14 +183,14 @@ public class OrdineDAO {
 	        try (ResultSet rs = preparedStatement.executeQuery()) {
 	            while (rs.next()) {
 	                Ordine bean = new Ordine();
-	                bean.setId(rs.getInt("id"));
-	                bean.setDataOra(rs.getTimestamp("data_ora"));
-	                bean.setPrezzo(rs.getDouble("prezzo"));
-	                bean.setStato(rs.getString("stato"));
-	                bean.setIdUtente(rs.getInt("id_utente"));
-	                bean.setIdMetodoPagamento(rs.getInt("id_metodo_pagamento"));
-	                bean.setIdMetodoSpedizione(rs.getInt("id_metodo_spedizione"));
-	                bean.setIdIndirizzo(rs.getInt("id_indirizzo"));
+	                bean.setId(rs.getInt(COLUMN_NAME_ID));
+	                bean.setDataOra(rs.getTimestamp(COLUMN_NAME_DATA_ORA));
+	                bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+	                bean.setStato(rs.getString(COLUMN_NAME_STATO));
+	                bean.setIdUtente(rs.getInt(COLUMN_NAME_ID_UTENTE));
+	                bean.setIdMetodoPagamento(rs.getInt(COLUMN_NAME_ID_METODO_PAGAMENTO));
+	                bean.setIdMetodoSpedizione(rs.getInt(COLUMN_NAME_ID_METODO_SPEDIZIONE));
+	                bean.setIdIndirizzo(rs.getInt(COLUMN_NAME_ID_INDIRIZZO));
 
 	                ordini.add(bean);
 	            }
@@ -195,7 +203,7 @@ public class OrdineDAO {
 	}
 	
 	public synchronized boolean updateStatoById(int id, String nuovoStato) throws PetShopException {
-	    String updateSQL = "UPDATE " + TABLE_NAME + " SET stato = ? WHERE id = ?";
+	    String updateSQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_STATO + " = ? WHERE " + COLUMN_NAME_ID + " = ?";
 	    int affectedRows = 0;
 
 	    try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
@@ -207,8 +215,4 @@ public class OrdineDAO {
 	    }
 	    return affectedRows > 0;
 	}
-
-
-
-
 }

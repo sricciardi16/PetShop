@@ -16,6 +16,10 @@ public class MetodoSpedizioneDAO {
 
 	private DataSource dataSource;
 	private static final String TABLE_NAME = "metodo_spedizione";
+	private static final String COLUMN_NAME_ID = "id";
+	private static final String COLUMN_NAME_DESCRIZIONE = "descrizione";
+	private static final String COLUMN_NAME_PREZZO = "prezzo";
+	private static final String COLUMN_NAME_GIORNI_CONSEGNA_PREVISTI = "giorni_consegna_previsti";
 
 	public MetodoSpedizioneDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -30,10 +34,10 @@ public class MetodoSpedizioneDAO {
 
 			while (rs.next()) {
 				MetodoSpedizione bean = new MetodoSpedizione();
-				bean.setId(rs.getInt("id"));
-				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
-				bean.setGiorniConsegnaPrevisti(rs.getInt("giorni_consegna_previsti"));
+				bean.setId(rs.getInt(COLUMN_NAME_ID));
+				bean.setDescrizione(rs.getString(COLUMN_NAME_DESCRIZIONE));
+				bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+				bean.setGiorniConsegnaPrevisti(rs.getInt(COLUMN_NAME_GIORNI_CONSEGNA_PREVISTI));
 
 				metodiSpedizione.add(bean);
 			}
@@ -46,17 +50,17 @@ public class MetodoSpedizioneDAO {
 
 	public synchronized MetodoSpedizione findByKey(int id) throws PetShopException {
 		MetodoSpedizione bean = new MetodoSpedizione();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
+		String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME_ID + " = ?";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 
 			preparedStatement.setInt(1, id);
 			try (ResultSet rs = preparedStatement.executeQuery()) {
 				while (rs.next()) {
-					bean.setId(rs.getInt("id"));
-					bean.setDescrizione(rs.getString("descrizione"));
-					bean.setPrezzo(rs.getDouble("prezzo"));
-					bean.setGiorniConsegnaPrevisti(rs.getInt("giorni_consegna_previsti"));
+					bean.setId(rs.getInt(COLUMN_NAME_ID));
+					bean.setDescrizione(rs.getString(COLUMN_NAME_DESCRIZIONE));
+					bean.setPrezzo(rs.getDouble(COLUMN_NAME_PREZZO));
+					bean.setGiorniConsegnaPrevisti(rs.getInt(COLUMN_NAME_GIORNI_CONSEGNA_PREVISTI));
 				}
 			}
 		} catch (SQLException e) {
