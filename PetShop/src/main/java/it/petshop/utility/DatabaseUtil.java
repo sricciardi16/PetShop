@@ -26,9 +26,6 @@ public class DatabaseUtil {
 			}
 		} catch (SQLException e) {
 			throw new PetShopException("Errore durante il recupero dell'ID generato", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e);
-		} finally {
-			if (generatedId == -1)
-				throw new PetShopException("Errore durante il recupero dell'ID generato", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 
 		return generatedId;

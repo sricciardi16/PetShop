@@ -1,11 +1,7 @@
 package it.petshop.utility;
 
 public class PetShopException extends RuntimeException {
-	private int errorCode;
-
-	public PetShopException() {
-		super();
-	}
+	private final int errorCode;
 
 	public PetShopException(int errorCode) {
 		super();
