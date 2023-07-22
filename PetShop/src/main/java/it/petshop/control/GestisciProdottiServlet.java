@@ -52,7 +52,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 			// ---
 			
 			JsonResponseHelper jresponse = new JsonResponseHelper();
-			jresponse.add("status", "success");
+			jresponse.addStatusSuccess();
 			jresponse.send(response);
 	    } else if (request.getPathInfo().equals("/create")) {
 	        Prodotto newProduct = new Prodotto();
@@ -75,7 +75,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 	        prodottoDao.save(newProduct);
 	        
 	        JsonResponseHelper jresponse = new JsonResponseHelper();
-	        jresponse.add("status", "success");
+	        jresponse.addStatusSuccess();
 	        jresponse.send(response);
 	    } else if (request.getPathInfo().equals("/update")) {
 	    	
@@ -98,7 +98,7 @@ public class GestisciProdottiServlet extends HttpServlet {
 	        prodottoDao.updateById(productToUpdate, toUpdateId);
 	        
 	        JsonResponseHelper jresponse = new JsonResponseHelper();
-	        jresponse.add("status", "success");
+	        jresponse.addStatusSuccess();
 	        jresponse.send(response);
 	    }  else {
 	        throw new PetShopException("Operazione Non Definita", HttpServletResponse.SC_NOT_FOUND);
