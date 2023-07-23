@@ -171,6 +171,7 @@ function populateProducts(response) {
 	$('#ultimaPagina').html(numeroPagine);
 	eliminaProdotto();
 	modificaProdotto();
+	window.scrollTo(0, 0);
 }
 
 function eliminaProdotto() {

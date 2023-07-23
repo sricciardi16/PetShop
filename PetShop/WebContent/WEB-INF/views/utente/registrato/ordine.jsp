@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/main.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/ordine.css">
 <title>Ordine ${ordine.id}</title>
 </head>
@@ -17,9 +16,12 @@
 		<c:forEach var="elemento" items="${elementi}">
 			<div class="prodotto">
 				<img alt="ordine" src="${pageContext.request.contextPath}${initParam['imgElementiPath']}${elemento.immagine}"> <label class="nome">${elemento.nome}</label> <label class="prezzo">${elemento.prezzo} &#8364</label> <label class="modificaQuantita">Quantità: ${elemento.quantita }</label> <label
-					class="totale">Totale: <fmt:formatNumber value="${elemento.quantita * elemento.prezzo}" type="number" minFractionDigits="2" maxFractionDigits="2" /> &#8364
+					class="totale">Totale: <fmt:formatNumber value="${elemento.quantita * elemento.prezzo}" type="number" minFractionDigits="2" maxFractionDigits="2" /> €
 				</label>
-				<button class="vaiAlProdotto" onclick="window.location.href='${pageContext.request.contextPath}/prodotto?id=${elemento.idProdotto}'" ${elemento.idProdotto == 0 ? 'disabled' : ''}>Vai al prodotto</button>
+				<c:if test="${sessionScope.utente != null}">
+	<button class="vaiAlProdotto" onclick="window.location.href='${pageContext.request.contextPath}/prodotto?id=${elemento.idProdotto}'" ${elemento.idProdotto == 0 ? 'disabled' : ''}>Vai al prodotto</button>
+</c:if>
+
 			</div>
 		</c:forEach>
 		<div class="checkout">
