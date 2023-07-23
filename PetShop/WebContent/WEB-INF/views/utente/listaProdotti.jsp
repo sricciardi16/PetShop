@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>PetShop Products</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/listaProdotti.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/main.css">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/listaProdotti.css">
 </head>
 
 <body>
@@ -15,9 +15,9 @@
 
 	<div id="content">
 		<div id="prodotti">
-		
+
 			<h1>I nostri prodotti</h1>
-			<h3 id="ordinaPer">Ordina per:</h3>
+			<h3 id="ordinaPer">Filtra e Ordina</h3>
 			<select id="tipologia" name="tipologia">
 				<option value="tutte">Tutte</option>
 			</select> <select id="tipologiaIn" name="tipologiaIn">

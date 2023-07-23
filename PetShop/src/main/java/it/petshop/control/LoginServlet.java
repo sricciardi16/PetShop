@@ -14,6 +14,7 @@ import it.petshop.dao.UtenteDAO;
 import it.petshop.dto.Amministratore;
 import it.petshop.dto.Utente;
 import it.petshop.utility.JsonResponseHelper;
+import it.petshop.utility.RedirectUtil;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,6 +30,7 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RedirectUtil.storeCurrentUrlForRedirect(request);
 		request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
 	}
 

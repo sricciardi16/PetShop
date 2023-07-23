@@ -39,7 +39,7 @@ public class ProdottiServlet extends HttpServlet {
 		String orderBy = Optional.ofNullable(request.getParameter("order")).orElse("in_magazzino");
 		String direction = Optional.ofNullable(request.getParameter("direction")).orElse("asc");
 
-		if ((animale == null || (!animale.equals("cane") && !animale.equals("gatto"))) && (direction == null || direction.equals("asc")))
+		if ((animale == null || (!animale.equals("cane") && !animale.equals("gatto"))) || (!direction.equals("asc") && !direction.equals("desc")))
 			throw new PetShopException("Parametri Errati nella Richiesta dei Prodotti", 404);
 
 		if (!AjaxUtil.isAjaxRequest(request)) {
@@ -75,6 +75,10 @@ public class ProdottiServlet extends HttpServlet {
 		jresponse.add("numeroPagine", numeroPagine);
 		jresponse.send(response);
 
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 	
 	

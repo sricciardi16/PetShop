@@ -155,8 +155,8 @@ div #home_redirect {
 	word-wrap: break-word;
 }
 
-.element a{
-		color: #333;
+.element a {
+	color: #333;
 }
 
 .element img {
@@ -225,7 +225,7 @@ div #home_redirect {
 #input-text input[type="text"] {
 	margin: 4% auto 4% auto;
 	padding: 2%;
-	width:90%;
+	width: 90%;
 	border: 2px solid #FA9D12;
 }
 

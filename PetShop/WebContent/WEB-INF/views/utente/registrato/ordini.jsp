@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/main.css">
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/ordini.css">
 <title>I Miei Ordini</title>
 </head>
@@ -16,7 +17,7 @@
 		<h3>I Miei ordini</h3>
 		<h5>Questi sono gli ordini che hai effettuato dal momento della creazione del tuo account</h5>
 		<table>
-		<caption>Tabella ordini</caption>
+			<caption>Tabella ordini</caption>
 			<tr>
 				<th>Codice</th>
 				<th>Data</th>
@@ -29,7 +30,7 @@
 				<tr>
 					<td>${ordine.id}</td>
 					<td><fmt:formatDate value="${ordine.dataOra}" type="date" pattern="dd/MM/yyyy" /></td>
-					<td>${ordine.prezzo}</td>
+					<td>${ordine.prezzo}€</td>
 					<td><c:choose>
 							<c:when test="${ordine.idMetodoPagamento == 1}">Contanti</c:when>
 							<c:otherwise>Carta</c:otherwise>

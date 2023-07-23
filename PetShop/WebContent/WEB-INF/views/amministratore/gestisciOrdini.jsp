@@ -11,29 +11,29 @@
 	<div class="content">
 		<div class="filterContent">
 			<div>
-				<label for="selectClienti">Clienti: </label> <select id="selectClienti">
+				<label for="selectClienti">Cliente </label> <select id="selectClienti">
 					<option value="">Tutti</option>
 					<!-- Options to be filled with AJAX -->
 				</select>
 			</div>
 
 			<div>
-				<label for="startDate">Data iniziale: </label> <input type="date" id="startDate">
+				<label for="startDate">Da </label> <input type="date" id="startDate">
 			</div>
 
 			<div>
-				<label for="endDate">Data finale: </label> <input type="date" id="endDate">
+				<label for="endDate">A </label> <input type="date" id="endDate">
 			</div>
 
 			<div>
-				<label for="selectOrdinamento">Ordinamento per: </label> <select id="selectOrdinamento">
+				<label for="selectOrdinamento">Ordina per </label> <select id="selectOrdinamento">
 					<option value="data_ora">Data</option>
 					<option value="prezzo">Prezzo</option>
 				</select>
 			</div>
 
 			<div>
-				<label for="selectCrescenteDecrescente">Ordine: </label> <select id="selectCrescenteDecrescente">
+				<label for="selectCrescenteDecrescente">Ordine </label> <select id="selectCrescenteDecrescente">
 					<option value="asc">Crescente</option>
 					<option value="desc">Decrescente</option>
 				</select>
@@ -41,7 +41,7 @@
 		</div>
 		<div class="tableContainer">
 			<table id="tableOrdini">
-			<caption>Tabella ordini</caption>
+				<caption>Tabella ordini</caption>
 				<thead>
 					<tr>
 						<th>Codice</th>
@@ -50,6 +50,7 @@
 						<th>Cognome</th>
 						<th>Data</th>
 						<th>Prezzo Totale</th>
+						<th>Metodo Pagamento</th>
 						<th>Stato</th>
 						<th>Dettagli</th>
 					</tr>

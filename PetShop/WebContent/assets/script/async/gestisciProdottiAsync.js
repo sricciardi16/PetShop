@@ -154,7 +154,7 @@ function populateProducts(response) {
 		let prodottoHTML = '<tr>' +
 			'<td><input type="text" class="nome" value="' + prodotto.nome + '"></td>' +
 			'<td><input type="text" class="descrizione" value="' + prodotto.descrizione + '"></td>' +
-			'<td><input type="text" class="prezzo" value="' + prodotto.prezzo + '"></td>' +
+			'<td><input type="number" class="prezzo" value="' + prodotto.prezzo + '"></td>' +
 			'<td>' +
 			'<input type="file" class="immagine">' +
 			'<img src="' + imgProdottiPath + prodotto.immagine + '" alt="Anteprima dell\'immagine" style="width: 100px; height: 100px;">' +

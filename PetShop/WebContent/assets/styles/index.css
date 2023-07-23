@@ -1,7 +1,11 @@
 @charset "UTF-8";
 
+#footer {
+	flex-shrink: 0;
+}
+
 #content {
-	width:100%;
+	width: 100%;
 	text-align: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -28,4 +32,19 @@
 
 #content p {
 	font-size: 20px;
+}
+
+@media ( max-width : 700px) {
+	#content {
+		min-width: 0;
+	}
+	#content h1 {
+		font-size: 40px;
+	}
+	#content img {
+		width: 100%;
+	}
+	#content p {
+		font-size: 16px;
+	}
 }

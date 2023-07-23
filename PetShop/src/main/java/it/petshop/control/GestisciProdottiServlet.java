@@ -73,10 +73,10 @@ public class GestisciProdottiServlet extends HttpServlet {
 	        newProduct.setImmagine(fileName);
 	        
 	        prodottoDao.save(newProduct);
+	        request.setAttribute("status", "success");
+	        request.setAttribute("message", "Prodotto Creato Con Successo");
+	        request.getRequestDispatcher("/admin").forward(request, response);
 	        
-	        JsonResponseHelper jresponse = new JsonResponseHelper();
-	        jresponse.addStatusSuccess();
-	        jresponse.send(response);
 	    } else if (request.getPathInfo().equals("/update")) {
 	    	
 	        int toUpdateId = Integer.parseInt(getStringFromPart(request.getPart("id")));

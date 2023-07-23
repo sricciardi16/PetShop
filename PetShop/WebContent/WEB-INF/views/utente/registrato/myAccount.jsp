@@ -24,8 +24,8 @@
 				<label>Cognome: </label><span><c:out value="${sessionScope.utente.cognome}" /></span>
 			</div>
 			<div id="data_registrazione" class="element">
-	<label>Registrazione: </label><span><fmt:formatDate value="${sessionScope.utente.dataRegistrazione}" pattern="dd/MM/yyyy" /></span>
-</div>
+				<label>Registrazione: </label><span><fmt:formatDate value="${sessionScope.utente.dataRegistrazione}" pattern="dd/MM/yyyy" /></span>
+			</div>
 			<div id="email" class="element">
 				<label>Email: </label><span><c:out value="${sessionScope.utente.email}" /></span>
 			</div>

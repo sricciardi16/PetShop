@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="it">
@@ -7,8 +6,8 @@
 <meta charset="UTF-8">
 <title>PetShop Products</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/styles/gestisciProdotti.css">
+
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/gestisciProdotti.css">
 </head>
 
 <body>
@@ -17,7 +16,7 @@
 		<div id="prodotti">
 			<h1>I nostri prodotti</h1>
 			<div class="filter-container">
-				<h3 id="ordinaPer">Ordina per:</h3>
+				<h3 id="ordinaPer">Filtra e Ordina</h3>
 				<select id="tipologia" name="tipologia">
 					<option value="tutte">Tutte</option>
 				</select> <select id="tipologiaIn" name="tipologiaIn">
@@ -34,15 +33,15 @@
 
 			<div id="table-container">
 				<table id="productList">
-				<caption>Lista prodotti</caption>
+					<caption>Lista prodotti</caption>
 					<thead>
-					<tr>
-        <th>Nome</th>
-        <th>Descrizione</th>
-        <th>Prezzo</th>
-        <th>Immagine</th>
-        <th>In Magazzino</th>
-        <th></th>
+						<tr>
+							<th>Nome</th>
+							<th>Descrizione</th>
+							<th>Prezzo</th>
+							<th>Immagine</th>
+							<th>In Magazzino</th>
+							<th></th>
 					</thead>
 					<tbody>
 					</tbody>
@@ -61,7 +60,6 @@
 	<jsp:include page="../../views/fragments/footer.jsp" />
 	<jsp:include page="../../views/fragments/toast.jsp" />
 
-	<script
-		src="${pageContext.request.contextPath}/assets/script/async/gestisciProdottiAsync.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/script/async/gestisciProdottiAsync.js"></script>
 </body>
 </html>

@@ -132,7 +132,7 @@ public class OrdineDAO {
 
 	public List<Ordine> findAllByUtente(Utente utente) throws PetShopException {
 		List<Ordine> ordini = new ArrayList<>();
-		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID_UTENTE + " = ?";
+		String selectSQL = SELECT_ALL_FROM + TABLE_NAME + WHERE + COLUMN_NAME_ID_UTENTE + " = ?" + " ORDER BY " + COLUMN_NAME_DATA_ORA + " DESC";
 
 		try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
 

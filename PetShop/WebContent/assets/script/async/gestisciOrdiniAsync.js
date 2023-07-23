@@ -63,7 +63,7 @@ function populateOrdini(data) {
         
 row.append($("<td>").text(new Date(order.dataOra).toLocaleDateString('it-IT')));
 
-        row.append($("<td>").text(order.prezzo));
+        row.append($("<td>").text(order.prezzo + ' €'));
         row.append($("<td>").text(order.metodoPagamento));
         row.append($("<td>").append(
             $("<select>").attr("data-id", order.id).append(
@@ -76,6 +76,7 @@ row.append($("<td>").text(new Date(order.dataOra).toLocaleDateString('it-IT')));
             $("<a>").attr("href", contextPath + "/admin/ordine?id=" + order.id).text("Dettagli")
         ));
         table.append(row);
+        window.scrollTo(0, 0);
     });
 }
 
