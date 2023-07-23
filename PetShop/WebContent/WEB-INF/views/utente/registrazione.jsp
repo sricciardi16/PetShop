@@ -18,7 +18,7 @@
 					<label>Nome:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="nome" id="nome" placeholder="Inserisci Nome" onchange="validateFormElement(this, nameOrLastnamePattern, document.getElementById('errorName'), nameErrorMessage)"><span id="errorName"></span>
+					<input class="field" type="text" name="nome" id="nome" placeholder="Inserisci Nome" onchange="validateFormElement(this, nameOrLastnamePattern, document.getElementById('errorName'), nameErrorMessage)" required /><span id="errorName"></span>
 				</div>
 			</div>
 			<div class="input">
@@ -26,7 +26,7 @@
 					<label>Cognome:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="cognome" id="cognome" placeholder="Inserisci Cognome" onchange="validateFormElement(this, nameOrLastnamePattern, document.getElementById('errorLastName'),lastnameErrorMessage)"><span id="errorLastName"></span>
+					<input class="field" type="text" name="cognome" id="cognome" placeholder="Inserisci Cognome" onchange="validateFormElement(this, nameOrLastnamePattern, document.getElementById('errorLastName'),lastnameErrorMessage)" required /><span id="errorLastName"></span>
 				</div>
 			</div>
 			<div class="input">
@@ -34,7 +34,7 @@
 					<label>Email:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="email" id="email" placeholder="Inserisci Email" onchange="validateFormElement(this, emailPattern, document.getElementById('errorEmail'), emailErrorMessage)"><span id="errorEmail"></span>
+					<input class="field" type="text" name="email" id="email" placeholder="Inserisci Email" onchange="validateFormElement(this, emailPattern, document.getElementById('errorEmail'), emailErrorMessage)" required /><span id="errorEmail"></span>
 				</div>
 			</div>
 			<div class="input">
@@ -42,7 +42,7 @@
 					<label>Nome Utente:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="nomeUtente" id="nomeUtente" placeholder="Inserisci Nome Utente">
+					<input class="field" type="text" name="nomeUtente" id="nomeUtente" placeholder="Inserisci Nome Utente" required />
 				</div>
 			</div>
 			<div class="input">
@@ -50,7 +50,7 @@
 					<label>Password:</label>
 				</div>
 				<div>
-					<input class="field" type="password" name="password" id="password" placeholder="Inserisci Password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorPassword'), passwordErrorMessage)"><span id="errorPassword"></span>
+					<input class="field" type="password" name="password" id="password" placeholder="Inserisci Password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorPassword'), passwordErrorMessage)" required /><span id="errorPassword"></span>
 				</div>
 			</div>
 			<div class="input">
@@ -58,7 +58,7 @@
 					<label>Telefono:</label>
 				</div>
 				<div>
-					<input class="field" type="text" name="telefono" id="phone" placeholder="##########" onchange="validateFormElement(this, phonePattern, document.getElementById('errorPhone'),nummberErrorMessage)"><span id="errorPhone"></span>
+					<input class="field" type="text" name="telefono" id="phone" placeholder="##########" onchange="validateFormElement(this, phonePattern, document.getElementById('errorPhone'),nummberErrorMessage)" required /><span id="errorPhone"></span>
 				</div>
 			</div>
 			<div class="bottoneRegistrazione">
