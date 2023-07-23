@@ -14,7 +14,7 @@
 	<div id="content">
 		<div class="credenziali">
 			<form id="loginForm" class="form">
-				<label>Nome Utente <input type="text" name="nomeUtente" required /></label><br> <label>Password <input type="password" name="password" required /></label>
+				<label>Nome Utente: <input type="text" name="nomeUtente" required /></label><br> <label>Password: <input type="password" name="password" required /></label>
 				<div class="button">
 					<input type="submit" value="Login"> <input type="button" onclick="window.location.href='${pageContext.request.contextPath}/registrati'" value="Registrazione">
 				</div>

@@ -21,11 +21,11 @@ h1 {
 
 .credenziali {
 	background: #FA9D12;
-	border: solid;
 	font-family: Arial, Helvetica, sans-serif;
 	display: inline-block;
-	padding: 3%;
+	padding: 5%;
 	border-radius: 10px;
+	
 }
 
 .credenziali label {
@@ -36,6 +36,7 @@ h1 {
 
 .credenziali input {
 	font-size: medium;
+	border:none;
 	border-radius: 5px;
 }
 
@@ -54,11 +55,15 @@ h1 {
 
 .button input {
 	font-size: 15px;
-	background: white;
-	color: #FA9D12;
-	border-radius: 10px;
+	background-color: #333;
+	color: white;
 	padding: 3%;
 	margin: 2%;
+	border:none;
+}
+
+.button input:hover{
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 @media ( max-width : 767px) {
@@ -66,8 +71,8 @@ h1 {
 		font-size: 30px;
 	}
 	.credenziali {
-		padding: 1%;
-		font-size: 14px;
+		display: grid;
+			
 	}
 	.button {
 		font-size: 8px;
